@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>브렌트유 선물 가격 동향 | Aurora World 생산운영팀</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #f4f3ef; --surface: #ffffff; --surface2: #f0ede6;
+    --border: rgba(0,0,0,0.08); --border-mid: rgba(0,0,0,0.14);
+    --text: #1c1b18; --text-muted: #6a6960; --text-hint: #a3a298;
+    --blue: #185FA5; --blue-light: #e6f1fb;
+    --green: #3B6D11; --green-bg: #eaf3de;
+    --red: #A32D2D; --red-bg: #fcebeb;
+    --amber: #854F0B; --amber-bg: #fef3e2;
+    --radius: 12px; --radius-sm: 7px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo','Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .header { background: var(--surface); border-bottom: 1px solid var(--border-mid); padding: 13px 30px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header-left { display: flex; align-items: center; gap: 11px; }
+  .logo { width: 32px; height: 32px; border-radius: 7px; background: var(--blue); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; }
+  .header-title { font-size: 14px; font-weight: 600; }
+  .header-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .last-update { font-size: 11px; color: var(--text-hint); }
+  .source-tag { font-size: 11px; color: var(--text-hint); background: var(--surface2); border-radius: 20px; padding: 3px 10px; border: 1px solid var(--border); }
+  .btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; transition: background .15s, transform .1s; }
+  .btn:hover { background: var(--surface2); }
+  .btn:active { transform: scale(0.97); }
+  .main { max-width: 1080px; margin: 0 auto; padding: 24px 28px 56px; }
+  .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .status-left { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-muted); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #639922; }
+  .dot.loading { background: var(--amber); }
+  .dot.error { background: var(--red); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .dot.loading { animation: blink 1.2s infinite; }
+  .metrics { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 16px; }
+  .mcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .mcard.accent { border-left: 3px solid var(--blue); }
+  .mlabel { font-size: 10px; font-weight: 600; letter-spacing: 0.4px; color: var(--text-hint); text-transform: uppercase; margin-bottom: 7px; }
+  .mval { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
+  .mdelta { font-size: 11px; font-weight: 600; }
+  .up { color: var(--green); } .dn { color: var(--red); } .nt { color: var(--text-hint); font-weight: 400; }
+  .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .period-group { display: flex; gap: 4px; }
+  .pbtn { font-size: 12px; font-weight: 500; padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border-mid); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all .15s; }
+  .pbtn:hover { background: var(--surface2); }
+  .pbtn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .divider { width: 1px; height: 22px; background: var(--border-mid); margin: 0 4px; }
+  .date-input { font-size: 12px; padding: 5px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; }
+  .date-label { font-size: 12px; color: var(--text-muted); }
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px; }
+  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .chart-title { font-size: 13px; font-weight: 600; }
+  .chart-legend { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  .legend-line { width: 18px; height: 2px; background: var(--blue); border-radius: 2px; display: inline-block; }
+  .chart-wrap { position: relative; height: 280px; }
+  .events-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 16px; }
+  .section-title { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+  .section-badge { font-size: 10px; font-weight: 600; background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 20px; }
+  .event-row { display: grid; grid-template-columns: 95px 1fr; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .event-row:last-child { border-bottom: none; }
+  .event-date { font-weight: 600; color: var(--blue); }
+  .event-desc { color: var(--text-muted); }
+  .scenario-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .scenario-head { background: var(--surface2); padding: 14px 22px; border-bottom: 1px solid var(--border-mid); }
+  .scenario-head-title { font-size: 14px; font-weight: 700; }
+  .scenario-head-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .scenario-table { width: 100%; border-collapse: collapse; }
+  .scenario-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.3px; color: var(--text-muted); text-transform: uppercase; padding: 10px 20px; text-align: left; border-bottom: 1px solid var(--border-mid); background: var(--surface2); }
+  .scenario-table th:not(:first-child) { border-left: 1px solid var(--border); }
+  .scenario-table td { padding: 16px 20px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .scenario-table td:not(:first-child) { border-left: 1px solid var(--border); }
+  .scenario-table tr:last-child td { border-bottom: none; }
+  .td-period { font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .pill-base { display: inline-flex; align-items: center; gap: 5px; background: var(--green-bg); color: var(--green); border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; font-weight: 700; }
+  .pill-risk { display: inline-flex; align-items: center; gap: 5px; background: var(--red-bg); color: var(--red); border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; font-weight: 700; }
+  .sc-desc { font-size: 11px; color: var(--text-hint); margin-top: 6px; line-height: 1.5; }
+  .tags { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+  .tag { font-size: 10px; font-weight: 600; border-radius: 20px; padding: 2px 8px; }
+  .tag-m { background: var(--amber-bg); color: var(--amber); }
+  .tag-f { background: var(--blue-light); color: var(--blue); }
+  .footer { text-align: center; font-size: 11px; color: var(--text-hint); padding-top: 8px; }
+  #overlay { position: fixed; inset: 0; background: rgba(244,243,239,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
+  .loader { width: 30px; height: 30px; border: 2px solid var(--border-mid); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-size: 13px; color: var(--text-muted); }
+  @media (max-width: 700px) { .metrics { grid-template-columns: repeat(2,1fr); } .main { padding: 16px 14px 40px; } .header-right .source-tag { display: none; } }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <div class="loader"></div>
+  <div class="loader-text">EIA 데이터 불러오는 중...</div>
+</div>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">AW</div>
+    <div>
+      <div class="header-title">브렌트유 선물 가격 동향</div>
+      <div class="header-sub">Aurora World 생산운영팀 · Brent Crude Futures (USD/bbl)</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="last-update" id="lastUpdate">—</span>
+    <span class="source-tag">출처: EIA (미국 에너지정보청)</span>
+    <button class="btn" onclick="loadData()">↻ 새로고침</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="status-row">
+    <div class="status-left">
+      <span class="dot loading" id="statusDot"></span>
+      <span id="statusText">데이터 로딩 중...</span>
+    </div>
+    <span class="source-tag" id="dataRange">—</span>
+  </div>
+
+  <div class="metrics">
+    <div class="mcard accent">
+      <div class="mlabel">현재가 (USD/bbl)</div>
+      <div class="mval" id="mCur">—</div>
+      <div class="mdelta" id="mDelta"><span class="nt">로딩 중</span></div>
+    </div>
+    <div class="mcard">
+      <div class="mlabel">구간 최고가</div>
+      <div class="mval" id="mHigh">—</div>
+      <div class="mdelta nt" id="mHighDate">—</div>
+    </div>
+    <div class="mcard">
+      <div class="mlabel">구간 최저가</div>
+      <div class="mval" id="mLow">—</div>
+      <div class="mdelta nt" id="mLowDate">—</div>
+    </div>
+    <div class="mcard">
+      <div class="mlabel">구간 평균가</div>
+      <div class="mval" id="mAvg">—</div>
+      <div class="mdelta nt">선택 기간 기준</div>
+    </div>
+    <div class="mcard">
+      <div class="mlabel">원/달러 환율</div>
+      <div class="mval" id="mFx">—</div>
+      <div class="mdelta nt" id="mFxNote">참고용</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="period-group">
+      <button class="pbtn" onclick="setPeriod(1,this)">1M</button>
+      <button class="pbtn active" onclick="setPeriod(3,this)">3M</button>
+      <button class="pbtn" onclick="setPeriod(6,this)">6M</button>
+      <button class="pbtn" onclick="setPeriod(12,this)">1Y</button>
+    </div>
+    <div class="divider"></div>
+    <span class="date-label">기간 직접 입력:</span>
+    <input class="date-input" type="date" id="dateFrom" onchange="setCustom()">
+    <span class="date-label">~</span>
+    <input class="date-input" type="date" id="dateTo" onchange="setCustom()">
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">브렌트유 일별 종가 추이</div>
+      <div class="chart-legend"><span class="legend-line"></span> 브렌트유 (USD/bbl)</div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="oilChart" role="img" aria-label="브렌트유 선물 일별 가격 추이 차트"></canvas>
+    </div>
+  </div>
+
+  <div class="events-card">
+    <div class="section-title">🚩 주요 이벤트 메모 <span class="section-badge">원부자재 · 운임 영향 시점</span></div>
+    <div class="event-row"><span class="event-date">2026-01-14</span><span class="event-desc">OPEC+ 감산 연장 발표 → 가격 급등 · 원부자재 비용 상승 검토 필요</span></div>
+    <div class="event-row"><span class="event-date">2026-02-20</span><span class="event-desc">미-이란 협상 재개 소식 → 공급 증가 기대로 하락세</span></div>
+    <div class="event-row"><span class="event-date">2026-04-07</span><span class="event-desc">글로벌 경기침체 우려 → 연중 최저가 기록 · 해상운임 병행 하락</span></div>
+    <div class="event-row"><span class="event-date">2026-05-12</span><span class="event-desc">중동 지역 긴장 재고조 → 단기 반등 · 항공운임 모니터링 필요</span></div>
+  </div>
+
+  <div class="scenario-card">
+    <div class="scenario-head">
+      <div class="scenario-head-title">📊 종합 시나리오 전망</div>
+      <div class="scenario-head-sub">원부자재 · 항공/해상 운임 영향 예측 포함 · 참고용 전망이며 실제와 다를 수 있음</div>
+    </div>
+    <table class="scenario-table">
+      <thead>
+        <tr>
+          <th style="width:130px;">시기</th>
+          <th>✅ 베이스 시나리오 <span style="font-weight:400;">(호르무즈 점진 재개)</span></th>
+          <th>⚠️ 리스크 시나리오 <span style="font-weight:400;">(분쟁 장기화)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-period">2026년<br>2~3분기</td>
+          <td><div class="pill-base">📈 브렌트 100~110달러</div><div class="sc-desc">공급 부분 재개에도 수요 강세 유지. PP·PE 원가 상승 지속 예상.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 고압</span><span class="tag tag-f">해상운임 ↑ 상승</span></div></td>
+          <td><div class="pill-risk">⚠️ 130달러 이상 재상승</div><div class="sc-desc">호르무즈 봉쇄 장기화 시 공급 충격. 항공운임 급등 우려.</div><div class="tags"><span class="tag tag-m">원부자재 ↑↑ 심각</span><span class="tag tag-f">항공운임 ↑↑ 급등</span></div></td>
+        </tr>
+        <tr>
+          <td class="td-period">2026년<br>4분기</td>
+          <td><div class="pill-base">📉 85~90달러로 점진 하락</div><div class="sc-desc">OPEC+ 증산 전환 및 수요 둔화. 원가 부담 완화 시작 예상.</div><div class="tags"><span class="tag tag-m">원부자재 ↓ 완화</span><span class="tag tag-f">해상운임 → 안정</span></div></td>
+          <td><div class="pill-risk">⚠️ 100달러 이상 유지</div><div class="sc-desc">지정학 리스크 지속으로 하락 제한. 연말 원가 관리 중점 필요.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 지속</span><span class="tag tag-f">운임 → 고위 유지</span></div></td>
+        </tr>
+        <tr>
+          <td class="td-period">2027년</td>
+          <td><div class="pill-base">🟢 75~80달러 수준 안정화</div><div class="sc-desc">공급 정상화 및 글로벌 수요 조정. 원가 안정 국면 진입 예상.</div><div class="tags"><span class="tag tag-m">원부자재 → 안정</span><span class="tag tag-f">운임 ↓ 정상화</span></div></td>
+          <td><div class="pill-risk">⚠️ 90달러 이상 고착</div><div class="sc-desc">구조적 공급 부족 고착화. 장기 소싱 전략 재검토 권고.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 구조적</span><span class="tag tag-f">운임 ↑ 고착</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">Aurora World 생산운영팀 · 데이터: U.S. Energy Information Administration (EIA) · 시나리오는 참고용 전망이며 실제와 다를 수 있습니다.</div>
+</div>
+
+<script>
+const API_KEY = 'c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY';
+let allData = [], chart = null, currentMonths = 3;
+
+async function loadData() {
+  setStatus('loading', 'EIA 데이터 불러오는 중...');
+  document.getElementById('overlay').style.display = 'flex';
+  try {
+    const end = new Date(), start = new Date();
+    start.setFullYear(start.getFullYear() - 1);
+    const fmt = d => d.toISOString().slice(0,10);
+    const url = `https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key=${API_KEY}&frequency=daily&data[0]=value&facets[product][]=EPCBRENT&sort[0][column]=period&sort[0][direction]=asc&start=${fmt(start)}&end=${fmt(end)}&length=400`;
+    const res = await fetch(url);
+    const json = await res.json();
+    const rows = json?.response?.data;
+    if (!rows || !rows.length) throw new Error('데이터 없음');
+    allData = rows.filter(r => r.value != null).map(r => ({date: r.period, price: parseFloat(r.value)})).sort((a,b) => a.date.localeCompare(b.date));
+    setStatus('ok', '실시간 EIA 데이터 · ' + allData.length + '개 데이터 포인트');
+    document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+    document.getElementById('dataRange').textContent = allData[0].date + ' ~ ' + allData[allData.length-1].date;
+    initDateInputs();
+    renderChart(getFilteredData(currentMonths));
+    fetchFx();
+  } catch(e) {
+    setStatus('error', '오류: ' + e.message);
+    allData = generateDemo();
+    initDateInputs();
+    renderChart(getFilteredData(currentMonths));
+  } finally {
+    document.getElementById('overlay').style.display = 'none';
+  }
+}
+
+async function fetchFx() {
+  try {
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const j = await res.json();
+    const krw = j.rates?.KRW;
+    if (krw) { document.getElementById('mFx').textContent = '₩' + Math.round(krw).toLocaleString(); document.getElementById('mFxNote').textContent = '실시간 (참고용)'; }
+  } catch {}
+}
+
+function generateDemo() {
+  const data = []; let price = 80;
+  const start = new Date(); start.setFullYear(start.getFullYear()-1);
+  for (let d = new Date(start); d <= new Date(); d.setDate(d.getDate()+1)) {
+    if (d.getDay()!==0 && d.getDay()!==6) { price += (Math.random()-.47)*1.6; price = Math.max(60,Math.min(135,price)); data.push({date:d.toISOString().slice(0,10),price:parseFloat(price.toFixed(2))}); }
+  }
+  return data;
+}
+
+function initDateInputs() {
+  const last = allData[allData.length-1].date;
+  const from = new Date(last); from.setMonth(from.getMonth()-3);
+  document.getElementById('dateTo').value = last;
+  document.getElementById('dateFrom').value = from.toISOString().slice(0,10);
+}
+
+function getFilteredData(months) {
+  if (!allData.length) return [];
+  const last = new Date(allData[allData.length-1].date);
+  const from = new Date(last); from.setMonth(from.getMonth()-months);
+  return allData.filter(d => new Date(d.date) >= from);
+}
+
+function getCustomData(from, to) { return allData.filter(d => d.date >= from && d.date <= to); }
+
+function renderChart(data) {
+  if (!data.length) return;
+  updateMetrics(data);
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById('oilChart'), {
+    type: 'line',
+    data: { labels: data.map(d=>d.date), datasets: [{ label: '브렌트유 (USD/bbl)', data: data.map(d=>d.price), borderColor: '#185FA5', backgroundColor: 'rgba(24,95,165,0.06)', borderWidth: 1.8, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#185FA5', pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2, fill: true, tension: 0.3 }] },
+    options: { responsive: true, maintainAspectRatio: false, interaction: {mode:'index',intersect:false},
+      plugins: { legend: {display:false}, tooltip: { backgroundColor:'#fff', borderColor:'rgba(0,0,0,0.12)', borderWidth:1, titleColor:'#6a6960', bodyColor:'#1c1b18', titleFont:{size:11}, bodyFont:{size:13,weight:'600'}, padding:10, callbacks: { title: ctx=>ctx[0].label, label: ctx=>' $'+ctx.parsed.y.toFixed(2)+' / bbl' } } },
+      scales: { x: { ticks: {maxTicksLimit:10,color:'#a3a298',font:{size:11},autoSkip:true,maxRotation:0,callback:function(v){const l=this.getLabelForValue(v);return l?l.slice(5):''}}, grid:{color:'rgba(0,0,0,0.04)'}, border:{display:false} }, y: { ticks:{callback:v=>'$'+v.toFixed(0),color:'#a3a298',font:{size:11}}, grid:{color:'rgba(0,0,0,0.04)'}, border:{display:false} } }
+    }
+  });
+}
+
+function updateMetrics(data) {
+  const prices = data.map(d=>d.price);
+  const last = prices[prices.length-1], prev = prices[prices.length-2]??last;
+  const delta = last-prev, pct = ((delta/prev)*100).toFixed(1);
+  const high = Math.max(...prices), low = Math.min(...prices);
+  const avg = (prices.reduce((a,b)=>a+b,0)/prices.length).toFixed(2);
+  document.getElementById('mCur').textContent = '$'+last.toFixed(2);
+  const dEl = document.getElementById('mDelta'), sign = delta>=0?'+':'';
+  dEl.className = 'mdelta '+(delta>=0?'up':'dn');
+  dEl.textContent = sign+delta.toFixed(2)+' ('+sign+pct+'%) 전일比';
+  document.getElementById('mHigh').textContent = '$'+high.toFixed(2);
+  document.getElementById('mHighDate').textContent = data[prices.indexOf(high)]?.date??'';
+  document.getElementById('mLow').textContent = '$'+low.toFixed(2);
+  document.getElementById('mLowDate').textContent = data[prices.indexOf(low)]?.date??'';
+  document.getElementById('mAvg').textContent = '$'+avg;
+}
+
+function setPeriod(months, btn) {
+  currentMonths = months;
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = getFilteredData(months);
+  if (f.length) { document.getElementById('dateFrom').value=f[0].date; document.getElementById('dateTo').value=f[f.length-1].date; }
+  renderChart(f);
+}
+
+function setCustom() {
+  const from = document.getElementById('dateFrom').value, to = document.getElementById('dateTo').value;
+  if (from && to && from <= to) { document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('active')); renderChart(getCustomData(from,to)); }
+}
+
+function setStatus(type, msg) {
+  document.getElementById('statusDot').className = 'dot '+(type==='ok'?'':type);
+  document.getElementById('statusText').textContent = msg;
+}
+
+loadData();
+</script>
+</body>
+</html>
