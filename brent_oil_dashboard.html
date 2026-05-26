@@ -225,41 +225,55 @@ async function loadData() {
   setStatus('loading', '브렌트유 데이터 불러오는 중...');
   document.getElementById('overlay').style.display = 'flex';
   try {
-    const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?interval=1d&range=1y';
-    const proxies = [
-      'https://corsproxy.io/?' + yahooUrl,
-      'https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl),
-      'https://proxy.cors.sh/' + yahooUrl,
-    ];
-    let json = null;
-    for (const proxyUrl of proxies) {
-      try {
-        const res = await fetch(proxyUrl, {headers: {'x-requested-with': 'XMLHttpRequest'}});
-        if (!res.ok) continue;
-        const text = await res.text();
-        const parsed = JSON.parse(text);
-        if (parsed?.chart?.result?.[0]) { json = parsed; break; }
-      } catch(e2) {}
+    // 1순위: corsproxy + Yahoo Finance (실시간 15분 지연)
+    let loaded = false;
+    try {
+      const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?interval=1d&range=1y';
+      const res = await fetch('https://corsproxy.io/?' + yahooUrl, {headers:{'x-requested-with':'XMLHttpRequest'}});
+      if (res.ok) {
+        const json = await res.json();
+        const result = json?.chart?.result?.[0];
+        if (result?.timestamp && result?.indicators?.quote?.[0]?.close) {
+          const timestamps = result.timestamp;
+          const closes = result.indicators.quote[0].close;
+          allData = timestamps.map((ts, i) => ({
+            date: new Date(ts * 1000).toISOString().slice(0,10),
+            price: closes[i] ? parseFloat(closes[i].toFixed(2)) : null
+          })).filter(d => d.price !== null).sort((a,b) => a.date.localeCompare(b.date));
+          if (allData.length) {
+            setStatus('ok', 'Yahoo Finance 실시간 · ' + allData.length + '개 데이터 포인트');
+            loaded = true;
+          }
+        }
+      }
+    } catch(e1) {}
+
+    // 2순위: EIA API (주간 업데이트)
+    if (!loaded) {
+      const end = new Date(), start2 = new Date();
+      start2.setFullYear(start2.getFullYear() - 1);
+      const fmt = d => d.toISOString().slice(0,10);
+      const eiaUrl = 'https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key=c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY&frequency=daily&data[0]=value&facets[product][]=EPCBRENT&sort[0][column]=period&sort[0][direction]=asc&start=' + fmt(start2) + '&end=' + fmt(end) + '&length=400';
+      const res2 = await fetch(eiaUrl);
+      const json2 = await res2.json();
+      const rows = json2?.response?.data;
+      if (rows && rows.length) {
+        allData = rows.filter(r => r.value != null).map(r => ({date: r.period, price: parseFloat(r.value)})).sort((a,b) => a.date.localeCompare(b.date));
+        setStatus('ok', 'EIA 공식 데이터 · ' + allData.length + '개 데이터 포인트');
+        loaded = true;
+      }
     }
-    if (!json?.chart?.result?.[0]) throw new Error('연결 실패');
-    const result = json.chart.result[0];
-    const timestamps = result.timestamp;
-    const closes = result.indicators?.quote?.[0]?.close;
-    if (!timestamps || !closes) throw new Error('데이터 파싱 오류');
-    allData = timestamps.map((ts, i) => ({
-      date: new Date(ts * 1000).toISOString().slice(0,10),
-      price: closes[i] ? parseFloat(closes[i].toFixed(2)) : null
-    })).filter(d => d.price !== null).sort((a,b) => a.date.localeCompare(b.date));
-    if (!allData.length) throw new Error('유효한 데이터 없음');
+
+    if (!loaded || !allData.length) throw new Error('데이터 없음');
+
     const latestDate = allData[allData.length-1].date;
-    setStatus('ok', '실시간 데이터 (Yahoo Finance) · ' + allData.length + '개 데이터 포인트');
     document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
     document.getElementById('dataRange').textContent = '최신 데이터: ' + latestDate;
     initDateInputs();
     renderChart(getFilteredData(currentMonths));
     fetchFx();
   } catch(e) {
-    setStatus('error', '외부 데이터 연결 오류 — 샘플 데이터로 임시 표시');
+    setStatus('error', '데이터 로드 실패 — 샘플 데이터로 표시');
     allData = generateDemo();
     initDateInputs();
     renderChart(getFilteredData(currentMonths));
@@ -270,25 +284,32 @@ async function loadData() {
 }
 
 async function fetchFx() {
-  const fxApis = [
-    'https://open.er-api.com/v6/latest/USD',
-    'https://api.exchangerate-api.com/v4/latest/USD',
-  ];
-  for (const url of fxApis) {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    const krw = j?.rates?.KRW;
+    if (krw && krw > 900) {
+      document.getElementById('mFx').textContent = '₩' + Math.round(krw).toLocaleString();
+      document.getElementById('mFxNote').textContent = '당일 기준 (참고용)';
+      return;
+    }
+    throw new Error('KRW not found');
+  } catch {
+    // fallback
     try {
-      const res = await fetch(url);
-      if (!res.ok) continue;
-      const j = await res.json();
-      const krw = j?.rates?.KRW;
-      if (krw && krw > 900) {
-        document.getElementById('mFx').textContent = '₩' + Math.round(krw).toLocaleString();
+      const res2 = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+      const j2 = await res2.json();
+      const krw2 = j2?.rates?.KRW;
+      if (krw2 && krw2 > 900) {
+        document.getElementById('mFx').textContent = '₩' + Math.round(krw2).toLocaleString();
         document.getElementById('mFxNote').textContent = '당일 기준 (참고용)';
         return;
       }
     } catch {}
+    document.getElementById('mFx').textContent = '조회 불가';
+    document.getElementById('mFxNote').textContent = '새로고침 시 재시도';
   }
-  document.getElementById('mFx').textContent = '조회 불가';
-  document.getElementById('mFxNote').textContent = '새로고침 시 재시도';
 }
 
 function generateDemo() {
