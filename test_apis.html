@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>API Test</title></head>
+<body>
+<h2>API CORS Test Results</h2>
+<div id="results"></div>
+<script>
+const log = msg => { document.getElementById('results').innerHTML += '<p>' + msg + '</p>'; console.log(msg); };
+
+async function testAll() {
+  // Test 1: EIA direct (CORS 허용 여부)
+  try {
+    const r = await fetch('https://api.eia.gov/v2/petroleum/pri/spt/data/?api_key=c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY&frequency=daily&data[0]=value&facets[product][]=EPCBRENT&length=3');
+    const j = await r.json();
+    log('✅ EIA direct: ' + JSON.stringify(j).slice(0,100));
+  } catch(e) { log('❌ EIA direct: ' + e.message); }
+
+  // Test 2: open.er-api (환율)
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/USD');
+    const j = await r.json();
+    log('✅ open.er-api KRW: ' + j?.rates?.KRW);
+  } catch(e) { log('❌ open.er-api: ' + e.message); }
+
+  // Test 3: exchangerate-api
+  try {
+    const r = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+    const j = await r.json();
+    log('✅ exchangerate-api KRW: ' + j?.rates?.KRW);
+  } catch(e) { log('❌ exchangerate-api: ' + e.message); }
+
+  // Test 4: frankfurter
+  try {
+    const r = await fetch('https://api.frankfurter.app/latest?to=KRW');
+    const j = await r.json();
+    log('✅ frankfurter KRW: ' + j?.rates?.KRW);
+  } catch(e) { log('❌ frankfurter: ' + e.message); }
+
+  // Test 5: corsproxy + yahoo
+  try {
+    const r = await fetch('https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?range=5d&interval=1d');
+    const j = await r.json();
+    log('✅ corsproxy+yahoo: ' + JSON.stringify(j).slice(0,80));
+  } catch(e) { log('❌ corsproxy+yahoo: ' + e.message); }
+
+  // Test 6: Metals-API / commodity free
+  try {
+    const r = await fetch('https://api.api-ninjas.com/v1/commodityprice?name=brent_crude', {headers:{'X-Api-Key':'demo'}});
+    log('✅ api-ninjas status: ' + r.status);
+  } catch(e) { log('❌ api-ninjas: ' + e.message); }
+}
+testAll();
+</script>
+</body>
+</html>
