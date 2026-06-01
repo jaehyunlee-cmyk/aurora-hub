@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Tariff Watch — Aurora World</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#f8f7f4;--surface:#fff;--surface2:#f2f1ee;
+    --border:rgba(0,0,0,.1);--border-md:rgba(0,0,0,.18);
+    --text:#1a1a18;--text-2:#5f5e5a;--text-3:#8a8985;
+    --s122-bg:#E6F1FB;--s122-text:#0C447C;
+    --s301-bg:#FAECE7;--s301-text:#712B13;
+    --warn-bg:#FAEEDA;--warn-text:#412402;--warn-border:#EF9F27;
+    --danger-bg:#FCEBEB;--danger-text:#791F1F;
+    --ok-bg:#EAF3DE;--ok-text:#27500A;
+    --neutral-bg:#F1EFE8;--neutral-text:#444441;
+    --r-md:8px;--r-lg:12px;--r-xl:16px;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#181816;--surface:#232320;--surface2:#2c2c2a;
+    --border:rgba(255,255,255,.1);--border-md:rgba(255,255,255,.18);
+    --text:#f0efe8;--text-2:#a8a7a0;--text-3:#6a6965;
+    --s122-bg:#042C53;--s122-text:#85B7EB;
+    --s301-bg:#4A1B0C;--s301-text:#F0997B;
+    --warn-bg:#412402;--warn-text:#FAC775;--warn-border:#BA7517;
+    --danger-bg:#501313;--danger-text:#F09595;
+    --ok-bg:#173404;--ok-text:#C0DD97;
+    --neutral-bg:#2C2C2A;--neutral-text:#B4B2A9;
+  }}
+  body{font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;}
+  .topnav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{display:flex;align-items:center;gap:10px;}
+  .nav-logo{width:28px;height:28px;background:var(--text);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+  .nav-logo i{color:var(--surface);font-size:16px;}
+  .nav-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.01em;}
+  .nav-sub{font-size:11px;color:var(--text-3);margin-left:4px;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:.5px solid var(--border);}
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 14px;border-radius:var(--r-md);border:.5px solid var(--border-md);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:background .15s,color .15s;}
+  .btn:hover{background:var(--surface2);color:var(--text);}
+  .btn-primary{background:var(--text);color:var(--surface);border-color:var(--text);}
+  .btn-primary:hover{opacity:.88;}
+  .btn.loading i.ti-refresh{animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;}
+  .page-header{margin-bottom:24px;}
+  .page-header h1{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:4px;}
+  .page-header p{font-size:13px;color:var(--text-2);}
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
+  .metric-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
+  .metric-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .metric-value{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:8px;letter-spacing:-.02em;}
+  .metric-sub{font-size:12px;color:var(--text-2);line-height:1.6;}
+  .metric-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-top:8px;font-weight:500;}
+  .badge-active{background:var(--s122-bg);color:var(--s122-text);}
+  .badge-warn{background:var(--warn-bg);color:var(--warn-text);}
+  .badge-ok{background:var(--ok-bg);color:var(--ok-text);}
+  .badge-neutral{background:var(--neutral-bg);color:var(--neutral-text);}
+  .warn-bar{background:var(--warn-bg);border:.5px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--warn-text);margin-bottom:24px;display:flex;gap:10px;line-height:1.6;}
+  .section-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
+  .card-header{padding:12px 18px;border-bottom:.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .card-title{font-size:13px;font-weight:600;color:var(--text);}
+  .card-body{padding:18px;}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text-2);align-items:center;}
+  .legend-item{display:flex;align-items:center;gap:5px;}
+  .legend-swatch{width:22px;height:11px;border-radius:2px;flex-shrink:0;}
+  .legend-dline{width:18px;border-top:2px dashed #BA7517;}
+
+  /* ── HEATMAP (단일 테이블, 색상 없음) ── */
+  .heatmap-scroll{overflow-x:visible;}
+  table.hm{width:100%;border-collapse:collapse;font-size:10px;}
+
+  table.hm th{
+    padding:5px 3px;text-align:center;font-size:9px;font-weight:600;
+    color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;
+    border-bottom:.5px solid var(--border);background:var(--surface2);white-space:nowrap;
+  }
+  table.hm th.lc{text-align:left;padding-left:8px;}
+  /* 연도 구분 헤더 */
+  table.hm th.yr{
+    background:var(--surface2);color:var(--text-2);
+    font-size:11px;font-weight:700;letter-spacing:.06em;
+    border-bottom:.5px solid var(--border);
+  }
+  /* 7/24 만료선 */
+  table.hm th.dth{border-left:2px dashed #BA7517!important;}
+  /* 연도 경계선 */
+  table.hm th.yrb{border-left:1.5px solid var(--border-md)!important;}
+
+  table.hm td{
+    padding:5px 3px;text-align:center;font-size:10px;
+    font-weight:500;border-bottom:.5px solid var(--border);
+    white-space:nowrap;color:var(--text);
+  }
+  table.hm td.lc-c{text-align:left;padding-left:8px;font-weight:700;color:var(--text);background:var(--surface);}
+  table.hm td.lc-s{text-align:left;padding-left:6px;font-size:9px;font-weight:400;color:var(--text-2);background:var(--surface);}
+  table.hm tr.tr td{background:var(--surface2)!important;border-top:.5px solid var(--border-md);font-weight:700;}
+  table.hm tr.sp td{height:10px;background:var(--bg)!important;border:none;}
+  table.hm tr:last-child td{border-bottom:none;}
+
+  /* 7/24 만료선 셀 */
+  table.hm td.dtd{border-left:2px dashed #BA7517!important;}
+  /* 연도 경계선 셀 */
+  table.hm td.yrb{border-left:1.5px solid var(--border-md)!important;}
+
+  /* 색상 없이 텍스트로만 구분 */
+  .val-active{color:var(--text);font-weight:600;}
+  .val-zero{color:var(--text-3);font-weight:400;}
+  .val-exp{color:var(--text-3);font-size:10px;font-weight:400;}
+  .val-tbd{color:var(--text-3);font-size:10px;font-weight:400;}
+  .val-total{color:var(--text);font-weight:700;}
+  .val-total-hi{color:var(--text);font-weight:700;}
+  .val-ended{color:var(--text-3);font-size:10px;font-weight:400;text-decoration:line-through;}
+
+  /* ── CHART ── */
+  .chart-tabs{display:flex;gap:6px;margin-bottom:14px;}
+  .chart-tab{font-size:12px;padding:5px 14px;border-radius:20px;border:.5px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:all .15s;}
+  .chart-tab.active{background:var(--text);color:var(--surface);border-color:var(--text);}
+
+  /* ── DEF CARDS ── */
+  .def-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;align-items:stretch;}
+  .def-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;}
+  .def-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .def-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;}
+  .def-status{font-size:10px;color:var(--text-3);}
+  .def-fullname{font-size:11px;color:var(--text-3);margin-bottom:8px;font-style:italic;}
+  .def-body{font-size:12px;color:var(--text-2);line-height:1.65;}
+  .def-foot{font-size:11px;color:var(--text-3);margin-top:auto;padding-top:10px;border-top:.5px solid var(--border);}
+
+  /* ── TIMELINE ── */
+  .tl-row{display:flex;gap:14px;padding:14px 0;border-bottom:.5px solid var(--border);align-items:flex-start;}
+  .tl-row:last-child{border-bottom:none;}
+  .tl-date{font-size:11px;color:var(--text-3);min-width:90px;padding-top:3px;}
+  .tl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .tl-content{flex:1;}
+  .tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+  .tl-desc{font-size:12px;color:var(--text-2);line-height:1.6;}
+  .tl-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-top:6px;}
+  .future{opacity:.6;}
+
+  /* ── NEWS ── */
+  
+  .news-empty i{font-size:24px;display:block;margin-bottom:10px;}
+  
+  
+  
+  
+  .news-item:last-of-type{border-bottom:none;}
+  
+  
+  
+  
+  
+
+  /* ── SHARE MODAL ── */
+  .share-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;}
+  .share-modal-backdrop.open{display:flex;}
+  .share-modal{background:var(--surface);border-radius:var(--r-xl);padding:28px;width:100%;max-width:400px;margin:16px;border:.5px solid var(--border-md);}
+  .share-modal h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .share-modal p{font-size:13px;color:var(--text-2);margin-bottom:18px;}
+  .share-url-box{display:flex;gap:8px;margin-bottom:20px;}
+  .share-url-box input{flex:1;font-size:12px;padding:8px 12px;border:.5px solid var(--border-md);border-radius:var(--r-md);background:var(--surface2);color:var(--text);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
+  .share-methods{display:flex;flex-direction:column;gap:8px;}
+  .share-method-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);border:.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:background .15s;}
+  .share-method-btn:hover{background:var(--surface);border-color:var(--border-md);}
+  .share-method-btn i{font-size:18px;color:var(--text-3);}
+  .sm-label{font-weight:600;font-size:13px;color:var(--text);}
+  .sm-sub{font-size:11px;color:var(--text-3);}
+  .modal-close{float:right;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;}
+  footer{text-align:center;padding:24px;font-size:11px;color:var(--text-3);border-top:.5px solid var(--border);margin-top:20px;}
+  @media(max-width:600px){
+    .main{padding:16px 14px 40px;}
+    .topnav{padding:0 14px;}
+    .nav-sub,.nav-tag{display:none;}
+    .metric-grid{grid-template-columns:1fr 1fr;}
+    .def-grid{grid-template-columns:1fr;}
+    .tl-date{min-width:62px;font-size:10px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo"><i class="ti ti-chart-bar-popular"></i></div>
+    <span class="nav-title">US Tariff Watch</span>
+    <span class="nav-sub">Aurora World</span>
+  </div>
+  <div class="nav-right">
+    <span class="nav-tag" id="nav-date">2026-06-01</span>
+    <button class="btn btn-primary" onclick="openShare()"><i class="ti ti-share"></i> 공유</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-header">
+    <h1>US Tariff Watch</h1>
+    <p>Section 122 / 301 / IEEPA 기준 미국 관세 현황 (2025~2026) — 오로라월드 생산운영팀 · <span id="hdr-date"></span> 기준</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">중국 실효관세</div>
+      <div class="metric-value">17.5%</div>
+      <div class="metric-sub">Section 301 &nbsp;7.5%<br>Section 122 &nbsp;10%</div>
+      <div class="metric-badge badge-active">진행 중</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">인도네시아 실효관세</div>
+      <div class="metric-value">10%</div>
+      <div class="metric-sub">Section 301 &nbsp;미부과<br>Section 122 &nbsp;10%</div>
+      <div class="metric-badge badge-warn">S301 조사 중</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Section 122 만료</div>
+      <div class="metric-value" id="countdown">D-—</div>
+      <div class="metric-sub">2026-07-24 자동 만료 예정<br>의회 연장 없이 대통령 불가</div>
+      <div class="metric-badge badge-warn">임박</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">다음 주요 이벤트</div>
+      <div class="metric-value" style="font-size:16px;padding-top:6px;">미중 재회담</div>
+      <div class="metric-sub">시진핑 방미<br>2026년 9월 예정</div>
+      <div class="metric-badge badge-neutral">모니터링</div>
+    </div>
+  </div>
+
+  <div class="warn-bar">
+    <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
+    <div><strong>2026-05-07</strong> CIT 2:1 판결 — Section 122 법적 근거 부정. 행정부 항소 진행 중. 실제 만료·환급 시점 유동적. 단, <strong>중국 Section 301</strong>은 판결 영향 없이 현행 완전 유지.</div>
+  </div>
+
+  <!-- HEATMAP -->
+  <div class="section-label"><i class="ti ti-table"></i> 월별 관세율 히트맵 (2025–2026)</div>
+  <div class="card" style="margin-bottom:8px;">
+    <div class="card-header">
+      <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <span><strong style="color:var(--text);">|</strong> 연도 구분선</span>
+        <span style="border-bottom:2px dashed #BA7517;padding-bottom:1px;">- - -</span><span>S122 만료선 (2026-07-24)</span>
+        <span style="color:var(--text-3);font-style:italic;">기울임</span><span>만료 / 미정 / 해당없음</span>
+      </div>
+    </div>
+    <div class="card-body" style="padding:14px 18px 12px;">
+      <div class="heatmap-scroll">
+        <table class="hm">
+          <thead>
+            <!-- 연도 헤더 행 -->
+            <tr>
+              <th class="lc yr" colspan="2"></th>
+              <th class="yr" colspan="12">2025</th>
+              <th class="yr yrb" colspan="7">2026 (Jan–Jul)</th>
+              <th class="yr dth" colspan="5">2026 (Aug–Dec)</th>
+            </tr>
+            <!-- 월 헤더 행 -->
+            <tr>
+              <th class="lc" style="width:52px;">국가</th>
+              <th class="lc" style="width:68px;">Section</th>
+              <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+              <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+              <th class="yrb">Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th>
+              <th class="dth">Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ── China ── -->
+            <tr>
+              <td class="lc-c" rowspan="4">China</td>
+              <td class="lc-s">IEEPA</td>
+              <!-- 2025 -->
+              <td class="val-zero">—</td>
+              <td class="val-active">10%</td><td class="val-active">20%</td><td class="val-active">20%</td>
+              <td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td>
+              <td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td>
+              <td class="val-active">10%</td><td class="val-active">10%</td>
+              <!-- 2026 Jan -->
+              <td class="val-active yrb">10%</td>
+              <!-- 2026 Feb~Dec: 위헌 종료 -->
+              <td class="val-exp" colspan="11" style="text-align:center;">위헌 종료 (2/24~)</td>
+            </tr>
+            <tr>
+              <td class="lc-s">Section 122</td>
+              <!-- 2025 전체: 미발동 -->
+              <td class="val-zero" colspan="12" style="text-align:center;">미발동</td>
+              <!-- 2026 Jan -->
+              <td class="val-zero yrb">—</td>
+              <!-- 2026 Feb~Jul -->
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <!-- 2026 Aug~Dec: 만료 -->
+              <td class="val-exp dtd" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
+            </tr>
+            <tr>
+              <td class="lc-s">Section 301</td>
+              <!-- 2025 -->
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <!-- 2026 -->
+              <td class="val-active yrb">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-active dtd">7.5%</td>
+              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+            </tr>
+            <tr class="tr">
+              <td class="lc-s">합산</td>
+              <!-- 2025 -->
+              <td class="val-total">7.5%</td>
+              <td class="val-total-hi">17.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
+              <td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
+              <td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
+              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
+              <!-- 2026 -->
+              <td class="val-total-hi yrb">17.5%</td>
+              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
+              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
+              <td class="val-total dtd">7.5%↓</td>
+              <td class="val-total">7.5%</td><td class="val-total">7.5%</td><td class="val-total">7.5%</td><td class="val-total">7.5%</td>
+            </tr>
+
+            <tr class="sp"><td colspan="26"></td></tr>
+
+            <!-- ── Indonesia ── -->
+            <tr>
+              <td class="lc-c" rowspan="4">Indonesia</td>
+              <td class="lc-s">IEEPA</td>
+              <td class="val-exp" colspan="12" style="text-align:center;">해당 없음</td>
+              <td class="val-exp yrb" colspan="12" style="text-align:center;">해당 없음</td>
+            </tr>
+            <tr>
+              <td class="lc-s">Section 122</td>
+              <!-- 2025: 미발동 -->
+              <td class="val-zero" colspan="12" style="text-align:center;">미발동</td>
+              <!-- 2026 Jan -->
+              <td class="val-zero yrb">—</td>
+              <!-- 2026 Feb~Jul -->
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <!-- 2026 Aug~Dec -->
+              <td class="val-exp dtd" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
+            </tr>
+            <tr>
+              <td class="lc-s">Section 301</td>
+              <!-- 2025 전체 -->
+              <td class="val-zero" colspan="12" style="text-align:center;">미부과</td>
+              <!-- 2026 Jan~Jul -->
+              <td class="val-zero yrb">—</td>
+              <td class="val-zero">—</td><td class="val-zero">—</td><td class="val-zero">—</td>
+              <td class="val-zero">—</td><td class="val-zero">—</td><td class="val-zero">—</td>
+              <!-- 2026 Aug~Dec: TBD -->
+              <td class="val-tbd dtd">조사중</td>
+              <td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td>
+            </tr>
+            <tr class="tr">
+              <td class="lc-s">합산</td>
+              <!-- 2025 -->
+              <td class="val-zero" colspan="12" style="text-align:center;">0%</td>
+              <!-- 2026 Jan -->
+              <td class="val-zero yrb">0%</td>
+              <!-- 2026 Feb~Jul -->
+              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <!-- 2026 Aug~Dec -->
+              <td class="val-tbd dtd">미정↑?</td>
+              <td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:10px;line-height:1.7;">
+        ※ IEEPA(중국 한정): 2025-02-04(10%) → 2025-03-04(20%) → 2025-11-10(10%↓) → 2026-02-24 위헌 소멸<br>
+        ※ 2026년 Aug 이후: S122 만료(7/24) 시나리오 기준 추정. 인도네시아 S301 조사 결과에 따라 변동 가능
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <div class="section-label"><i class="ti ti-chart-bar-popular"></i> 월별 실효관세율 추이 (2025-01 ~ 2026-12)</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="chart-tabs">
+        <button class="chart-tab active" onclick="switchChart('china',this)">China</button>
+        <button class="chart-tab" onclick="switchChart('indonesia',this)">Indonesia</button>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(92,26,0,.85);"></div>IEEPA</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(55,138,221,.85);"></div>Section 122</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(216,90,48,.85);"></div>Section 301</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="position:relative;width:100%;height:240px;">
+        <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
+      </div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
+        주황 점선: S122 만료 기준선 (2026-07-24) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24) · Aug 이후는 시나리오 추정
+      </div>
+    </div>
+  </div>
+
+  <!-- DEF -->
+  <div class="section-label"><i class="ti ti-book"></i> 관세 제도 정의</div>
+  <div class="def-grid">
+    <div class="def-card">
+      <div class="def-head"><span class="def-badge" style="background:var(--s122-bg);color:var(--s122-text);">Section 122</span><span class="def-status"><i class="ti ti-clock" style="font-size:12px;"></i> 임시 조치</span></div>
+      <div class="def-fullname">Section 122 of the Trade Act of 1974</div>
+      <div class="def-body">국제수지 불균형 등 긴급 경제 상황 대응을 위해 미국 대통령이 거의 모든 국가 수입품에 추가 관세를 부과할 수 있도록 한 법적 권한.</div>
+      <div class="def-foot">최대 150일 · 의회 승인 시 연장 · 상한 15%<br>현재 적용: 2026/02/24 ~ 07/24</div>
+    </div>
+    <div class="def-card">
+      <div class="def-head"><span class="def-badge" style="background:var(--s301-bg);color:var(--s301-text);">Section 301</span><span class="def-status"><i class="ti ti-lock" style="font-size:12px;"></i> 장기 제재</span></div>
+      <div class="def-fullname">Section 301 of the Trade Act of 1974</div>
+      <div class="def-body">외국 정부의 불공정 무역행위(지식재산 침해·시장 접근 제한 등)에 대응하기 위해 보복 관세 또는 무역 제재를 부과할 수 있도록 하는 권한.</div>
+      <div class="def-foot">기간 제한 없음 · 금액 상한 없음<br>대중국: 2018년~현재 / 인도네시아: 2026/03/11 조사 개시</div>
+    </div>
+    <div class="def-card">
+      <div class="def-head"><span class="def-badge" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA</span><span class="def-status" style="color:var(--danger-text);"><i class="ti ti-circle-x" style="font-size:12px;"></i> 위헌 종료</span></div>
+      <div class="def-fullname">International Emergency Economic Powers Act</div>
+      <div class="def-body">트럼프 2기가 2025년 대중국 관세(Fentanyl+상호관세, 최고 20%)에 사용한 권한. 2026-02-20 대법원 위헌 판결로 종료. Section 122로 대체.</div>
+      <div class="def-foot">2025-02-04 발동 → 최고 20% → 2026-02-24 위헌 소멸<br>중국에만 적용 (인도네시아 해당 없음)</div>
+    </div>
+    <div class="def-card">
+      <div class="def-head"><span class="def-badge" style="background:var(--ok-bg);color:var(--ok-text);">USTR</span><span class="def-status"><i class="ti ti-building" style="font-size:12px;"></i> 집행 기관</span></div>
+      <div class="def-fullname">United States Trade Representative (미국 무역대표부)</div>
+      <div class="def-body">미국 대통령 직속 무역 정책 기관. 무역 정책 수립·협상·분쟁 대응, Section 301 조사를 실제로 수행하는 핵심 기관.</div>
+      <div class="def-foot">2026/03/11 인도네시아 포함 16개국<br>신규 Section 301 조사 개시</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section-label"><i class="ti ti-timeline"></i> 주요 이벤트 타임라인</div>
+  <div class="card">
+    <div class="card-body" style="padding:8px 18px;">
+      <div class="tl-row">
+        <div class="tl-date">2025-02-04</div>
+        <div class="tl-dot" style="background:#5C1A00;"></div>
+        <div class="tl-content">
+          <div class="tl-title">IEEPA 발동 — 중국 Fentanyl 관세 10% 최초 부과</div>
+          <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. Section 301(7.5%) 포함 중국 합산 17.5% 도달.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA 개시</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025-03-04</div>
+        <div class="tl-dot" style="background:#5C1A00;"></div>
+        <div class="tl-content">
+          <div class="tl-title">IEEPA 추가 인상 — 중국 합산 최고 27.5%</div>
+          <div class="tl-desc">IEEPA 10%→20% 추가 인상. 합산 최고 27.5% 도달. 오로라월드, 중국 아웃소싱 Baby 단가 5% D/C 대응 시작(4월 출고분부터).</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">최고 관세</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025-10-30</div>
+        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-content">
+          <div class="tl-title">미중 부산 정상회담 (APEC) — IEEPA 20%→10% 인하</div>
+          <div class="tl-desc">IEEPA 인하 합의(11/10 발효). 합산 27.5%→17.5% 복귀. 오로라월드 Baby D/C 5%→3%로 조정(11/13 출고분부터).</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">휴전 합의</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-02-20</div>
+        <div class="tl-dot" style="background:#E24B4A;"></div>
+        <div class="tl-content">
+          <div class="tl-title">SCOTUS, IEEPA 관세 전면 위헌 판결</div>
+          <div class="tl-desc">대법원 6-3 판결로 IEEPA 기반 관세 전면 위헌 선고. 당일 Section 122 긴급 발동. 2026년 4월 CAPE 포털 통해 IEEPA 관세 환급 절차 개시.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-02-24</div>
+        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-content">
+          <div class="tl-title">Section 122 발동 — 전 세계 10% 관세 시행</div>
+          <div class="tl-desc">대부분의 수입국에 10% 일괄 관세 적용. 150일 한시 조치로 의회 연장 없이는 2026/07/24 자동 만료.</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">Section 122</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-03-11</div>
+        <div class="tl-dot" style="background:#BA7517;"></div>
+        <div class="tl-content">
+          <div class="tl-title">USTR, 인도네시아 포함 16개국 Section 301 조사 개시</div>
+          <div class="tl-desc">과잉 생산 설비·불공정 무역 관행 이유로 조사 개시. 인도네시아·베트남·캄보디아·태국 등 아시아 주요 대체 생산국 포함.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">S301 조사</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-05-07</div>
+        <div class="tl-dot" style="background:#E24B4A;"></div>
+        <div class="tl-content">
+          <div class="tl-title">CIT, Section 122 법적 근거에 부정적 판결</div>
+          <div class="tl-desc">CIT 2:1 판결로 Section 122 발동의 법적 요건 미충족 판단. 행정부 항소 및 집행정지 여부에 따라 만료·환급 시점 변동 가능.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-05-13~15</div>
+        <div class="tl-dot" style="background:#1D9E75;"></div>
+        <div class="tl-content">
+          <div class="tl-title">트럼프 방중 — 미중 정상회담</div>
+          <div class="tl-desc">Boeing 200대 구매, 농산물 $170억/년 구매 합의. 무역이사회 설치 합의. 관세율 직접 합의는 없음. "관계 재설정" 성격으로 평가.</div>
+          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">정상회담</div>
+        </div>
+      </div>
+      <div class="tl-row future">
+        <div class="tl-date">2026-07-24</div>
+        <div class="tl-dot" style="background:#BA7517;outline:2px solid #EF9F27;outline-offset:1px;"></div>
+        <div class="tl-content">
+          <div class="tl-title">⚑ Section 122 만료 예정 — 핵심 분기점</div>
+          <div class="tl-desc">전 세계 10% 관세 자동 소멸 예정. 이후 S301 국가별 차등 관세로 대체 가능성. 인도네시아는 조사 결과에 따라 변동.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">D-<span id="tl-countdown"></span></div>
+        </div>
+      </div>
+      <div class="tl-row future">
+        <div class="tl-date">2026-09 예정</div>
+        <div class="tl-dot" style="background:var(--text-3);"></div>
+        <div class="tl-content">
+          <div class="tl-title">시진핑 방미 — 미중 재회담</div>
+          <div class="tl-desc">워싱턴 국빈 방문 예정. Section 301 조사 결과 및 관세율 추가 협의 가능성. 중장기 무역 구조 논의 예상.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">예정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>US Tariff Watch · Aurora World 생산운영팀 · 2025–2026 · 본 페이지의 정보는 참고용이며 공식 법률·관세 자문을 대체하지 않습니다.</footer>
+
+<div class="share-modal-backdrop" id="share-backdrop" onclick="closeShare(event)">
+  <div class="share-modal">
+    <button class="modal-close" onclick="closeShareBtn()"><i class="ti ti-x"></i></button>
+    <h3><i class="ti ti-share" style="font-size:18px;vertical-align:-2px;margin-right:6px;"></i>US Tariff Watch 공유</h3>
+    <p>동료에게 이 페이지를 공유하세요.</p>
+    <div class="share-url-box">
+      <input type="text" id="share-url-input" readonly>
+      <button class="btn" onclick="copyUrl()"><i class="ti ti-copy"></i> 복사</button>
+    </div>
+    <div class="share-methods">
+      <button class="share-method-btn" onclick="shareEmail()">
+        <i class="ti ti-mail"></i><span><span class="sm-label">이메일로 공유</span><span class="sm-sub">기본 메일 앱 열기</span></span>
+      </button>
+      <button class="share-method-btn" onclick="downloadFile()">
+        <i class="ti ti-download"></i><span><span class="sm-label">HTML 파일 다운로드</span><span class="sm-sub">로컬 저장 후 공유</span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const labels=['25-Jan','25-Feb','25-Mar','25-Apr','25-May','25-Jun','25-Jul','25-Aug','25-Sep','25-Oct','25-Nov','25-Dec','26-Jan','26-Feb','26-Mar','26-Apr','26-May','26-Jun','26-Jul','26-Aug','26-Sep','26-Oct','26-Nov','26-Dec'];
+const chartData={
+  china:{
+    ieepa:[0,10,20,20,20,20,20,20,20,20,10,10,10,0,0,0,0,0,0,0,0,0,0,0],
+    s122: [0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,0,0,0,0,0],
+    s301: [7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5]
+  },
+  indonesia:{
+    ieepa:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    s122: [0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,0,0,0,0,0],
+    s301: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  }
+};
+let myChart=null;
+
+function buildChart(country){
+  const ctx=document.getElementById('tariffChart');
+  if(myChart)myChart.destroy();
+  const d=chartData[country];
+  const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  const tc=isDark?'#6a6965':'#8a8985';
+  const gc=isDark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)';
+  myChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Section 301',data:d.s301,backgroundColor:'rgba(216,90,48,.85)',stack:'t',borderWidth:0},
+        {label:'Section 122',data:d.s122,backgroundColor:labels.map((_,i)=>i>=19?'rgba(55,138,221,.3)':'rgba(55,138,221,.85)'),stack:'t',borderWidth:0},
+        {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{footer:items=>'합산: '+items.reduce((s,i)=>s+i.raw,0).toFixed(1)+'%'}}},
+      scales:{
+        x:{stacked:true,grid:{display:false},ticks:{font:{size:9},color:tc,maxRotation:45}},
+        y:{stacked:true,beginAtZero:true,max:35,ticks:{callback:v=>v+'%',font:{size:11},color:tc,stepSize:5},grid:{color:gc}}
+      }
+    },
+    plugins:[{
+      id:'vlines',
+      afterDraw(chart){
+        const{ctx:c,scales:{x,y}}=chart;
+        const x1=x.getPixelForValue(18.5);
+        c.save();c.strokeStyle='#BA7517';c.lineWidth=1.5;c.setLineDash([4,3]);
+        c.beginPath();c.moveTo(x1,y.top);c.lineTo(x1,y.bottom);c.stroke();
+        const x2=x.getPixelForValue(13.5);
+        c.strokeStyle='rgba(226,75,74,.5)';c.lineWidth=1;c.setLineDash([3,3]);
+        c.beginPath();c.moveTo(x2,y.top);c.lineTo(x2,y.bottom);c.stroke();
+        c.restore();
+      }
+    }]
+  });
+}
+
+function switchChart(country,btn){
+  document.querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');buildChart(country);
+}
+
+function updateCountdown(){
+  const now=new Date(),exp=new Date('2026-07-24');
+  const days=Math.max(0,Math.ceil((exp-now)/(1000*60*60*24)));
+  document.getElementById('countdown').textContent='D-'+days;
+  const tl=document.getElementById('tl-countdown');if(tl)tl.textContent=days;
+  const today=now.toISOString().slice(0,10);
+  document.getElementById('hdr-date').textContent=today;
+  document.getElementById('nav-date').textContent=today;
+}
+
+
+
+function openShare(){document.getElementById('share-url-input').value=window.location.href;document.getElementById('share-backdrop').classList.add('open');}
+function closeShare(e){if(e.target===document.getElementById('share-backdrop'))closeShareBtn();}
+function closeShareBtn(){document.getElementById('share-backdrop').classList.remove('open');}
+function copyUrl(){const input=document.getElementById('share-url-input');input.select();navigator.clipboard.writeText(input.value).then(()=>{const btn=input.nextElementSibling;btn.innerHTML='<i class="ti ti-check"></i> 복사됨';setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i> 복사';},2000);});}
+function shareEmail(){const url=window.location.href;const subject=encodeURIComponent('[US Tariff Watch] 미국 관세 현황 공유');const b=encodeURIComponent('안녕하세요,\n\n오로라월드 생산운영팀 US Tariff Watch를 공유드립니다.\n\n'+url+'\n\n감사합니다.');window.location.href='mailto:?subject='+subject+'&body='+b;}
+function downloadFile(){const a=document.createElement('a');a.href=window.location.href;a.download='us-tariff-watch.html';document.body.appendChild(a);a.click();document.body.removeChild(a);closeShareBtn();}
+
+buildChart('china');
+updateCountdown();
+setInterval(updateCountdown,60000);
+</script>
+</body>
+</html>
