@@ -32,6 +32,15 @@
   .btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; transition: background .15s, transform .1s; }
   .btn:hover { background: var(--surface2); }
   .btn:active { transform: scale(0.97); }
+  .home-btn {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-mid);
+    background: var(--surface); color: var(--text-muted);
+    text-decoration: none; transition: background .15s, color .15s;
+  }
+  .home-btn:hover { background: var(--surface2); color: var(--text); }
 
   .main { max-width: 1100px; margin: 0 auto; padding: 24px 28px 56px; }
 
@@ -154,6 +163,9 @@
     </div>
   </div>
   <div class="header-right">
+    <a href="https://jaehyunlee-cmyk.github.io/brent-dashboard/" class="home-btn" title="허브 페이지로">
+      ← Home
+    </a>
     <span class="last-update" id="lastUpdate">—</span>
     <span class="source-tag">출처: Yahoo Finance</span>
     <button class="btn" onclick="loadAll()">↻ 새로고침</button>
