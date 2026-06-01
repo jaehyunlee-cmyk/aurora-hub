@@ -55,12 +55,7 @@ html, body {
 /* ── Header ── */
 header {
   padding: 48px 0 40px;
-  border-bottom: 1px solid var(--border);
   margin-bottom: 48px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
 }
 
 .logo-row {
@@ -98,11 +93,6 @@ h1 strong {
 50% { opacity: 0.25; }
 }
 
-.header-date {
-  font-size: 11.5px;
-  color: var(--text-3);
-  letter-spacing: 0.02em;
-}
 
 /* ── Section label ── */
 .section-label {
@@ -111,7 +101,7 @@ h1 strong {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -332,9 +322,7 @@ footer {
       </div>
       <h1>Intelligence <strong>Hub</strong></h1>
     </div>
-    <div class="header-right">
-<div class="header-date" id="currentDate">—</div>
-    </div>
+
   </header>
 
   <!-- ── Active dashboards ── -->
@@ -349,7 +337,6 @@ footer {
       <div class="card-inner">
         <div class="card-top">
           <div class="card-icon">🛢️</div>
-          <span class="card-badge">LIVE · Yahoo Finance</span>
         </div>
         <div class="card-title">Petrochemical Price Monitor</div>
         <div class="card-sub">브렌트유 · 나프타(RBOB) · 천연가스<br>석유화학 원자재 가격 실시간 추적</div>
@@ -372,7 +359,6 @@ footer {
       <div class="card-inner">
         <div class="card-top">
           <div class="card-icon">🇮🇩</div>
-          <span class="card-badge">LIVE · Exchange Rate</span>
         </div>
         <div class="card-title">USD/IDR Exchange Rate Monitor</div>
         <div class="card-sub">인도네시아 루피아 환율 추이<br>배경 분석 · 시나리오 · Action Trigger</div>
@@ -394,7 +380,6 @@ footer {
       <div class="card-inner">
         <div class="card-top">
           <div class="card-icon">🇺🇸</div>
-          <span class="card-badge">AI-Powered · Claude</span>
         </div>
         <div class="card-title">US Tariff Watch</div>
         <div class="card-sub">미국 관세 동향 실시간 모니터링<br>중국·인도네시아 관세율 · 타임라인</div>
@@ -441,12 +426,7 @@ footer {
 </div>
 
 <script>
-(function() {
-  const d = new Date();
-  const opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
-  document.getElementById('currentDate').textContent =
-    d.toLocaleDateString('ko-KR', opts);
-})();
+
 </script>
 
 </body>
