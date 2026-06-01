@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora World · Intelligence Hub</title>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --bg: #f4f3f0;
+  --surface: #ffffff;
+  --surface2: #eeede9;
+  --border: rgba(0,0,0,0.08);
+  --border-md: rgba(0,0,0,0.14);
+  --text: #1a1916;
+  --text-2: #6b6a65;
+  --text-3: #a8a7a2;
+
+  --gold: #a07828;
+  --gold-dim: rgba(160,120,40,0.08);
+  --green: #2e7d52;
+  --green-dim: rgba(46,125,82,0.08);
+  --red: #b54036;
+  --red-dim: rgba(181,64,54,0.08);
+  --teal: #2b7a74;
+  --teal-dim: rgba(43,122,116,0.08);
+  --blue: #2c5fa8;
+  --blue-dim: rgba(44,95,168,0.08);
+
+  --r: 12px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+/* ── Header ── */
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.logo-mark {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--gold);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: -0.5px;
+  font-family: var(--font);
+}
+
+.logo-text {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+h1 strong {
+  font-weight: 600;
+}
+
+.header-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--border-md);
+  border-radius: 100px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  margin-bottom: 7px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.header-date {
+  font-size: 11.5px;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+
+/* ── Section label ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Dashboard grid ── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+/* ── Dashboard card ── */
+.dash-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
+  cursor: pointer;
+
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.45s ease forwards;
+}
+
+.dash-card:nth-child(1) { animation-delay: 0.04s; }
+.dash-card:nth-child(2) { animation-delay: 0.10s; }
+.dash-card:nth-child(3) { animation-delay: 0.16s; }
+.dash-card:nth-child(4) { animation-delay: 0.22s; }
+.dash-card:nth-child(5) { animation-delay: 0.28s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dash-card:hover {
+  border-color: var(--accent-color, var(--gold));
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Top accent bar */
+.dash-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent-color, var(--gold));
+}
+
+.card-inner {
+  padding: 26px 26px 22px;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  background: var(--accent-dim, var(--gold-dim));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid var(--border);
+}
+
+.card-badge {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 7px;
+  letter-spacing: -0.02em;
+}
+
+.card-sub {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.card-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.card-arrow {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-md);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+
+.dash-card:hover .card-arrow {
+  background: var(--accent-color, var(--gold));
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Color themes */
+.theme-gold  { --accent-color: var(--gold);  --accent-dim: var(--gold-dim);  }
+.theme-teal  { --accent-color: var(--teal);  --accent-dim: var(--teal-dim);  }
+.theme-red   { --accent-color: var(--red);   --accent-dim: var(--red-dim);   }
+.theme-blue  { --accent-color: var(--blue);  --accent-dim: var(--blue-dim);  }
+.theme-green { --accent-color: var(--green); --accent-dim: var(--green-dim); }
+
+/* Placeholder */
+.dash-card.placeholder {
+  border-style: dashed;
+  opacity: 0.35 !important;
+  pointer-events: none;
+  box-shadow: none;
+  animation: none;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer-left {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.footer-right {
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .wrapper { padding: 0 20px 60px; }
+  header { flex-direction: column; align-items: flex-start; }
+  .header-right { text-align: left; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-left">
+      <div class="logo-row">
+        <div class="logo-mark">A</div>
+        <span class="logo-text">Aurora World · Production Operations</span>
+      </div>
+      <h1>Intelligence <strong>Hub</strong></h1>
+    </div>
+    <div class="header-right">
+      <div class="live-pill">
+        <span class="live-dot"></span>
+        LIVE DASHBOARDS
+      </div>
+      <div class="header-date" id="currentDate">—</div>
+    </div>
+  </header>
+
+  <!-- ── Active dashboards ── -->
+  <div class="section-label">Active Dashboards</div>
+
+  <div class="dashboard-grid">
+
+    <!-- 1. Petrochemical Price Monitor -->
+    <a class="dash-card theme-gold"
+       href="https://jaehyunlee-cmyk.github.io/aurora-hub/raw_material_dashboard.html"
+       target="_blank" rel="noopener">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-icon">🛢️</div>
+          <span class="card-badge">LIVE · Yahoo Finance</span>
+        </div>
+        <div class="card-title">Petrochemical Price Monitor</div>
+        <div class="card-sub">브렌트유 · 나프타(RBOB) · 천연가스<br>석유화학 원자재 가격 실시간 추적</div>
+        <div class="card-meta">
+          <div class="card-tags">
+            <span class="tag">BZ=F</span>
+            <span class="tag">RB=F</span>
+            <span class="tag">NG=F</span>
+            <span class="tag">IDR/USD</span>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 2. 루피아 환율변동 대시보드 -->
+    <a class="dash-card theme-teal"
+       href="https://jaehyunlee-cmyk.github.io/brent-dashboard/idr_usd_dashboard.html"
+       target="_blank" rel="noopener">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-icon">🇮🇩</div>
+          <span class="card-badge">LIVE · Exchange Rate</span>
+        </div>
+        <div class="card-title">USD/IDR 환율 변동</div>
+        <div class="card-sub">인도네시아 루피아 환율 추이<br>배경 분석 · 시나리오 · Action Trigger</div>
+        <div class="card-meta">
+          <div class="card-tags">
+            <span class="tag">Cianjur</span>
+            <span class="tag">USD/IDR</span>
+            <span class="tag">BI Rate</span>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 3. US Tariff Watch -->
+    <a class="dash-card theme-red"
+       href="https://jaehyunlee-cmyk.github.io/brent-dashboard/us-tariff-watch.html"
+       target="_blank" rel="noopener">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-icon">🇺🇸</div>
+          <span class="card-badge">AI-Powered · Claude</span>
+        </div>
+        <div class="card-title">US Tariff Watch</div>
+        <div class="card-sub">미국 관세 동향 실시간 모니터링<br>중국·인도네시아 관세율 · 타임라인</div>
+        <div class="card-meta">
+          <div class="card-tags">
+            <span class="tag">Sec.301</span>
+            <span class="tag">Sec.122</span>
+            <span class="tag">IEEPA</span>
+            <span class="tag">China / ID</span>
+          </div>
+          <div class="card-arrow">↗</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── Coming Soon ── -->
+  <div class="section-label">Coming Soon</div>
+
+  <div class="dashboard-grid">
+    <div class="dash-card placeholder theme-blue">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-icon">📊</div>
+          <span class="card-badge">PLANNED</span>
+        </div>
+        <div class="card-title">Dashboard D</div>
+        <div class="card-sub">준비 중</div>
+        <div class="card-meta">
+          <div class="card-tags"><span class="tag">TBD</span></div>
+          <div class="card-arrow">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="footer-left">Aurora World · Production Operations · 생산운영팀</div>
+    <div class="footer-right">Internal Use Only</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  const d = new Date();
+  const opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+  document.getElementById('currentDate').textContent =
+    d.toLocaleDateString('ko-KR', opts);
+})();
+</script>
+
+</body>
+</html>
