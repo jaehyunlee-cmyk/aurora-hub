@@ -70,21 +70,6 @@ header {
   margin-bottom: 10px;
 }
 
-.logo-mark {
-  width: 30px;
-  height: 30px;
-  border: 1.5px solid var(--gold);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: -0.5px;
-  font-family: var(--font);
-}
-
 .logo-text {
   font-size: 12px;
   font-weight: 500;
@@ -110,32 +95,7 @@ h1 strong {
   flex-shrink: 0;
 }
 
-.live-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--surface);
-  border: 1px solid var(--border-md);
-  border-radius: 100px;
-  padding: 5px 13px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--text-2);
-  margin-bottom: 7px;
-}
-
-.live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
+50% { opacity: 0.25; }
 }
 
 .header-date {
@@ -251,7 +211,7 @@ h1 strong {
 }
 
 .card-title {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.25;
   color: var(--text);
@@ -368,17 +328,12 @@ footer {
   <header>
     <div class="header-left">
       <div class="logo-row">
-        <div class="logo-mark">A</div>
-        <span class="logo-text">Aurora World · Production Operations</span>
+<span class="logo-text">Aurora World · Production Operations</span>
       </div>
       <h1>Intelligence <strong>Hub</strong></h1>
     </div>
     <div class="header-right">
-      <div class="live-pill">
-        <span class="live-dot"></span>
-        LIVE DASHBOARDS
-      </div>
-      <div class="header-date" id="currentDate">—</div>
+<div class="header-date" id="currentDate">—</div>
     </div>
   </header>
 
@@ -419,7 +374,7 @@ footer {
           <div class="card-icon">🇮🇩</div>
           <span class="card-badge">LIVE · Exchange Rate</span>
         </div>
-        <div class="card-title">USD/IDR 환율 변동</div>
+        <div class="card-title">USD/IDR Exchange Rate Monitor</div>
         <div class="card-sub">인도네시아 루피아 환율 추이<br>배경 분석 · 시나리오 · Action Trigger</div>
         <div class="card-meta">
           <div class="card-tags">
