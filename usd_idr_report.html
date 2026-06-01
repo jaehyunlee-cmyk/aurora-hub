@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>USD/IDR 환율 변동 — 배경 및 전망</title>
+<title>USD/IDR Rate Monitor</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   :root {
@@ -19,15 +19,20 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.6}
-  .page{max-width:960px;margin:0 auto;padding:52px 36px 88px}
+  .page{max-width:960px;margin:0 auto;padding:32px 36px 88px}
   .nav-bar{
+    position:sticky;top:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
-    padding:14px 0 16px;border-bottom:1px solid var(--border);margin-bottom:32px;
+    padding:10px 24px;
+    background:#ffffff;
+    border-bottom:1px solid var(--border);
+    margin-bottom:0;
+    width:100%;
   }
   .nav-left{display:flex;align-items:center;gap:12px}
   .nav-icon-box{
-    width:42px;height:42px;border-radius:10px;
-    background:linear-gradient(135deg,#2a7a9a,#1a5a7a);
+    width:40px;height:40px;border-radius:9px;
+    background:linear-gradient(135deg,#1a7a6a,#0f5a4a);
     display:flex;align-items:center;justify-content:center;
     font-size:20px;flex-shrink:0;
   }
@@ -136,13 +141,11 @@
 </style>
 </head>
 <body>
-<div class="page">
-
-  <div class="nav-bar">
+<div class="nav-bar">
     <div class="nav-left">
       <div class="nav-icon-box">💱</div>
       <div>
-        <div class="nav-title">USD/IDR 환율 변동 — 배경 및 전망</div>
+        <div class="nav-title">USD/IDR Rate Monitor</div>
         <div class="nav-sub">Aurora World 생산운영팀 · 인도네시아 Cianjur 법인 · USD/IDR</div>
       </div>
     </div>
@@ -150,7 +153,8 @@
       <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Home</a>
       <span class="nav-date" id="header-date">불러오는 중...</span>
     </div>
-  </div>
+</div>
+<div class="page">
 
   <div class="section">
     <div class="sec-label">환율 현황</div>
