@@ -10,7 +10,6 @@
 
 :root {
   --font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
   --bg: #f4f3f0;
   --surface: #ffffff;
   --surface2: #eeede9;
@@ -19,18 +18,11 @@
   --text: #1a1916;
   --text-2: #6b6a65;
   --text-3: #a8a7a2;
-
-  --gold: #a07828;
-  --gold-dim: rgba(160,120,40,0.08);
-  --green: #2e7d52;
-  --green-dim: rgba(46,125,82,0.08);
-  --red: #b54036;
-  --red-dim: rgba(181,64,54,0.08);
-  --teal: #2b7a74;
-  --teal-dim: rgba(43,122,116,0.08);
-  --blue: #2c5fa8;
-  --blue-dim: rgba(44,95,168,0.08);
-
+  --gold: #a07828;   --gold-dim: rgba(160,120,40,0.08);
+  --green: #2e7d52;  --green-dim: rgba(46,125,82,0.08);
+  --red: #b54036;    --red-dim: rgba(181,64,54,0.08);
+  --teal: #2b7a74;   --teal-dim: rgba(43,122,116,0.08);
+  --blue: #2c5fa8;   --blue-dim: rgba(44,95,168,0.08);
   --r: 12px;
   --shadow: 0 2px 12px rgba(0,0,0,0.07);
   --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
@@ -45,7 +37,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Layout ── */
 .wrapper {
   max-width: 1100px;
   margin: 0 auto;
@@ -55,7 +46,7 @@ html, body {
 /* ── Header ── */
 header {
   padding: 48px 0 40px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .logo-row {
@@ -81,18 +72,7 @@ h1 {
   letter-spacing: -0.02em;
 }
 
-h1 strong {
-  font-weight: 600;
-}
-
-.header-right {
-  text-align: right;
-  flex-shrink: 0;
-}
-
-50% { opacity: 0.25; }
-}
-
+h1 strong { font-weight: 600; }
 
 /* ── Section label ── */
 .section-label {
@@ -101,7 +81,7 @@ h1 strong {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-3);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -119,7 +99,7 @@ h1 strong {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 14px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 /* ── Dashboard card ── */
@@ -135,7 +115,6 @@ h1 strong {
   box-shadow: var(--shadow);
   transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
   cursor: pointer;
-
   opacity: 0;
   transform: translateY(12px);
   animation: fadeUp 0.45s ease forwards;
@@ -147,9 +126,7 @@ h1 strong {
 .dash-card:nth-child(4) { animation-delay: 0.22s; }
 .dash-card:nth-child(5) { animation-delay: 0.28s; }
 
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
 .dash-card:hover {
   border-color: var(--accent-color, var(--gold));
@@ -157,7 +134,6 @@ h1 strong {
   box-shadow: var(--shadow-hover);
 }
 
-/* Top accent bar */
 .dash-card::before {
   content: '';
   position: absolute;
@@ -166,9 +142,7 @@ h1 strong {
   background: var(--accent-color, var(--gold));
 }
 
-.card-inner {
-  padding: 26px 26px 22px;
-}
+.card-inner { padding: 26px 26px 22px; }
 
 .card-top {
   display: flex;
@@ -224,12 +198,7 @@ h1 strong {
   padding-top: 14px;
 }
 
-.card-tags {
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-  flex: 1;
-}
+.card-tags { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
 
 .tag {
   font-size: 10px;
@@ -262,14 +231,12 @@ h1 strong {
   border-color: transparent;
 }
 
-/* Color themes */
 .theme-gold  { --accent-color: var(--gold);  --accent-dim: var(--gold-dim);  }
 .theme-teal  { --accent-color: var(--teal);  --accent-dim: var(--teal-dim);  }
 .theme-red   { --accent-color: var(--red);   --accent-dim: var(--red-dim);   }
 .theme-blue  { --accent-color: var(--blue);  --accent-dim: var(--blue-dim);  }
 .theme-green { --accent-color: var(--green); --accent-dim: var(--green-dim); }
 
-/* Placeholder */
 .dash-card.placeholder {
   border-style: dashed;
   opacity: 0.35 !important;
@@ -288,23 +255,11 @@ footer {
   gap: 16px;
 }
 
-.footer-left {
-  font-size: 12px;
-  color: var(--text-3);
-}
+.footer-left { font-size: 12px; color: var(--text-3); }
+.footer-right { font-size: 11px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
 
-.footer-right {
-  font-size: 11px;
-  color: var(--text-3);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* ── Responsive ── */
 @media (max-width: 640px) {
   .wrapper { padding: 0 20px 60px; }
-  header { flex-direction: column; align-items: flex-start; }
-  .header-right { text-align: left; }
   .dashboard-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; align-items: flex-start; }
 }
@@ -314,30 +269,21 @@ footer {
 
 <div class="wrapper">
 
-  <!-- ── Header ── -->
   <header>
-    <div class="header-left">
-      <div class="logo-row">
-<span class="logo-text">Aurora World · Production Operations</span>
-      </div>
-      <h1>Intelligence <strong>Hub</strong></h1>
+    <div class="logo-row">
+      <span class="logo-text">Aurora World · Production Operations</span>
     </div>
-
+    <h1>Intelligence <strong>Hub</strong></h1>
   </header>
 
-  <!-- ── Active dashboards ── -->
   <div class="section-label">Active Dashboards</div>
-
   <div class="dashboard-grid">
 
-    <!-- 1. Petrochemical Price Monitor -->
     <a class="dash-card theme-gold"
        href="https://jaehyunlee-cmyk.github.io/aurora-hub/raw_material_dashboard.html"
        target="_blank" rel="noopener">
       <div class="card-inner">
-        <div class="card-top">
-          <div class="card-icon">🛢️</div>
-        </div>
+        <div class="card-top"><div class="card-icon">🛢️</div></div>
         <div class="card-title">Petrochemical Price Monitor</div>
         <div class="card-sub">브렌트유 · 나프타(RBOB) · 천연가스<br>석유화학 원자재 가격 실시간 추적</div>
         <div class="card-meta">
@@ -352,14 +298,11 @@ footer {
       </div>
     </a>
 
-    <!-- 2. 루피아 환율변동 대시보드 -->
     <a class="dash-card theme-teal"
        href="https://jaehyunlee-cmyk.github.io/brent-dashboard/idr_usd_dashboard.html"
        target="_blank" rel="noopener">
       <div class="card-inner">
-        <div class="card-top">
-          <div class="card-icon">🇮🇩</div>
-        </div>
+        <div class="card-top"><div class="card-icon">🇮🇩</div></div>
         <div class="card-title">USD/IDR Exchange Rate Monitor</div>
         <div class="card-sub">인도네시아 루피아 환율 추이<br>배경 분석 · 시나리오 · Action Trigger</div>
         <div class="card-meta">
@@ -373,14 +316,11 @@ footer {
       </div>
     </a>
 
-    <!-- 3. US Tariff Watch -->
     <a class="dash-card theme-red"
        href="https://jaehyunlee-cmyk.github.io/brent-dashboard/us-tariff-watch.html"
        target="_blank" rel="noopener">
       <div class="card-inner">
-        <div class="card-top">
-          <div class="card-icon">🇺🇸</div>
-        </div>
+        <div class="card-top"><div class="card-icon">🇺🇸</div></div>
         <div class="card-title">US Tariff Watch</div>
         <div class="card-sub">미국 관세 동향 실시간 모니터링<br>중국·인도네시아 관세율 · 타임라인</div>
         <div class="card-meta">
@@ -397,9 +337,7 @@ footer {
 
   </div>
 
-  <!-- ── Coming Soon ── -->
   <div class="section-label">Coming Soon</div>
-
   <div class="dashboard-grid">
     <div class="dash-card placeholder theme-blue">
       <div class="card-inner">
@@ -417,17 +355,11 @@ footer {
     </div>
   </div>
 
-  <!-- ── Footer ── -->
   <footer>
     <div class="footer-left">Aurora World · Production Operations · 생산운영팀</div>
     <div class="footer-right">Internal Use Only</div>
   </footer>
 
 </div>
-
-<script>
-
-</script>
-
 </body>
 </html>
