@@ -210,15 +210,15 @@
 <div class="metric-grid">
     <div class="metric-card">
       <div class="metric-label">중국 실효관세</div>
-      <div class="metric-value">17.5%</div>
-      <div class="metric-sub">Section 301 &nbsp;7.5%<br>Section 122 &nbsp;10%</div>
-      <div class="metric-badge badge-active">진행 중</div>
+      <div class="metric-value">10%</div>
+      <div class="metric-sub">Section 122 &nbsp;10%<br>Section 301 &nbsp;미적용 (List 4B 유예)</div>
+      <div class="metric-badge badge-warn">~ 2026-07-24</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">인도네시아 실효관세</div>
       <div class="metric-value">10%</div>
-      <div class="metric-sub">Section 301 &nbsp;미부과<br>Section 122 &nbsp;10%</div>
-      <div class="metric-badge badge-warn">Section 301 조사 중</div>
+      <div class="metric-sub">Section 122 &nbsp;10%<br>Section 301 &nbsp;미부과 (조사 중)</div>
+      <div class="metric-badge badge-warn">~ 2026-07-24</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Section 122 만료</div>
@@ -236,36 +236,27 @@
 
   <div class="warn-bar">
     <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
-    <div><strong>2026-05-07</strong> CIT 2:1 판결 — Section 122 법적 근거 부정. 행정부 항소 진행 중. 실제 만료·환급 시점 유동적. 단, <strong>중국 Section 301</strong>은 판결 영향 없이 현행 완전 유지.</div>
+    <div><strong>2026-05-07</strong> CIT 2:1 판결 — Section 122 법적 근거 부정. 행정부 항소 진행 중. 실제 만료·환급 시점 유동적. 단, Section 301은 판결 영향 없음 — HTS 9503.00.2100은 List 4B 유예로 현재도 미적용.</div>
   </div>
 
   <!-- HEATMAP -->
   <div class="section-label"><i class="ti ti-table"></i> 월별 관세율 히트맵 (2025–2026)</div>
   <div class="card" style="margin-bottom:8px;">
-    <div class="card-header">
-      <div style="font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span><strong style="color:var(--text);">|</strong> 연도 구분선</span>
-        <span style="border-bottom:2px dashed #BA7517;padding-bottom:1px;">- - -</span><span>S122 만료선 (2026-07-24)</span>
-        <span style="color:var(--text-3);font-style:italic;">기울임</span><span>만료 / 미정 / 해당없음</span>
-      </div>
-    </div>
+
     <div class="card-body" style="padding:14px 18px 12px;">
       <div class="heatmap-scroll">
         <table class="hm">
           <thead>
-            <!-- 연도 헤더 행 -->
             <tr>
-              <th class="lc yr" colspan="2"></th>
-              <th class="yr" colspan="12">2025</th>
-              <th class="yr yrb" colspan="7">2026 (Jan–Jul)</th>
-              <th class="yr dth" colspan="5">2026 (Aug–Dec)</th>
+              <th class="lc" style="width:76px;">국가</th>
+              <th class="lc" style="width:88px;">Section</th>
+              <th colspan="12" style="text-align:center;border-bottom:.5px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2025</th>
+              <th colspan="12" class="yrb" style="text-align:center;border-bottom:.5px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2026</th>
             </tr>
-            <!-- 월 헤더 행 -->
             <tr>
-              <th class="lc" style="width:52px;">국가</th>
-              <th class="lc" style="width:68px;">Section</th>
-              <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-              <th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
+              <th class="lc" style="width:76px;"></th>
+              <th class="lc" style="width:88px;"></th>
+              <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
               <th class="yrb">Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th>
               <th class="dth">Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th>
             </tr>
@@ -275,61 +266,33 @@
             <tr>
               <td class="lc-c" rowspan="4">China</td>
               <td class="lc-s">IEEPA</td>
-              <!-- 2025 -->
-              <td class="val-zero">—</td>
-              <td class="val-active">10%</td><td class="val-active">20%</td><td class="val-active">20%</td>
-              <td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td>
-              <td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td>
-              <td class="val-active">10%</td><td class="val-active">10%</td>
-              <!-- 2026 Jan -->
+              <td class="val-zero"></td>
+              <td class="val-active">10%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">20%</td><td class="val-active">10%</td><td class="val-active">10%</td>
               <td class="val-active yrb">10%</td>
-              <!-- 2026 Feb~Dec: 위헌 종료 -->
-              <td class="val-exp" colspan="11" style="text-align:center;">위헌 종료 (2/24~)</td>
+              <td class="val-exp" colspan="5" style="text-align:center;">위헌 종료 (2/24~)</td>
+              <td class="val-exp dth" colspan="5" style="text-align:center;"></td>
             </tr>
             <tr>
               <td class="lc-s">Section 122</td>
-              <!-- 2025 전체: 미발동 -->
-              <td class="val-zero" colspan="12" style="text-align:center;">미발동</td>
-              <!-- 2026 Jan -->
-              <td class="val-zero yrb">—</td>
-              <!-- 2026 Feb~Jul -->
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <!-- 2026 Aug~Dec: 만료 -->
-              <td class="val-exp dtd" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
+              <td class="val-zero" colspan="12" style="text-align:center;"></td>
+              <td class="val-zero yrb"></td>
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <td class="val-exp dth" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
             </tr>
             <tr>
               <td class="lc-s">Section 301</td>
-              <!-- 2025 -->
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <!-- 2026 -->
-              <td class="val-active yrb">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
-              <td class="val-active dtd">7.5%</td>
-              <td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td><td class="val-active">7.5%</td>
+              <td class="val-exp" colspan="12" style="text-align:center;">List 4B 유예 — 미적용 (0%)</td>
+              <td class="val-exp yrb" colspan="12" style="text-align:center;">List 4B 유예 — 미적용 (0%)</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
-              <!-- 2025 -->
-              <td class="val-total">7.5%</td>
-              <td class="val-total-hi">17.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
-              <td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
-              <td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td><td class="val-total-hi">27.5%</td>
-              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
-              <!-- 2026 -->
-              <td class="val-total-hi yrb">17.5%</td>
-              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
-              <td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td><td class="val-total-hi">17.5%</td>
-              <td class="val-total dtd">7.5%↓</td>
-              <td class="val-total">7.5%</td><td class="val-total">7.5%</td><td class="val-total">7.5%</td><td class="val-total">7.5%</td>
+              <td class="val-zero"></td>
+              <td class="val-total">10%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <td class="val-total yrb">10%</td>
+              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <td class="val-zero dth">0%↓</td><td class="val-zero">0%</td><td class="val-zero">0%</td><td class="val-zero">0%</td><td class="val-zero">0%</td>
             </tr>
-
             <tr class="sp"><td colspan="26"></td></tr>
-
             <!-- ── Indonesia ── -->
             <tr>
               <td class="lc-c" rowspan="4">Indonesia</td>
@@ -339,46 +302,30 @@
             </tr>
             <tr>
               <td class="lc-s">Section 122</td>
-              <!-- 2025: 미발동 -->
-              <td class="val-zero" colspan="12" style="text-align:center;">미발동</td>
-              <!-- 2026 Jan -->
-              <td class="val-zero yrb">—</td>
-              <!-- 2026 Feb~Jul -->
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <!-- 2026 Aug~Dec -->
-              <td class="val-exp dtd" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
+              <td class="val-zero" colspan="12" style="text-align:center;"></td>
+              <td class="val-zero yrb"></td>
+              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
+              <td class="val-exp dth" colspan="5" style="text-align:center;">만료 예정 (7/24~)</td>
             </tr>
             <tr>
               <td class="lc-s">Section 301</td>
-              <!-- 2025 전체 -->
-              <td class="val-zero" colspan="12" style="text-align:center;">미부과</td>
-              <!-- 2026 Jan~Jul -->
-              <td class="val-zero yrb">—</td>
-              <td class="val-zero">—</td><td class="val-zero">—</td><td class="val-zero">—</td>
-              <td class="val-zero">—</td><td class="val-zero">—</td><td class="val-zero">—</td>
-              <!-- 2026 Aug~Dec: TBD -->
-              <td class="val-tbd dtd">조사중</td>
-              <td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td>
+              <td class="val-zero" colspan="12" style="text-align:center;"></td>
+              <td class="val-zero yrb" colspan="7" style="text-align:center;"></td>
+              <td class="val-tbd dth">조사중</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td><td class="val-tbd">TBD</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
-              <!-- 2025 -->
-              <td class="val-zero" colspan="12" style="text-align:center;">0%</td>
-              <!-- 2026 Jan -->
-              <td class="val-zero yrb">0%</td>
-              <!-- 2026 Feb~Jul -->
-              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <!-- 2026 Aug~Dec -->
-              <td class="val-tbd dtd">미정↑?</td>
-              <td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td>
+              <td class="val-zero" colspan="12" style="text-align:center;"></td>
+              <td class="val-zero yrb"></td>
+              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <td class="val-tbd dth">미정↑?</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td><td class="val-tbd">미정</td>
             </tr>
           </tbody>
         </table>
-      </div>
+      </div></div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;line-height:1.7;">
         ※ IEEPA(중국 한정): 2025-02-04(10%) → 2025-03-04(20%) → 2025-11-10(10%↓) → 2026-02-24 위헌 소멸<br>
+        ※ Section 301: HTS 9503.00.2100 → List 4B 해당 → 2019년 12월 이후 무기한 유예 → 현재 0% 적용<br>
         ※ 2026년 Aug 이후: S122 만료(7/24) 시나리오 기준 추정. 인도네시아 S301 조사 결과에 따라 변동 가능
       </div>
     </div>
@@ -395,7 +342,6 @@
       <div class="legend">
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(92,26,0,.85);"></div>IEEPA</div>
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(55,138,221,.85);"></div>Section 122</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(216,90,48,.85);"></div>Section 301</div>
       </div>
     </div>
     <div class="card-body">
@@ -403,8 +349,110 @@
         <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
       </div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
-        주황 점선: S122 만료 기준선 (2026-07-24) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24) · Aug 이후는 시나리오 추정
+        주황 점선: S122 만료 기준선 (2026-07-24) — 이후 중국 0%, 인도네시아 미정 · 빨간 점선: IEEPA 위헌 종료 (2026-02-24) · Section 301: List 4B 유예 0%
       </div>
+    </div>
+  </div>
+
+
+  <!-- AURORA TARIFF STRUCTURE -->
+  <div class="section-label"><i class="ti ti-search"></i> 오로라월드 관세 구조 분석</div>
+  <div class="card" style="margin-bottom:8px;">
+    <div style="display:grid;grid-template-columns:auto 1fr auto;">
+      <div style="padding:16px;background:var(--surface2);border-right:.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:88px;gap:4px;">
+        <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">HTS 코드</div>
+        <div style="font-size:12px;font-weight:600;color:var(--text);font-family:monospace;">9503.00.2100</div>
+        <div style="font-size:10px;color:var(--text-3);margin-top:2px;">무역팀 확인</div>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column;justify-content:center;gap:8px;">
+        <div style="font-size:14px;font-weight:600;color:var(--text);">사람 형상 인형 (Dolls representing human beings)</div>
+        <div style="font-size:12px;color:var(--text-2);line-height:1.5;">오로라월드 전 제품 공통 적용 코드 · MFN 기본관세 4.7% · Chapter 95 완구류 헤딩</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--s122-bg);color:var(--s122-text);border:.5px solid var(--border);">HTS 9503.00.2100</span>
+          <span style="color:var(--text-3);font-size:13px;">→</span>
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--warn-bg);color:var(--warn-text);border:.5px solid var(--warn-border);">Section 301 List 4B</span>
+          <span style="color:var(--text-3);font-size:13px;">→</span>
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--ok-bg);color:var(--ok-text);border:.5px solid var(--border);">유예 중 — 미적용</span>
+        </div>
+      </div>
+      <div style="padding:16px;border-left:.5px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px;min-width:100px;">
+        <div class="metric-badge badge-neutral">List 4B</div>
+        <div style="font-size:26px;font-weight:700;color:#1D9E75;letter-spacing:-.02em;">0%</div>
+        <div style="font-size:11px;color:var(--text-3);">Section 301 관세</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:20px;"><i class="ti ti-list"></i> Section 301 List 구조</div>
+  <div class="card" style="margin-bottom:8px;">
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr>
+            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">구분</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">발효일</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">세율</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">현황</th>
+            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">오로라월드</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 1</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-07-06</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 2</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-08-23</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 3</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-09-24</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 4A</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2019-09-01</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">7.5%</td>
+            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+          </tr>
+          <tr style="background:rgba(186,117,23,.04);">
+            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:var(--text);">List 4B</td>
+            <td style="padding:10px;border-bottom:none;color:var(--text-2);text-align:center;">2019-12-15 (예정)</td>
+            <td style="padding:10px;border-bottom:none;text-align:center;"><span style="text-decoration:line-through;color:var(--text-3);font-weight:600;">15%</span></td>
+            <td style="padding:10px;border-bottom:none;text-align:center;"><span class="metric-badge badge-warn">유예 중</span></td>
+            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:#1D9E75;">✓ 해당 — 현재 0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="border-left:3px solid #1D9E75;padding:14px 18px;background:var(--ok-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:8px;">
+    <div style="font-size:10px;color:var(--ok-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600;">결론</div>
+    <div style="font-size:12px;color:var(--ok-text);line-height:2.1;">
+      <div>· HTS <code style="font-size:11px;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;">9503.00.2100</code> → Section 301 <strong>List 4B</strong> 해당</div>
+      <div>· List 4B: <strong>무기한 유예</strong> (2019-12 Phase One 합의) — 실제 부과 이력 없음</div>
+      <div>· 현재 적용 관세: <strong>Section 122 10%만</strong></div>
+      <div>· Section 122 만료: <strong>2026-07-24</strong> → 이후 실효관세 <strong>0% 예상</strong></div>
+    </div>
+  </div>
+
+  <div style="border-left:3px solid var(--warn-border);padding:11px 16px;background:var(--warn-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:20px;">
+    <div style="font-size:12px;color:var(--warn-text);line-height:2.0;">
+      <div><i class="ti ti-alert-triangle" style="font-size:12px;vertical-align:-1px;margin-right:4px;"></i><strong>주의</strong></div>
+      <div>· List 4B 상태: <strong>유예</strong> (소멸 아님)</div>
+      <div>· 미국 정부 결정 시 <strong>즉시 발동 가능</strong></div>
+      <div>· 발동 시 Section 301 관세 <strong>즉시 부과</strong></div>
     </div>
   </div>
 
@@ -421,7 +469,7 @@
       <div class="def-head"><span class="def-badge" style="background:var(--s301-bg);color:var(--s301-text);">Section 301</span><span class="def-status"><i class="ti ti-lock" style="font-size:12px;"></i> 장기 제재</span></div>
       <div class="def-fullname">Section 301 of the Trade Act of 1974</div>
       <div class="def-body">외국 정부의 불공정 무역행위(지식재산 침해·시장 접근 제한 등)에 대응하기 위해 보복 관세 또는 무역 제재를 부과할 수 있도록 하는 권한.</div>
-      <div class="def-foot">기간 제한 없음 · 금액 상한 없음<br>대중국: 2018년~현재 / 인도네시아: 2026/03/11 조사 개시</div>
+      <div class="def-foot">기간 제한 없음 · 금액 상한 없음<br><strong>HTS 9503 (완구) → List 4B → 유예 중 → 오로라월드 미적용</strong><br>인도네시아: 2026/03/11 조사 개시</div>
     </div>
     <div class="def-card">
       <div class="def-head"><span class="def-badge" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA</span><span class="def-status" style="color:var(--danger-text);"><i class="ti ti-circle-x" style="font-size:12px;"></i> 위헌 종료</span></div>
@@ -446,7 +494,7 @@
         <div class="tl-dot" style="background:#5C1A00;"></div>
         <div class="tl-content">
           <div class="tl-title">IEEPA 발동 — 중국 Fentanyl 관세 10% 최초 부과</div>
-          <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. Section 301(7.5%) 포함 중국 합산 17.5% 도달.</div>
+          <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. MFN 0% · Section 301 List 4B 유예. 중국 합산 10% 도달.</div>
           <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA 개시</div>
         </div>
       </div>
@@ -564,7 +612,7 @@ const chartData={
   china:{
     ieepa:[0,10,20,20,20,20,20,20,20,20,10,10,10,0,0,0,0,0,0,0,0,0,0,0],
     s122: [0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,0,0,0,0,0],
-    s301: [7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5]
+    s301: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   },
   indonesia:{
     ieepa:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -586,8 +634,7 @@ function buildChart(country){
     data:{
       labels,
       datasets:[
-        {label:'Section 301',data:d.s301,backgroundColor:'rgba(216,90,48,.85)',stack:'t',borderWidth:0},
-        {label:'Section 122',data:d.s122,backgroundColor:labels.map((_,i)=>i>=19?'rgba(55,138,221,.3)':'rgba(55,138,221,.85)'),stack:'t',borderWidth:0},
+{label:'Section 122',data:d.s122,backgroundColor:labels.map((_,i)=>i>=19?'rgba(55,138,221,.3)':'rgba(55,138,221,.85)'),stack:'t',borderWidth:0},
         {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0}
       ]
     },
@@ -596,16 +643,26 @@ function buildChart(country){
       plugins:{legend:{display:false},tooltip:{callbacks:{footer:items=>'합산: '+items.reduce((s,i)=>s+i.raw,0).toFixed(1)+'%'}}},
       scales:{
         x:{stacked:true,grid:{display:false},ticks:{font:{size:9},color:tc,maxRotation:45}},
-        y:{stacked:true,beginAtZero:true,max:35,ticks:{callback:v=>v+'%',font:{size:11},color:tc,stepSize:5},grid:{color:gc}}
+        y:{stacked:true,beginAtZero:true,max:30,ticks:{callback:v=>v+'%',font:{size:11},color:tc,stepSize:5},grid:{color:gc}}
       }
     },
     plugins:[{
       id:'vlines',
       afterDraw(chart){
         const{ctx:c,scales:{x,y}}=chart;
+        const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+        const tc=isDark?'rgba(240,239,232,.5)':'rgba(26,26,24,.5)';
+        // 7/24 만료선
         const x1=x.getPixelForValue(18.5);
         c.save();c.strokeStyle='#BA7517';c.lineWidth=1.5;c.setLineDash([4,3]);
         c.beginPath();c.moveTo(x1,y.top);c.lineTo(x1,y.bottom);c.stroke();
+        // 만료 후 "0%" 레이블
+        c.setLineDash([]);
+        c.fillStyle=tc;c.font='500 10px Helvetica Neue,sans-serif';c.textAlign='center';
+        const xMid=(x1+x.right)/2;
+        c.fillText('S122 만료 후',xMid,y.top+14);
+        c.fillText('→ 0% (중국)',xMid,y.top+26);
+        // IEEPA 종료선
         const x2=x.getPixelForValue(13.5);
         c.strokeStyle='rgba(226,75,74,.5)';c.lineWidth=1;c.setLineDash([3,3]);
         c.beginPath();c.moveTo(x2,y.top);c.lineTo(x2,y.bottom);c.stroke();
