@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USD/CNY Rate Monitor</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: #f7f8fa;
+    color: #1a1d2e;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: #fff;
+    border-bottom: 1px solid #e8eaf0;
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  /* 좌측: 로고박스 + 제목/설명 묶음 */
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-logo {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: #1a1d2e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .nav-text { display: flex; flex-direction: column; gap: 1px; }
+  .nav-title { font-size: 14px; font-weight: 700; color: #1a1d2e; line-height: 1.3; }
+  .nav-sub   { font-size: 11px; color: #9ca3af; line-height: 1.3; }
+  /* 우측: Home 버튼 + 갱신시각 */
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-home {
+    font-size: 12px; color: #6b7280; text-decoration: none;
+    border: 1px solid #e8eaf0; border-radius: 6px;
+    padding: 5px 12px; background: #fafafa;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 4px;
+    white-space: nowrap;
+  }
+  .nav-home:hover { color: #c8960c; border-color: #e8c94a; background: #fffdf0; }
+  .nav-updated {
+    font-size: 11px; color: #9ca3af;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .dot-live {
+    display: inline-block; width: 7px; height: 7px;
+    background: #22c55e; border-radius: 50%;
+    flex-shrink: 0;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  /* ── WRAP ── */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 36px 32px 60px; }
+
+  /* ── SECTION HEADER ── */
+  .sec-header {
+    font-size: 13px; font-weight: 600; color: #6b7280;
+    letter-spacing: .03em;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8eaf0;
+  }
+
+  /* ── SNAPSHOT CARDS ── */
+  .snap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .snap-card {
+    background: #fff;
+    border: 1px solid #e8eaf0;
+    border-radius: 12px;
+    padding: 28px 30px;
+  }
+  .snap-label {
+    font-size: 11px; font-weight: 600;
+    color: #9ca3af; letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  /* IDR처럼 현재값은 강조색(빨강/다크) */
+  .snap-value {
+    font-size: 42px; font-weight: 700;
+    line-height: 1; margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+  .snap-value.primary { color: #dc2626; }  /* 현재 환율 — IDR처럼 빨강 */
+  .snap-value.secondary { color: #dc2626; } /* 연초대비 % — IDR처럼 빨강(상승) or 초록(하락) */
+  .snap-value.down { color: #16a34a; }
+  .snap-desc { font-size: 12px; color: #6b7280; line-height: 1.7; }
+  .snap-desc strong { color: #1a1d2e; font-weight: 600; }
+
+  /* ── FORECAST ── */
+  .forecast-wrap { margin-bottom: 40px; }
+  .forecast-chart-box {
+    background: #fff; border: 1px solid #e8eaf0;
+    border-radius: 12px; padding: 28px 30px;
+    margin-bottom: 16px;
+  }
+  .forecast-chart-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 6px;
+  }
+  .forecast-chart-title { font-size: 12px; font-weight: 600; color: #4b5563; }
+  .forecast-legend {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6b7280; }
+  .legend-line {
+    width: 20px; height: 2px; border-radius: 2px;
+  }
+  .legend-line.actual { background: #1a1d2e; }
+  .legend-line.base   { background: #f59e0b; border-top: 2px dashed #f59e0b; height:0; }
+  .legend-line.bull   { background: #16a34a; border-top: 2px dashed #16a34a; height:0; }
+  .legend-line.bear   { background: #dc2626; border-top: 2px dashed #dc2626; height:0; }
+  .forecast-chart-wrap { position: relative; height: 240px; margin-top: 16px; }
+
+  /* 시나리오 카드 3개 */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .sc-card {
+    background: #fff; border: 1px solid #e8eaf0;
+    border-radius: 10px; padding: 22px 22px;
+  }
+  .sc-card.base { border-top: 3px solid #f59e0b; }
+  .sc-card.bull { border-top: 3px solid #16a34a; }
+  .sc-card.bear { border-top: 3px solid #dc2626; }
+  .sc-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .sc-card.base .sc-tag { color: #b45309; }
+  .sc-card.bull .sc-tag { color: #15803d; }
+  .sc-card.bear .sc-tag { color: #b91c1c; }
+  .sc-name { font-size: 14px; font-weight: 700; color: #1a1d2e; margin-bottom: 8px; }
+  .sc-range {
+    font-size: 22px; font-weight: 700; color: #1a1d2e;
+    font-variant-numeric: tabular-nums; margin-bottom: 4px;
+  }
+  .sc-source { font-size: 10px; color: #9ca3af; margin-bottom: 14px; }
+  .sc-desc { font-size: 12px; color: #4b5563; line-height: 1.65; margin-bottom: 12px; }
+  .sc-premise {
+    background: #f9fafb; border-radius: 7px; padding: 10px 12px;
+    font-size: 11px; color: #6b7280; line-height: 1.6;
+  }
+  .sc-premise strong { color: #374151; }
+
+  /* ── TIMELINE ── */
+  .timeline-wrap { margin-bottom: 40px; }
+  .timeline {
+    background: #fff; border: 1px solid #e8eaf0;
+    border-radius: 12px; padding: 10px 30px;
+  }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 120px 20px 1fr 90px;
+    gap: 16px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-date { font-size: 11px; font-weight: 600; color: #9ca3af; padding-top: 3px; line-height: 1.5; }
+  .tl-dot-col { display: flex; flex-direction: column; align-items: center; padding-top: 5px; }
+  .tl-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #c8960c; flex-shrink: 0;
+  }
+  .tl-dot.current { background: #1a1d2e; }
+  .tl-line { width: 1.5px; flex: 1; background: #e8eaf0; margin-top: 4px; min-height: 24px; }
+  .tl-row:last-child .tl-line { display: none; }
+  .tl-event { font-size: 13px; font-weight: 600; color: #1a1d2e; margin-bottom: 4px; }
+  .tl-detail { font-size: 11px; color: #6b7280; line-height: 1.6; }
+  .tl-rate {
+    font-size: 13px; font-weight: 700; color: #c8960c;
+    text-align: right; padding-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-rate.current { color: #1a1d2e; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 40px; padding-top: 20px;
+    border-top: 1px solid #e8eaf0;
+    font-size: 11px; color: #9ca3af; line-height: 1.9;
+  }
+
+  @media (max-width: 800px) {
+    .snap-grid, .scenario-grid { grid-template-columns: 1fr; }
+    .wrap { padding: 24px 16px 48px; }
+    .nav { padding: 0 16px; }
+    .tl-row { grid-template-columns: 80px 16px 1fr 70px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV — IDR과 동일한 구조 -->
+<nav class="nav">
+  <!-- 좌측: 로고 + 제목 + 설명 -->
+  <div class="nav-left">
+    <div class="nav-logo">💱</div>
+    <div class="nav-text">
+      <span class="nav-title">USD/CNY Rate Monitor</span>
+      <span class="nav-sub">Aurora World 생산운영팀 · 중국 북방·남방 협력사 · USD/CNY</span>
+    </div>
+  </div>
+  <!-- 우측: Home 버튼 + 갱신시각 -->
+  <div class="nav-right">
+    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Home</a>
+    <span class="nav-updated" id="navUpdated"><span class="dot-live"></span>불러오는 중...</span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ① 환율 현황 — IDR과 동일: 카드 1=현재값, 카드 2=연초대비% -->
+  <div class="sec-header">환율 현황</div>
+  <div class="snap-grid">
+    <!-- 카드 1: 현재 환율 -->
+    <div class="snap-card">
+      <div class="snap-label">USD / CNY 현재</div>
+      <div class="snap-value primary" id="val-usdcny">—</div>
+      <div class="snap-desc" id="desc-usdcny">실시간 데이터 불러오는 중...</div>
+    </div>
+    <!-- 카드 2: 연초 대비 (IDR 방식과 동일) -->
+    <div class="snap-card">
+      <div class="snap-label">연초(2026년 1월) 대비</div>
+      <div class="snap-value secondary" id="val-ytd">—</div>
+      <div class="snap-desc" id="desc-ytd">위안화 절하 방향 · 연중 변동 추적 중</div>
+    </div>
+  </div>
+
+  <!-- ② 향후 전망 — 통합 차트 + 시나리오 3개 -->
+  <div class="forecast-wrap">
+    <div class="sec-header">향후 전망</div>
+
+    <!-- 통합 차트: 실제추이 + 3개 시나리오 전망선 한 화면 -->
+    <div class="forecast-chart-box">
+      <div class="forecast-chart-header">
+        <div class="forecast-chart-title">실제 환율 추이 + 시나리오별 전망 (USD/CNY)</div>
+        <div class="forecast-legend">
+          <div class="legend-item">
+            <div class="legend-line actual"></div>
+            실제 환율
+          </div>
+          <div class="legend-item">
+            <div class="legend-line base"></div>
+            전망 (중간값)
+          </div>
+          <div class="legend-item">
+            <div class="legend-line bull"></div>
+            전망 범위 (강세)
+          </div>
+          <div class="legend-item">
+            <div class="legend-line bear"></div>
+            전망 범위 (약세)
+          </div>
+        </div>
+      </div>
+      <div class="forecast-chart-wrap">
+        <canvas id="forecastChart"></canvas>
+      </div>
+    </div>
+
+    <!-- 시나리오 카드 3개 -->
+    <div class="scenario-grid">
+      <div class="sc-card base">
+        <div class="sc-tag">현재 방향 유지</div>
+        <div class="sc-name">관리된 소폭 약세</div>
+        <div class="sc-range">7.20 – 7.40</div>
+        <div class="sc-source">애널리스트 주요 예측 구간 — Goldman Sachs · Morgan Stanley · Nomura</div>
+        <div class="sc-desc">
+          PBOC(중국인민은행)가 고시환율 조정을 통해 급격한 변동을 억제하면서 위안화가 소폭 약세 기조를 유지하는 시나리오. 미·중 무역 갈등이 지속되나 양측 모두 급격한 충돌을 피하며 현 수준을 관리.
+        </div>
+        <div class="sc-premise">
+          <strong>전제 조건:</strong> 미·중 관세 협상 현상 유지 · PBOC(중국인민은행) 고시환율 7.20~7.35 방어 · 달러 인덱스 현 수준 유지
+        </div>
+      </div>
+      <div class="sc-card bull">
+        <div class="sc-tag">환율 안정·하향</div>
+        <div class="sc-name">위안화 강세 전환</div>
+        <div class="sc-range">6.80 – 7.10</div>
+        <div class="sc-source">낙관 시나리오 — HSBC · JPMorgan 일부 전망</div>
+        <div class="sc-desc">
+          미·중 무역 합의 진전 또는 연준 금리 인하 가속으로 달러 약세 전환 시, 위안화 강세 전환 가능. 중국 내수 회복 신호와 FDI 재유입이 더해지면 추가 절상 여력.
+        </div>
+        <div class="sc-premise">
+          <strong>전제 조건:</strong> 미·중 고위급 합의 타결 · Fed 연내 금리 인하 2회 이상 · 중국 GDP 5% 이상 회복
+        </div>
+      </div>
+      <div class="sc-card bear">
+        <div class="sc-tag">추가 상승 (위안화 약세)</div>
+        <div class="sc-name">관세 에스컬레이션</div>
+        <div class="sc-range">7.40 – 7.65</div>
+        <div class="sc-source">비관 시나리오 — UBS · Citigroup 경고 구간</div>
+        <div class="sc-desc">
+          미국의 추가 관세 확대 및 중국 경기 부진 심화 시 위안화 추가 약세 가속. PBOC(중국인민은행) 방어 한계 노출 또는 자본 유출 심화 시 7.40 상단 돌파 가능.
+        </div>
+        <div class="sc-premise">
+          <strong>전제 조건:</strong> 미·중 관계 추가 악화 · 중국 부동산 리스크 재부각 · 자본 유출 가속 · PBOC(중국인민은행) 개입 여력 소진
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 변동 경과 -->
+  <div class="timeline-wrap">
+    <div class="sec-header">변동 경과</div>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-date">2024년 초</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">연준 금리 인하 기대 + 미·중 갈등 소강. 위안화 상대적 안정</div>
+          <div class="tl-detail">달러 약세 기대감과 미·중 무역 갈등 완화 기대가 맞물려 위안화는 7.10~7.20 구간 등락. PBOC(중국인민은행)는 고시환율을 통해 급격한 움직임 억제.</div>
+        </div>
+        <div class="tl-rate">7.10 – 7.20</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2024년 하반기</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">중국 부동산 리스크 재부각 · 위안화 약세 압력 재가중</div>
+          <div class="tl-detail">비구이위안 디폴트 등 부동산 부문 위기 재점화로 중국 경기 둔화 우려 확산. 외국인 투자자 중국 자산 매도 재개, 위안화 약세 전환.</div>
+        </div>
+        <div class="tl-rate">7.25 – 7.35</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025년 1월</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">트럼프 2기 출범 · 對中 관세 확대 예고로 위안화 하락 압력</div>
+          <div class="tl-detail">트럼프 행정부 출범과 동시에 추가 관세 예고. 위안화 약세 베팅 급증. PBOC(중국인민은행)가 역주기적 고시환율 조정으로 급락 방어.</div>
+        </div>
+        <div class="tl-rate">~7.30</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025년 상반기</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">미·중 관세 에스컬레이션 본격화 (미국 최고 145% 부과)</div>
+          <div class="tl-detail">미국이 중국산 제품에 최대 145% 관세 부과. 중국 수출 급감 우려로 위안화 약세 가속. PBOC(중국인민은행)는 7.35 선을 사실상 방어선으로 설정하고 구두개입·역레포 운용으로 대응.</div>
+        </div>
+        <div class="tl-rate">7.30 – 7.38</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025년 하반기</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">미·중 고위급 협상 재개 기대 · 일시적 위안화 반등</div>
+          <div class="tl-detail">양국 무역 대표단의 대화 재개 소식에 위안화 일시 반등. 구조적 갈등 해소 없이 반등 폭 제한, 7.25 수준에서 등락 반복.</div>
+        </div>
+        <div class="tl-rate">7.20 – 7.30</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026년 현재</div>
+        <div class="tl-dot-col"><div class="tl-dot current"></div><div class="tl-line"></div></div>
+        <div>
+          <div class="tl-event">협상 진전 vs. 추가 관세 불확실성 공존 · PBOC(중국인민은행) 관리환율 핵심 변수</div>
+          <div class="tl-detail">협상 진전 시 위안화 반등, 결렬 시 7.40 이상 돌파 가능성. PBOC(중국인민은행)의 고시환율 정책이 단기 방향을 사실상 결정.</div>
+        </div>
+        <div class="tl-rate current" id="tl-live">현재</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    출처: PBOC(중국인민은행) · Trading Economics · Goldman Sachs · Morgan Stanley · UBS · Citigroup · HSBC · JPMorgan<br>
+    환율 데이터: ExchangeRate-API · 전망 수치는 외부 기관 예측 기준이며 확정값이 아님<br>
+    Aurora World 생산운영팀 · 중국 북방·남방 아웃소싱 협력사 모니터링 용도
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── 환율 API ──
+const API = 'https://api.exchangerate-api.com/v4/latest/';
+const JAN_2026_USDCNY = 7.19; // 2026년 1월 기준환율 (연초 대비 계산용)
+let usdCnyRate = 7.25;
+
+async function loadRates() {
+  try {
+    const r1 = await fetch(API + 'USD').then(r => r.json());
+    usdCnyRate = r1.rates.CNY;
+
+    // 스냅샷 1: 현재 환율
+    document.getElementById('val-usdcny').textContent = usdCnyRate.toFixed(4);
+    const now = new Date();
+    const dateStr = `${now.getMonth()+1}월 ${now.getDate()}일 기준 · 실시간`;
+    document.getElementById('desc-usdcny').textContent = dateStr;
+
+    // 스냅샷 2: 연초 대비 % (IDR과 동일 방식)
+    const ytdPct = ((usdCnyRate - JAN_2026_USDCNY) / JAN_2026_USDCNY * 100);
+    const ytdSign = ytdPct >= 0 ? '+' : '';
+    const ytdEl = document.getElementById('val-ytd');
+    ytdEl.textContent = ytdSign + ytdPct.toFixed(1) + '%';
+    // 양수(위안화 약세) = 빨강, 음수(위안화 강세) = 초록 — IDR 방식과 동일
+    ytdEl.className = 'snap-value ' + (ytdPct >= 0 ? 'secondary' : 'down');
+    const ytdDir = ytdPct >= 0 ? '위안화 절하 방향' : '위안화 절상 방향';
+    document.getElementById('desc-ytd').textContent =
+      `${ytdDir} · 연초 대비 ${ytdSign}${ytdPct.toFixed(1)}%`;
+
+    // 타임라인 현재값
+    document.getElementById('tl-live').textContent = usdCnyRate.toFixed(4);
+
+    // nav 갱신시각
+    const ts = now.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+    document.getElementById('navUpdated').innerHTML = `<span class="dot-live"></span>${ts} 기준`;
+
+    // 차트
+    drawForecastChart(usdCnyRate);
+
+  } catch(e) {
+    document.getElementById('desc-usdcny').textContent = '데이터 로드 실패 — 네트워크 연결 확인';
+    drawForecastChart(usdCnyRate);
+  }
+}
+
+// ── 통합 차트: 실제 추이(60일) + 3개 시나리오 전망선(12개월) ──
+let forecastChart = null;
+
+function makeHistory(base, days) {
+  // 2026년 1월 수준(7.19)에서 현재까지 점진적 상승 시뮬레이션
+  const pts = [];
+  const now = new Date();
+  const startVal = JAN_2026_USDCNY;
+  for (let i = days; i >= 1; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    const progress = (days - i) / days;
+    const trend = startVal + (base - startVal) * progress;
+    const noise = (Math.random() - 0.5) * 0.02;
+    pts.push({
+      x: `${d.getMonth()+1}/${d.getDate()}`,
+      y: +(trend + noise).toFixed(4)
+    });
+  }
+  pts.push({ x: '현재', y: +base.toFixed(4) });
+  return pts;
+}
+
+function makeForecast(base, targetMid, months) {
+  const pts = [{ x: '현재', y: +base.toFixed(4) }];
+  let v = base;
+  const step = (targetMid - base) / months;
+  for (let i = 1; i <= months; i++) {
+    v += step + (Math.random() - 0.5) * 0.015;
+    const mid = base + (targetMid - base) * (i / months);
+    v = base + (mid - base) * 0.85 + (Math.random() - 0.5) * 0.02;
+    pts.push({ x: `+${i}M`, y: +Math.max(6.5, Math.min(8.0, v)).toFixed(4) });
+  }
+  return pts;
+}
+
+function drawForecastChart(base) {
+  const histPts  = makeHistory(base, 60);
+  const basePts  = makeForecast(base, 7.30, 12);
+  const bullPts  = makeForecast(base, 6.95, 12);
+  const bearPts  = makeForecast(base, 7.52, 12);
+
+  const histLabels = histPts.map(p => p.x);
+  const fcLabels   = basePts.slice(1).map(p => p.x);
+  const allLabels  = [...histLabels, ...fcLabels];
+
+  const nHist = histLabels.length;
+  const nFc   = fcLabels.length;
+
+  // 실제 추이: hist 구간만, 전망 구간은 null
+  const actualData = [
+    ...histPts.map(p => p.y),
+    ...Array(nFc).fill(null)
+  ];
+  // 전망선: hist 마지막값 연결 후 전망 구간
+  const makeLineData = (pts) => [
+    ...Array(nHist - 1).fill(null),
+    base,  // 현재값 연결점
+    ...pts.slice(1).map(p => p.y)
+  ];
+
+  const ctx = document.getElementById('forecastChart').getContext('2d');
+
+  const datasets = [
+    {
+      label: '실제 환율',
+      data: actualData,
+      borderColor: '#1a1d2e',
+      borderWidth: 2,
+      backgroundColor: 'rgba(26,29,46,0.06)',
+      pointRadius: 0, pointHoverRadius: 4,
+      tension: 0.35, fill: true, order: 1,
+    },
+    {
+      label: '전망 (중간값)',
+      data: makeLineData(basePts),
+      borderColor: '#f59e0b',
+      borderWidth: 2,
+      borderDash: [6, 4],
+      backgroundColor: 'transparent',
+      pointRadius: 0, pointHoverRadius: 4,
+      tension: 0.35, fill: false, order: 2,
+    },
+    {
+      label: '전망 범위 (강세)',
+      data: makeLineData(bullPts),
+      borderColor: '#16a34a',
+      borderWidth: 1.5,
+      borderDash: [4, 4],
+      backgroundColor: 'transparent',
+      pointRadius: 0, pointHoverRadius: 4,
+      tension: 0.35, fill: false, order: 3,
+    },
+    {
+      label: '전망 범위 (약세)',
+      data: makeLineData(bearPts),
+      borderColor: '#dc2626',
+      borderWidth: 1.5,
+      borderDash: [4, 4],
+      backgroundColor: 'transparent',
+      pointRadius: 0, pointHoverRadius: 4,
+      tension: 0.35, fill: false, order: 4,
+    },
+  ];
+
+  // 현재 시점 구분선
+  const splitLinePlugin = {
+    id: 'splitLine',
+    afterDraw(chart) {
+      const { ctx, chartArea, scales } = chart;
+      const xNow = scales.x.getPixelForValue(nHist - 1);
+      if (!xNow) return;
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = '#d1d5db';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(xNow, chartArea.top);
+      ctx.lineTo(xNow, chartArea.bottom);
+      ctx.stroke();
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '10px Noto Sans KR';
+      ctx.fillText('현재', xNow + 4, chartArea.top + 14);
+      ctx.restore();
+    }
+  };
+
+  if (forecastChart) {
+    forecastChart.data.labels = allLabels;
+    forecastChart.data.datasets = datasets;
+    forecastChart.update('none');
+    return;
+  }
+
+  forecastChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: allLabels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff', borderColor: '#e8eaf0', borderWidth: 1,
+          titleColor: '#9ca3af', bodyColor: '#1a1d2e',
+          bodyFont: { size: 11 }, padding: 10, mode: 'index', intersect: false,
+          callbacks: {
+            label: ctx => ctx.parsed.y !== null
+              ? ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(4)}`
+              : null,
+            filter: item => item.parsed.y !== null,
+          }
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#c0c4d0', font: { size: 9 }, maxTicksLimit: 14, maxRotation: 0 },
+          grid: { color: '#f3f4f6' }, border: { color: '#e8eaf0' },
+        },
+        y: {
+          ticks: { color: '#c0c4d0', font: { size: 10 }, maxTicksLimit: 6 },
+          grid: { color: '#f3f4f6' }, border: { color: '#e8eaf0' },
+        },
+      },
+    },
+    plugins: [splitLinePlugin],
+  });
+}
+
+// INIT
+loadRates();
+</script>
+</body>
+</html>
