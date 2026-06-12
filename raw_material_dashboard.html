@@ -68,6 +68,7 @@
   .kpi-stat-label { font-size: 10px; color: var(--text-hint); margin-bottom: 2px; }
   .kpi-stat-val { font-size: 12px; font-weight: 600; color: var(--text); }
   .kpi-stat-date { font-size: 10px; color: var(--text-hint); }
+  .rbob-note { margin-top: 12px; padding: 9px 12px; background: var(--orange-bg); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); font-size: 11px; line-height: 1.6; color: var(--orange-dark); }
 
   /* FX Row */
   .fx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -159,7 +160,7 @@
     <div class="logo">AW</div>
     <div>
       <div class="header-title">Petrochemical Price Monitor</div>
-      <div class="header-sub">Aurora World 생산운영팀 · 브렌트유 · 나프타(RBOB) · 천연가스</div>
+      <div class="header-sub">Aurora World 생산운영팀 · 브렌트유 · RBOB 가솔린 · 천연가스</div>
     </div>
   </div>
   <div class="header-right">
@@ -199,8 +200,8 @@
 
     <div class="kpi-card c2">
       <div class="kpi-header">
-        <div class="kpi-name">⚗️ 나프타 ※ RBOB 기준</div>
-        <div class="kpi-name-sub">Naphtha via RBOB Gasoline Futures · RB=F</div>
+        <div class="kpi-name">⚗️ RBOB 가솔린 <span style="font-size:10px; font-weight:400; color:var(--text-hint);">(석유화학 원료 지표)</span></div>
+        <div class="kpi-name-sub">RBOB Gasoline Futures · RB=F · 나프타 추세 대리지표</div>
       </div>
       <div class="kpi-price" id="p2">—</div>
       <div class="kpi-delta" id="d2"><span class="nt">로딩 중</span></div>
@@ -209,6 +210,7 @@
         <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l2">—</div><div class="kpi-stat-date" id="ld2">—</div></div>
         <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a2">—</div><div class="kpi-stat-date">기간 기준</div></div>
       </div>
+      <div class="rbob-note">장외거래(OTC) 특성상 실시간 데이터는 유료로만 제공되어, 유사한 흐름의 RBOB 가솔린 선물을 대리지표로 활용. 정밀 모니터링 필요시 유료 데이터 도입 검토 가능.</div>
     </div>
 
     <div class="kpi-card c3">
@@ -225,6 +227,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- FX Row -->
   <div class="fx-row">
@@ -265,12 +268,12 @@
       <div class="chart-title">원자재 가격 추이 (정규화 비교, 기준일 = 100)</div>
       <div class="chart-legend">
         <div class="legend-item"><span class="legend-dot" style="background:var(--c1)"></span>브렌트유</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--c2)"></span>나프타(RBOB)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c2)"></span>RBOB 가솔린</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--c3)"></span>천연가스</div>
       </div>
     </div>
     <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
-    <div class="chart-note">※ 단위가 다른 3개 지표를 기준일 대비 상대 변화율로 정규화하여 동시 비교합니다. (기준일 = 선택 기간 첫째 날 = 100)</div>
+    <div class="chart-note">※ 단위가 다른 3개 지표를 기준일 대비 상대 변화율로 정규화하여 동시 비교합니다. (기준일 = 선택 기간 첫째 날 = 100)<br>※ 나프타는 실시간 무료 데이터가 없어, 추세가 유사한 RBOB 가솔린 선물을 석유화학 원료 흐름의 대리지표로 사용합니다. 절대 가격이 아닌 추세 방향 참고용입니다.</div>
   </div>
 
   <!-- Events -->
@@ -284,12 +287,12 @@
     </div>
     <div class="event-row">
       <span class="event-date">2026-02-20</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ RBOB</span></div>
       <span class="event-desc">미-이란 협상 재개 소식 → 공급 증가 기대로 하락세 · 석유화학 원료가 동반 하락</span>
     </div>
     <div class="event-row">
       <span class="event-date">2026-04-07</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ RBOB</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
       <span class="event-desc">글로벌 경기침체 우려 → 3개 지표 동반 최저가 기록 · 해상운임 병행 하락</span>
     </div>
     <div class="event-row">
@@ -339,7 +342,7 @@
 <script>
 const TICKERS = [
   { id: 'BZ=F', name: '브렌트유', unit: 'USD/bbl', prefix: '$', decimals: 2, idx: 1, color: '#185FA5' },
-  { id: 'RB=F', name: '나프타(RBOB)', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39' },
+  { id: 'RB=F', name: 'RBOB 가솔린', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39' },
   { id: 'NG=F', name: '천연가스', unit: 'USD/MMBtu', prefix: '$', decimals: 3, idx: 3, color: '#3B6D11' },
 ];
 
