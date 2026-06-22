@@ -94,6 +94,12 @@
   .mono{font-variant-numeric:tabular-nums}
   .col-g{border-top:3px solid var(--green)} .col-a{border-top:3px solid #c08a10} .col-r{border-top:3px solid var(--red)}
   .zone-active{background:var(--amber-dim)}
+  /* 구간 표 3등분: 첫 컬럼 고정, 나머지 3개 균등 */
+  #scnTable, #apTable{table-layout:fixed}
+  #scnTable th:first-child, #apTable th:first-child,
+  #scnTable td:first-child, #apTable td:first-child{width:15%}
+  #scnTable th:not(:first-child), #apTable th:not(:first-child),
+  #scnTable td:not(:first-child), #apTable td:not(:first-child){width:28.33%}
   .tbl-note{font-size:12px;color:var(--faint);margin-top:10px;line-height:1.6}
   .tally{display:flex;gap:15px;margin-top:14px;font-size:13px;color:var(--muted);flex-wrap:wrap}
   .tally span{display:inline-flex;align-items:center;gap:6px}
@@ -118,6 +124,8 @@
   .tag.credit{background:var(--blue-dim);color:var(--blue)}
   .tag.trade{background:var(--green-dim);color:var(--green)}
   .tag.geo{background:var(--panel2);color:var(--muted)}
+  .tag.social{background:var(--red-dim);color:var(--red)}
+  .tag.market{background:var(--amber-dim);color:var(--amber)}
 
   /* ── details ── */
   details{background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-top:13px;box-shadow:var(--shadow)}
@@ -166,17 +174,17 @@
   <div class="live-card">
     <div class="lbl">USD/IDR <span id="liveTag">(연결 중…)</span></div>
     <div class="val red" id="liveRate">—</div>
-    <div class="sub" id="liveBase">참고 · BI 공식 고시 18,129 (06.05)</div>
+    <div class="sub" id="liveBase">참고 · BI 공식 고시 17,753 (06.17) · 최고점 18,171 (06.08)</div>
   </div>
   <div class="live-card">
     <div class="lbl">주의 기준선까지</div>
     <div class="val amber" id="toP1">—</div>
-    <div class="sub">기준선: 18,500</div>
+    <div class="sub">기준선: 18,000</div>
   </div>
   <div class="live-card">
     <div class="lbl">비상 기준선까지</div>
     <div class="val" id="toP2">—</div>
-    <div class="sub">기준선: 20,000</div>
+    <div class="sub">기준선: 19,500</div>
   </div>
   <div class="live-card">
     <div class="lbl">외환보유고</div>
@@ -196,17 +204,17 @@
       <span class="tag" id="railTag">—</span>
       <div class="tick"></div>
     </div>
-    <div class="rail-flag" style="left:50%">18,500<br>주의</div>
-    <div class="rail-flag" style="left:80%">20,000<br>비상</div>
+    <div class="rail-flag" style="left:42.9%">18,000<br>주의</div>
+    <div class="rail-flag" style="left:85.7%">19,500<br>비상</div>
   </div>
-  <div class="rail-scale"><span>16,000</span><span>17,000</span><span>18,000</span><span>19,000</span><span>20,000</span><span>21,000</span></div>
-  <div class="rail-note">🟢 관리 가능 (~18,500) · 🟡 주의 (18,500~20,000) · 🔴 비상 (20,000+) — 기준선은 사내 내부 관리 기준이며, 외부 전망치가 아님. 기준선 도달 시 대응 항목은 아래 04 참조.</div>
+  <div class="rail-scale"><span>16,500</span><span>17,200</span><span>17,900</span><span>18,600</span><span>19,300</span><span>20,000</span></div>
+  <div class="rail-note">🟢 관리 가능 (~18,000) · 🟡 주의 (18,000~19,500) · 🔴 비상 (19,500+) — 기준선은 사내 내부 관리 기준이며 외부 전망치가 아님. 06.22 재조정: 6월 중 18,171 최고점 도달을 반영해 주의선을 18,500→18,000으로 하향. 기준선 도달 시 대응은 아래 04 참조.</div>
 </div>
 
 <!-- ── 01 현황 ── -->
 <section>
   <div class="sec-head"><span class="sec-no">01</span><h2>현황 — 공개 지표 신호판</h2></div>
-  <div class="sec-desc">공개 지표를 모아 신호등으로 표시 · 생산운영팀 자체 전망 아님 · IMF 단계 중 ①~③이 공장 직접 영향 구간</div>
+  <div class="sec-desc">공개 지표를 모아 신호등으로 표시 · 생산운영팀 자체 전망 아님 · 환율·자본유출 등 [주의]~[위기] 단계가 공장에 직접 영향</div>
 
   <div class="stage-scale">[정상] ──── [주의] ──── [경계] ──── [위기] ──── [IMF 구제금융]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="here">▲ 현재 위치 (공개 지표 종합)</span></div>
 
@@ -214,8 +222,8 @@
     <b>IMF 구제금융 가능성 — 외부 기관 시각 인용</b>
     <ul style="list-style:none;margin-top:8px">
       <li style="padding:3px 0">• <b>외환 펀더멘털</b> : 보유고 $144.9B · 수입커버 5.6개월 · 변동환율제 — 1998년과 비교 불가 수준으로 양호</li>
-      <li style="padding:3px 0">• <b>외부 기관 시각</b> : 단기 IMF 구제금융 시나리오 가능성 낮게 평가</li>
-      <li style="padding:3px 0">• <b>경고 신호</b> : Moody's·Fitch 신용등급 전망 <b>'Negative' ×2</b> — "다음 조치가 강등일 수 있다"는 단계</li>
+      <li style="padding:3px 0">• <b>단기 방어 성과</b> : BI 누적 +100bp 금리인상·집중 개입으로 환율 18,171 최고점 후 17,750대 회복. MSCI도 06월 EM 지위 유지</li>
+      <li style="padding:3px 0">• <b>심화된 경고 신호</b> : Moody's·Fitch Negative ×2 유지 · MSCI 'Information Flow' negative 강등 · 연료 30% 인상발 시위 격화</li>
       <li style="padding:3px 0;color:var(--faint)">※ 본 페이지는 공개 지표 모니터링용 — 환율·위기 시점을 자체 전망하지 않음</li>
     </ul>
   </div>
@@ -229,38 +237,9 @@
   <div class="tally" id="tally"></div>
 </section>
 
-<!-- ── 02 구간 정의 ── -->
+<!-- ── 02 신용등급 트래커 ── -->
 <section>
-  <div class="sec-head"><span class="sec-no">02</span><h2>환율 구간별 상황 정의</h2></div>
-  <div class="sec-desc">"환율이 이 구간이면 어떤 상황인가"를 정의한 참조표 · 현재 환율 해당 구간 자동 강조</div>
-  <div class="tbl-wrap">
-    <table id="scnTable">
-      <thead><tr>
-        <th>구분</th>
-        <th class="col-g">🟢 관리 가능</th>
-        <th class="col-a">🟡 주의</th>
-        <th class="col-r">🔴 비상</th>
-      </tr></thead>
-      <tbody>
-        <tr><td>환율 구간</td><td class="mono">~18,500</td><td class="mono">18,500~20,000</td><td class="mono">20,000+</td></tr>
-        <tr><td>외환보유고 (동반 관찰)</td><td class="mono">$140B+</td><td class="mono">$120~130B</td><td class="mono">$100B↓</td></tr>
-        <tr><td>신용등급 상태</td><td>Negative 전망 유지</td><td>실제 1단계 강등</td><td>투기등급 강등</td></tr>
-        <tr><td>이 구간이 의미하는 것</td><td>루피아 약세가 점진적으로 진행되는 일반적 압박 상태</td><td>외국인 자금 이탈이 빨라지며 환율 추가 절하 압력이 커지는 상태</td><td>달러 송금 제한 등 자본통제가 논의될 수 있는 상태</td></tr>
-        <tr><td>공개 출처 참고</td><td>—</td><td>Moody's·Fitch Negative 전망 (다음 조치는 통상 12~18개월 내 결정)</td><td>1998년 IMF 구제금융 당시 자본통제 시행 전례</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="tbl-note">* 각 구간은 발생 확률이나 시점을 예측하지 않음. 환율이 해당 구간에 들어왔을 때 일반적으로 동반되는 상황을 공개 정보 기준으로 정의한 참조표임.</div>
-
-  <div class="fc-box">
-    <div class="fc-range"><small>외부 기관 전망 (인용)</small>17,500–18,000</div>
-    <div class="fc-txt"><b>Aberdeen · DBS · MetLife</b> 주요 애널리스트 예측 구간 (현 방향 유지 시나리오 기준). 본 수치는 외부 기관 전망의 인용이며 생산운영팀 자체 전망이 아님. 배경 분석·시나리오 상세는 <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/usd_idr_report.html">USD/IDR Exchange Rate Monitor</a> 참조.</div>
-  </div>
-</section>
-
-<!-- ── 03 신용등급 트래커 ── -->
-<section>
-  <div class="sec-head"><span class="sec-no">03</span><h2>신용등급 트래커</h2></div>
+  <div class="sec-head"><span class="sec-no">02</span><h2>신용등급 트래커</h2></div>
   <div class="sec-desc">신용평가사는 정해진 주기가 없으며 사건 발생 시 수시 발표 · 아래는 현재 기준 최신 공식 조치</div>
   <div class="tbl-wrap">
     <table style="min-width:0">
@@ -273,6 +252,34 @@
     </table>
   </div>
   <div class="tbl-note">* "다음 조치 예상" 시점은 신용평가사의 일반적 검토 관행(Negative 전망 후 12~18개월)을 인용한 것이며, 생산운영팀의 자체 전망이 아님.</div>
+</section>
+
+<!-- ── 03 구간 정의 ── -->
+<section>
+  <div class="sec-head"><span class="sec-no">03</span><h2>환율 구간별 상황 정의</h2></div>
+  <div class="sec-desc">"환율이 이 구간이면 어떤 상황인가"를 정의한 참조표 · 현재 환율 해당 구간 자동 강조</div>
+  <div class="tbl-wrap">
+    <table id="scnTable">
+      <thead><tr>
+        <th>구분</th>
+        <th class="col-g">🟢 관리 가능</th>
+        <th class="col-a">🟡 주의</th>
+        <th class="col-r">🔴 비상</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>환율 구간</td><td class="mono">~18,000</td><td class="mono">18,000~19,500</td><td class="mono">19,500+</td></tr>
+        <tr><td>외환보유고 (동반 관찰)</td><td class="mono">$140B+</td><td class="mono">$120~130B</td><td class="mono">$100B↓</td></tr>
+        <tr><td>이 구간이 의미하는 것</td><td>루피아 약세가 점진적으로 진행되는 일반적 압박 상태</td><td>외국인 자금 이탈이 빨라지며 환율 추가 절하 압력이 커지는 상태</td><td>달러 송금 제한 등 자본통제가 논의될 수 있는 상태</td></tr>
+        <tr><td>공개 출처 참고</td><td>—</td><td>Moody's·Fitch Negative 전망 (다음 조치는 통상 12~18개월 내 결정)</td><td>1998년 IMF 구제금융 당시 자본통제 시행 전례</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tbl-note">* 각 구간은 발생 확률이나 시점을 예측하지 않음. 환율이 해당 구간에 들어왔을 때 일반적으로 동반되는 상황을 공개 정보 기준으로 정의한 참조표임. 신용등급 단계별 상세는 <b>02 신용등급 트래커</b> 참조.</div>
+
+  <div class="fc-box">
+    <div class="fc-range"><small>외부 기관 전망 (인용)</small>17,500–18,000</div>
+    <div class="fc-txt"><b>Aberdeen · DBS · MetLife</b> 주요 애널리스트 예측 구간 (현 방향 유지 시나리오 기준). 본 수치는 외부 기관 전망의 인용이며 생산운영팀 자체 전망이 아님. 배경 분석·시나리오 상세는 <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/usd_idr_report.html">USD/IDR Exchange Rate Monitor</a> 참조.</div>
+  </div>
 </section>
 
 <!-- ── 04 팀 대응 ── -->
@@ -288,8 +295,9 @@
         <th class="col-r">🔴 비상 진입 시</th>
       </tr></thead>
       <tbody>
-        <tr><td>환율·자금</td><td>법인 USD/IDR 결제 비중 파악 · 루피아 현금 보유 최소화</td><td>달러 수취 오더 환 헤지 필요성 재무팀에 제기</td><td>법인 운전자금 송금 상태 점검 · 경영진 보고</td></tr>
+        <tr><td>환율·자금</td><td>법인 USD/IDR 결제 비중 파악 · 루피아 현금 보유 최소화 · <b>07.01 송금규제 강화($25k) 영향 점검</b></td><td>달러 수취 오더 환 헤지 필요성 재무팀에 제기 · 송금 분할·사전 처리 검토</td><td>법인 운전자금 송금 상태 점검 · 경영진 보고</td></tr>
         <tr><td>원가·오더</td><td>주요 오더 환율 민감도 시트 유지</td><td>신규 견적에 환율 변동 반영 검토</td><td>달러 결제 수출 오더 우선순위 조정</td></tr>
+        <tr><td>안전·노무</td><td>현지 시위 동향·대사관 공지 모니터링 · 비상 연락망 점검</td><td>시위 지역 출퇴근 동선·물류 우회 · 주재원 안전 수칙 공유</td><td>조업 중단 리스크 대비 · 인력 안전 최우선 · 본사 비상보고</td></tr>
         <tr><td>생산거점</td><td>중국 북방·남방 협력사 가동 여력 상시 파악</td><td>오더 배분 재조정 시나리오 수치화</td><td>전환 가능 오더 중국 이관 검토 (경영진 승인)</td></tr>
         <tr><td>공급망</td><td>단일 소싱 품목 · 대체처 리스트 유지</td><td>원단·원부자재 안전재고 +2~4주</td><td>현지 협력사 납기·재무 상태 집중 점검</td></tr>
         <tr><td>보고</td><td>본 페이지 주 1회 확인</td><td>팀장 보고 · 모니터링 주기 강화</td><td>경영진 보고 라인 가동</td></tr>
@@ -325,7 +333,7 @@
             <tr><td>단기 외채 / 은행</td><td>과다 / NPL 폭증</td><td>GDP 30% 장기물 / NPL 2.3%</td><td>🟢 양호</td></tr>
             <tr><td>GDP</td><td class="mono">-13.6%</td><td class="mono">+5.61%</td><td>🟢 전혀 다름</td></tr>
             <tr><td>신용등급 전망</td><td>N/A</td><td>Negative ×2</td><td>🔴 주의</td></tr>
-            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$95 (+50%) / JCI -32%</td><td>🔴 주의</td></tr>
+            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$95 (+50%) / JCI -31%</td><td>🔴 주의</td></tr>
           </tbody>
         </table>
       </div>
@@ -371,36 +379,44 @@
    환율은 페이지 열 때마다 라이브 API 자동 갱신
    ════════════════════════════════════════════════════════════ */
 const DATA = {
-  asOf: "2026.06.10",
+  asOf: "2026.06.22",
   nextReview: "2026.09",
-  manualRate: 18129,
-  biLabel: "참고 · BI 공식 고시 18,129 (06.05)",
-  trigger: { p1: 18500, p2: 20000 },
-  railMin: 16000, railMax: 21000,
+  manualRate: 17753,
+  biLabel: "참고 · BI 공식 고시 17,753 (06.17) · 최고점 18,171 (06.08)",
+  trigger: { p1: 18000, p2: 19500 },
+  railMin: 16500, railMax: 20000,
   reserve: { val: "$144.9B", sub: "2026.05 · 5개월 연속 감소" },
   /* t = 분기별 추세 (25.1Q→현재) · up: good=오르면 좋음 / bad=오르면 나쁨 / neutral */
   indicators: [
-    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"역대 최고치권 — 상단 라이브 값과 동일", s:"r", src:"시장환율(라이브)", t:[16200,16300,16400,16100,16800,18129], up:"bad"},
-    {g:"외환·통화", n:"외환보유고", v:"$144.9B", d:"2024.06 이후 최저 · 12월比 -$11.6B", s:"a", src:"Bank Indonesia", t:[156.1,152.9,149.0,156.5,151.9,144.9], up:"good"},
-    {g:"외환·통화", n:"보유고 감소", v:"5개월 연속", d:"2018년 이후 최장 연속 감소", s:"r", src:"Bloomberg"},
+    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"06.08 최고점 18,171 후 BI 개입·금리인상으로 17,750대 회복", s:"a", src:"시장환율(라이브)", t:[16200,16400,16100,16800,18171,17753], up:"bad"},
+    {g:"외환·통화", n:"외환보유고", v:"$144.9B", d:"2024.06 이후 최저 · 개입으로 연초比 -$12B", s:"a", src:"Bank Indonesia", t:[156.1,152.9,149.0,156.5,148.2,144.9], up:"good"},
     {g:"외환·통화", n:"수입커버", v:"5.6개월", d:"국제 기준(3개월) 상회", s:"g", src:"Bank Indonesia"},
-    {g:"외환·통화", n:"BI Rate", v:"5.25%", d:"2026.05 +0.5%p 인상", s:"a", src:"Bank Indonesia", t:[5.75,5.50,5.25,5.25,5.25,5.25], up:"neutral"},
-    {g:"실물 경제", n:"GDP 성장률", v:"+5.61%", d:"2026 Q1 YoY", s:"g", src:"BPS"},
-    {g:"실물 경제", n:"인플레이션", v:"3.08%", d:"2026.05 · 목표 상단(3.5%) 근접", s:"a", src:"BPS", t:[1.6,1.9,2.3,1.6,3.0,3.08], up:"bad"},
+    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"05월 이후 누적 +100bp (05.20·06.09·06.18)", s:"a", src:"Bank Indonesia", t:[5.75,5.50,5.25,5.25,5.25,5.75], up:"neutral"},
+    {g:"외환·통화", n:"외환규제", v:"강화", d:"07.01부 송금 서류기준 $50k→$25k · 외화현금 $25k→$10k", s:"r", src:"Bank Indonesia"},
+    {g:"실물 경제", n:"GDP 성장률", v:"+5.61%", d:"2026 Q1 YoY · BI 2026 전망 4.9~5.7%", s:"g", src:"BPS"},
+    {g:"실물 경제", n:"인플레이션", v:"3.08%", d:"2026.05 · 연료 30%+ 인상으로 상승 압력", s:"a", src:"BPS", t:[1.6,1.9,2.3,1.6,2.42,3.08], up:"bad"},
+    {g:"실물 경제", n:"연료가격", v:"+30%↑", d:"06월 비보조 연료 30%+ 인상 → 시위 직접 트리거", s:"r", src:"ANTARA"},
     {g:"실물 경제", n:"경상수지", v:"-1.1%", d:"of GDP · 2026 Q1", s:"a", src:"IDN Financials"},
-    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP · 법정한도 3% 근접", s:"a", src:"BI"},
+    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP · 법정한도 3% 근접 · MBG 67조 삭감", s:"a", src:"BI"},
     {g:"신용·자본시장", n:"Moody's", v:"Baa2 Neg.", d:"2026.02.05 전망 하향 (최신)", s:"r", src:"Moody's"},
     {g:"신용·자본시장", n:"Fitch", v:"BBB Neg.", d:"2026.03.04 전망 하향 (최신)", s:"r", src:"Fitch"},
-    {g:"신용·자본시장", n:"주식시장 JCI", v:"5,405", d:"6개월 -32% · 2020년 말 이후 최저권", s:"r", src:"IDX", t:[7100,6900,7050,7400,6200,5405], up:"good"},
+    {g:"신용·자본시장", n:"MSCI 분류", v:"EM 유지", d:"06.18 EM 지위 유지, 단 Information Flow 'negative' 강등", s:"a", src:"MSCI"},
+    {g:"신용·자본시장", n:"주식시장 JCI", v:"~6,000", d:"연초 -31%(세계 최악권) 후 6,000선 회복 중", s:"r", src:"IDX", t:[7100,7050,7400,6200,5400,6007], up:"good"},
+    {g:"신용·자본시장", n:"외국인 자금유출", v:"-Rp61.3T", d:"2026 초~06월 누적 (약 -$3.4B) · MSCI 우려가 주동인", s:"r", src:"IDX"},
+    {g:"정치·사회", n:"시위 상황", v:"격화", d:"06.12~ 자카르타 연일 시위, 작년 8월 이후 최대 · 사망자 발생 이력", s:"r", src:"ABC·ANTARA"},
+    {g:"정치·사회", n:"정책 신뢰도", v:"약화", d:"Prabowo 정부 정책 불확실성 — 등급사·MSCI 공통 지적 사유", s:"a", src:"Jakarta Post"},
   ],
-  /* 이벤트 로그 (최신순) · t: fx 환율 / rate 통화정책 / credit 신용등급 / trade 무역 / geo 지정학 */
+  /* 이벤트 로그 (최신순) · t: fx 환율 / rate 통화정책 / credit 신용등급 / trade 무역 / geo 지정학 / social 정치사회 / market 자본시장 */
   events: [
-    {d:"2026.06.05", t:"fx",     tx:"<b>BI 공식 고시 18,129</b> — 역대 최고치 경신. 외환보유고 $144.9B 발표 (5개월 연속 감소)"},
-    {d:"2026.05.20", t:"rate",   tx:"<b>BI Rate 빅스텝 인상 +0.5%p → 5.25%</b> — 2024.04 이후 첫 인상, 루피아 방어 목적"},
-    {d:"2026.03.11", t:"trade",  tx:"<b>USTR, 인도네시아 포함 16개국 Section 301 조사 개시</b> (→ US Tariff Watch 참조)"},
-    {d:"2026.03.04", t:"credit", tx:"<b>Fitch, 등급 전망 Negative 하향</b> (BBB 유지) — 정책 불확실성 사유"},
-    {d:"2026.02.05", t:"credit", tx:"<b>Moody's, 등급 전망 Negative 하향</b> (Baa2 유지) — 정책 예측 가능성 저하 사유"},
-    {d:"2026.02",    t:"geo",    tx:"<b>이란-이스라엘 전쟁 본격화</b> — 국제유가 2개월 만에 40% 상승, 연료보조금 재정 부담 확대"},
+    {d:"2026.06.22", t:"social", tx:"<b>자카르타 시위 지속</b> — 미국대사관·Monas·국회의사당(Senayan) 일대. 주인니대사관 재외동포 안전 유의·우회 권고"},
+    {d:"2026.06.19", t:"market", tx:"<b>MSCI, Information Flow 등급 'negative' 강등</b> (Global Accessibility Review) — 소유구조 투명성·외환시장 자유화 미흡 지적 ('yellow card')"},
+    {d:"2026.06.18", t:"rate",   tx:"<b>BI Rate +25bp → 5.75%</b> (06.09 off-cycle +25bp 포함 누적 +100bp). SRBI 금리 인상으로 외자 유치"},
+    {d:"2026.06.18", t:"market", tx:"<b>외환규제 강화 발표</b> (07.01 시행) — 송금 서류기준 $50k→$25k, 외화현금 구매한도 $25k→$10k"},
+    {d:"2026.06.12", t:"social", tx:"<b>대규모 학생 시위 ('Menuju Indonesia Bangkrut')</b> — 비보조 연료 30%+ 인상이 직접 트리거. 경찰·군 6,000명 배치"},
+    {d:"2026.06.08", t:"fx",     tx:"<b>환율 18,171 사상 최고점</b> 후 BI 집중 개입으로 17,700대 회복"},
+    {d:"2026.05.20", t:"rate",   tx:"<b>BI Rate 빅스텝 +0.5%p → 5.25%</b> — 2024.04 이후 첫 인상, 루피아 방어"},
+    {d:"2026.03.04", t:"credit", tx:"<b>Fitch 전망 Negative 하향</b> (BBB 유지). 02.05 Moody's도 Negative 하향 (Baa2 유지)"},
+    {d:"2026.02",    t:"geo",    tx:"<b>이란-이스라엘 전쟁 본격화</b> — 호르무즈 봉쇄로 유가 급등, 연료보조금 재정 부담 확대"},
   ]
 };
 /* ════════════════════════════════════════════════════════════ */
@@ -443,7 +459,7 @@ function sparkline(pts, up){
   $('footDate').textContent='Data as of '+DATA.asOf;
   $('footReview').textContent='다음 검토: '+DATA.nextReview;
   $('liveBase').textContent=DATA.biLabel;
-  const tagName={fx:'환율',rate:'통화정책',credit:'신용등급',trade:'무역',geo:'지정학'};
+  const tagName={fx:'환율',rate:'통화정책',credit:'신용등급',trade:'무역',geo:'지정학',social:'정치·사회',market:'자본시장'};
   $('evtList').innerHTML = DATA.events.map(e=>
     `<li><span class="date">${e.d}</span><span class="body">${e.tx}<span class="tag ${e.t}">${tagName[e.t]}</span></span></li>`).join('');
 })();
@@ -493,10 +509,22 @@ function applyRate(r,isLive){
 }
 
 applyRate(DATA.manualRate,false);
-fetch('https://open.er-api.com/v6/latest/USD')
+/* ── 실시간 환율 ── USD/IDR Monitor와 동일한 API·키 사용 (두 페이지 숫자 일치 목적) ── */
+const FX_KEY='028f6b4e718a542c1439fe09';
+fetch(`https://v6.exchangerate-api.com/v6/${FX_KEY}/latest/USD`)
   .then(r=>r.json())
-  .then(d=>{ if(d&&d.rates&&d.rates.IDR) applyRate(Math.round(d.rates.IDR),true); })
-  .catch(()=>{});
+  .then(d=>{
+    if(d && d.result==='success' && d.conversion_rates && d.conversion_rates.IDR){
+      applyRate(Math.round(d.conversion_rates.IDR), true);
+    } else { throw new Error('primary api failed'); }
+  })
+  .catch(()=>{
+    /* 폴백: 무료 API (키 없음) — 유료 API 장애 시에도 라이브 유지 */
+    fetch('https://open.er-api.com/v6/latest/USD')
+      .then(r=>r.json())
+      .then(d=>{ if(d&&d.rates&&d.rates.IDR) applyRate(Math.round(d.rates.IDR),true); })
+      .catch(()=>{});
+  });
 </script>
 </body>
 </html>
