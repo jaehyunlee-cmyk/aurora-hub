@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Naphtha TE Test</title></head>
+<body>
+<h2>TradingEconomics Naphtha Test</h2>
+<div id="results"></div>
+<script>
+const log = msg => { document.getElementById('results').innerHTML += '<p>' + msg + '</p>'; };
+
+async function testAll() {
+
+  // Test 1: TradingEconomics embed API (guest 토큰)
+  try {
+    const r = await fetch('https://api.tradingeconomics.com/commodity/naphtha?c=guest:guest&f=json');
+    const t = await r.text();
+    log('✅ TE guest API: ' + t.slice(0,300));
+  } catch(e) { log('❌ TE guest API: ' + e.message); }
+
+  // Test 2: TradingEconomics via corsproxy
+  try {
+    const r = await fetch('https://corsproxy.io/?https://api.tradingeconomics.com/markets/commodity/naphtha?c=guest:guest');
+    const t = await r.text();
+    log('✅ TE via corsproxy: ' + t.slice(0,300));
+  } catch(e) { log('❌ TE via corsproxy: ' + e.message); }
+
+  // Test 3: TradingEconomics web page scrape via corsproxy
+  try {
+    const r = await fetch('https://corsproxy.io/?https://ko.tradingeconomics.com/commodity/naphtha');
+    const t = await r.text();
+    // look for price pattern
+    const match = t.match(/[\d,]+\.[\d]+/g);
+    log('TE page numbers found: ' + (match ? match.slice(0,10).join(', ') : 'none'));
+    log('TE page length: ' + t.length + ' chars');
+  } catch(e) { log('❌ TE page scrape: ' + e.message); }
+
+  // Test 4: Yahoo Finance - try naphtha CFD ticker
+  const cfdTickers = ['NAP=F', 'NAPHTHA=F', 'NAPUSD=X'];
+  for (const t of cfdTickers) {
+    try {
+      const r = await fetch('https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(t) + '?interval=1d&range=5d', {headers:{'x-requested-with':'XMLHttpRequest'}});
+      const j = await r.json();
+      const meta = j?.chart?.result?.[0]?.meta;
+      if (meta?.regularMarketPrice) log('✅ Yahoo ' + t + ': $' + meta.regularMarketPrice + ' ' + meta.currency);
+      else log('❌ Yahoo ' + t + ': no price data');
+    } catch(e) { log('❌ Yahoo ' + t + ': ' + e.message); }
+  }
+
+  // Test 5: Stooq naphtha CSV
+  try {
+    const r = await fetch('https://corsproxy.io/?https://stooq.com/q/d/l/?s=naphtha.f&i=d');
+    const t = await r.text();
+    log('Stooq naphtha.f: ' + t.slice(0,200));
+  } catch(e) { log('❌ Stooq naphtha.f: ' + e.message); }
+
+}
+testAll();
+</script>
+</body>
+</html>
