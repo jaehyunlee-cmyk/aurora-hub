@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Commodities-API Naphtha Test</title></head>
+<body>
+<h2>Commodities-API Naphtha Test</h2>
+<div id="results"></div>
+<script>
+const log = msg => { document.getElementById('results').innerHTML += '<p>' + msg + '</p>'; };
+
+async function testAll() {
+
+  // Test 1: Commodities-API 무료 플랜 (API key 없이 접근 가능한지)
+  try {
+    const r = await fetch('https://commodities-api.com/api/latest?access_key=demo&base=USD&symbols=NAPHTHA');
+    const j = await r.json();
+    log('✅ Commodities-API demo: ' + JSON.stringify(j).slice(0,300));
+  } catch(e) { log('❌ Commodities-API demo: ' + e.message); }
+
+  // Test 2: corsproxy 경유
+  try {
+    const r = await fetch('https://corsproxy.io/?https://commodities-api.com/api/latest?access_key=demo&base=USD&symbols=NAPHTHA');
+    const j = await r.json();
+    log('✅ Commodities-API via proxy: ' + JSON.stringify(j).slice(0,300));
+  } catch(e) { log('❌ Commodities-API via proxy: ' + e.message); }
+
+  // Test 3: commoditypriceapi.com (무료 여부 확인)
+  try {
+    const r = await fetch('https://commoditypriceapi.com/api/latest?access_key=demo&base=USD&symbols=NAP');
+    const j = await r.json();
+    log('✅ CommodityPriceAPI: ' + JSON.stringify(j).slice(0,300));
+  } catch(e) { log('❌ CommodityPriceAPI: ' + e.message); }
+
+  // Test 4: TradingEconomics 페이지에서 나프타 가격 파싱 시도
+  try {
+    const r = await fetch('https://corsproxy.io/?https://tradingeconomics.com/commodity/naphtha');
+    const html = await r.text();
+    // 692.24 같은 패턴 찾기
+    const priceMatch = html.match(/"price":\s*([\d.]+)/);
+    const altMatch = html.match(/(\d{3,4}\.\d{2})\s*USD\/T/);
+    log('TE price pattern: ' + (priceMatch ? priceMatch[1] : 'not found'));
+    log('TE USD/T pattern: ' + (altMatch ? altMatch[1] : 'not found'));
+    // 좀 더 광범위하게
+    const nums = html.match(/6\d{2}\.\d{2}/g);
+    log('TE 6xx.xx numbers: ' + (nums ? nums.slice(0,5).join(', ') : 'none'));
+  } catch(e) { log('❌ TE page parse: ' + e.message); }
+
+}
+testAll();
+</script>
+</body>
+</html>
