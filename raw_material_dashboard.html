@@ -69,6 +69,8 @@
   .kpi-stat-val { font-size: 12px; font-weight: 600; color: var(--text); }
   .kpi-stat-date { font-size: 10px; color: var(--text-hint); }
   .rbob-note { margin-top: 12px; padding: 9px 12px; background: var(--orange-bg); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); font-size: 11px; line-height: 1.6; color: var(--orange-dark); }
+  .te-link-btn { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--orange-dark); text-decoration: none; border-bottom: 1px solid var(--orange); padding-bottom: 1px; }
+  .te-link-btn:hover { color: var(--orange); }
 
   /* FX Row */
   .fx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -210,9 +212,10 @@
         <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l2">—</div><div class="kpi-stat-date" id="ld2">—</div></div>
         <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a2">—</div><div class="kpi-stat-date">기간 기준</div></div>
       </div>
-      <div class="rbob-note">장외거래(OTC) 특성상 실시간 데이터는 유료로만 제공되어, 유사한 흐름의 RBOB 가솔린 선물을 대리지표로 활용. 정밀 모니터링 필요시 유료 데이터 도입 검토 가능.</div>
+      <div class="rbob-note">장외거래(OTC) 특성상 실시간 데이터는 유료로만 제공되어, 유사한 흐름의 RBOB 가솔린 선물을 대리지표로 활용. 정밀 모니터링 필요시 유료 데이터 도입 필요하며, 잠정적으로 아래 링크를 병행 참고.<br><br>
+        <a href="https://ko.tradingeconomics.com/commodity/naphtha" target="_blank" class="te-link-btn">🔗 나프타 실제 가격 확인 (TradingEconomics) ↗</a>
+      </div>
     </div>
-
     <div class="kpi-card c3">
       <div class="kpi-header">
         <div class="kpi-name">🔥 천연가스</div>
@@ -287,12 +290,12 @@
     </div>
     <div class="event-row">
       <span class="event-date">2026-02-20</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ RBOB</span></div>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
       <span class="event-desc">미-이란 협상 재개 소식 → 공급 증가 기대로 하락세 · 석유화학 원료가 동반 하락</span>
     </div>
     <div class="event-row">
       <span class="event-date">2026-04-07</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ RBOB</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
       <span class="event-desc">글로벌 경기침체 우려 → 3개 지표 동반 최저가 기록 · 해상운임 병행 하락</span>
     </div>
     <div class="event-row">
@@ -336,7 +339,7 @@
     </table>
   </div>
 
-  <div class="footer">Aurora World 생산운영팀 · 데이터: Yahoo Finance · BZ=F (Brent Crude Oil Futures) · RB=F (RBOB Gasoline Futures) · NG=F (Natural Gas Futures) · 15분 지연 · 시나리오는 참고용 전망이며 실제와 다를 수 있습니다.</div>
+  <div class="footer">Aurora World 생산운영팀 · 데이터: Yahoo Finance (BZ=F, RB=F, NG=F) · 15분 지연 · 시나리오는 참고용 전망이며 실제와 다를 수 있습니다.</div>
 </div>
 
 <script>
@@ -373,23 +376,17 @@ async function loadAll() {
   let successCount = 0;
   for (const t of TICKERS) {
     try {
-      const data = await fetchYahoo(t.id);
-      allDataMap[t.idx] = data;
+      allDataMap[t.idx] = await fetchYahoo(t.id);
       successCount++;
     } catch(e) {
-      allDataMap[t.idx] = generateDemo(t.idx);
+      allDataMap[t.idx] = [];
     }
   }
 
-  const latestDate = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').sort().reverse()[0];
-  setStatus('ok', '데이터 수신 완료 · ' + successCount + '/3개 지표');
+  const latestDate = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').filter(Boolean).sort().reverse()[0];
+  setStatus('ok', '데이터 수신 완료 · ' + successCount + '/3개 지표 (나프타 로딩 중...)');
   document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  document.getElementById('dataRange').textContent = '최신 데이터: ' + latestDate;
-
-  initDateInputs();
-  renderAll(getFilteredAll(currentMonths));
-  fetchFx();
-  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('dataRange').textContent = '최신 데이터: ' + (latestDate || '—');
 }
 
 function generateDemo(idx) {
