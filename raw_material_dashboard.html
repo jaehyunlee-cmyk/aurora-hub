@@ -373,15 +373,18 @@ async function loadAll() {
   setStatus('loading', '시장 데이터 불러오는 중...');
   document.getElementById('overlay').style.display = 'flex';
 
+  // 3개 티커 동시 호출 (순차 아닌 병렬)
+  const results = await Promise.allSettled(TICKERS.map(t => fetchYahoo(t.id)));
   let successCount = 0;
-  for (const t of TICKERS) {
-    try {
-      allDataMap[t.idx] = await fetchYahoo(t.id);
+  results.forEach((result, i) => {
+    const t = TICKERS[i];
+    if (result.status === 'fulfilled') {
+      allDataMap[t.idx] = result.value;
       successCount++;
-    } catch(e) {
+    } else {
       allDataMap[t.idx] = [];
     }
-  }
+  });
 
   const latestDate = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').filter(Boolean).sort().reverse()[0];
   setStatus('ok', '데이터 수신 완료 · ' + successCount + '/3개 지표');
