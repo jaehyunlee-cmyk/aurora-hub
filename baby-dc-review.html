@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby 3% D/C 해제 검토 — Aurora World</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:#f8f7f4;--surface:#fff;--surface2:#f2f1ee;
+    --border:rgba(0,0,0,.1);--border-md:rgba(0,0,0,.18);
+    --text:#1a1a18;--text-2:#5f5e5a;--text-3:#8a8985;
+    --s122-bg:#E6F1FB;--s122-text:#0C447C;
+    --s301-bg:#FAECE7;--s301-text:#712B13;
+    --warn-bg:#FAEEDA;--warn-text:#412402;--warn-border:#EF9F27;
+    --ok-bg:#EAF3DE;--ok-text:#27500A;
+    --neutral-bg:#F1EFE8;--neutral-text:#444441;
+    --r-md:8px;--r-lg:12px;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#181816;--surface:#232320;--surface2:#2c2c2a;
+    --border:rgba(255,255,255,.1);--border-md:rgba(255,255,255,.18);
+    --text:#f0efe8;--text-2:#a8a7a0;--text-3:#6a6965;
+    --s122-bg:#042C53;--s122-text:#85B7EB;
+    --s301-bg:#4A1B0C;--s301-text:#F0997B;
+    --warn-bg:#412402;--warn-text:#FAC775;--warn-border:#BA7517;
+    --ok-bg:#173404;--ok-text:#C0DD97;
+    --neutral-bg:#2C2C2A;--neutral-text:#B4B2A9;
+  }}
+  body{font-family:Arial,'Noto Sans KR',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;}
+  .topnav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+  .nav-brand{display:flex;align-items:center;gap:10px;}
+  .nav-logo{width:28px;height:28px;background:var(--text);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+  .nav-logo i{color:var(--surface);font-size:16px;}
+  .nav-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.01em;}
+  .nav-sub{font-size:11px;color:var(--text-3);margin-left:4px;}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:.5px solid var(--border);}
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 14px;border-radius:var(--r-md);border:.5px solid var(--border-md);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:inherit;transition:background .15s,color .15s;text-decoration:none;}
+  .btn:hover{background:var(--surface2);color:var(--text);}
+  .btn-primary{background:var(--text);color:var(--surface);border-color:var(--text);}
+  .btn-primary:hover{opacity:.88;}
+  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;}
+  .page-header{margin-bottom:24px;}
+  .page-header h1{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:4px;}
+  .page-header p{font-size:13px;color:var(--text-2);}
+  .toggle-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .toggle-row .tlab{font-size:12px;font-weight:600;color:var(--text-2);}
+  .seg{display:inline-flex;gap:6px;}
+  .seg button{font-size:12px;padding:6px 16px;border-radius:20px;border:.5px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:inherit;transition:all .15s;}
+  .seg button.active{background:var(--text);color:var(--surface);border-color:var(--text);}
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px;}
+  .quad-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+  .quad-grid.three{grid-template-columns:repeat(3,1fr);}
+  .metric-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
+  .metric-card.hl{background:var(--s122-bg);border-color:transparent;}
+  .metric-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .metric-label small{text-transform:none;letter-spacing:0;font-size:10px;}
+  .metric-value{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:8px;letter-spacing:-.02em;transition:color .25s;}
+  .metric-card.hl .metric-value{color:var(--s122-text);}
+  .metric-value.shift{color:var(--s301-text);}
+  .metric-sub{font-size:12px;color:var(--text-2);line-height:1.6;min-height:32px;}
+  .metric-sub ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
+  .metric-sub li{display:flex;gap:6px;align-items:flex-start;}
+  .metric-sub li::before{content:'•';color:var(--text-3);flex-shrink:0;}
+  .section-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 12px;display:flex;align-items:center;gap:6px;}
+  .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
+  .card-header{padding:12px 18px;border-bottom:.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .card-title{font-size:13px;font-weight:600;color:var(--text);}
+  .card-body{padding:18px;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-2);align-items:center;}
+  .legend-item{display:flex;align-items:center;gap:5px;}
+  .legend-swatch{width:22px;height:11px;border-radius:2px;flex-shrink:0;}
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .proj-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:18px;}
+  .proj-yr{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+  .proj-big{font-size:30px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
+  .proj-krw{font-size:14px;font-weight:600;color:var(--text-2);margin-top:6px;}
+  .proj-note{font-size:11.5px;color:var(--text-3);line-height:1.6;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border);}
+  .bars{display:flex;align-items:flex-end;gap:clamp(3px,1vw,12px);height:200px;padding-top:22px;border-bottom:.5px solid var(--border);margin-bottom:2px;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end;}
+  .bar-val{font-size:10px;color:var(--text-2);font-weight:600;}
+  .bar{width:100%;max-width:42px;background:#7B4B36;border-radius:3px 3px 0 0;transition:height .5s cubic-bezier(.4,0,.2,1);min-height:3px;}
+  .bar-lab{font-size:9.5px;color:var(--text-3);white-space:nowrap;}
+  table.hm{width:100%;border-collapse:collapse;font-size:11.5px;}
+  table.hm th{padding:9px 12px;text-align:right;font-size:9px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;border-bottom:.5px solid var(--border);background:var(--surface2);white-space:nowrap;}
+  table.hm th.lc{text-align:left;}
+  table.hm td{padding:9px 12px;text-align:right;font-size:11.5px;font-weight:500;border-bottom:.5px solid var(--border);white-space:nowrap;color:var(--text);}
+  table.hm td.lc-c{text-align:left;font-weight:600;}
+  table.hm td.add{color:var(--s301-text);font-weight:700;}
+  table.hm td.dim{color:var(--text-3);font-weight:400;}
+  table.hm tr:hover td{background:var(--surface2);}
+  table.hm tr.tr td{background:var(--surface2)!important;border-top:.5px solid var(--border-md);font-weight:700;color:var(--text);}
+  table.hm tr.tr td.add{color:var(--s301-text);}
+  .tmp-mark{font-size:9px;color:var(--text-3);margin-left:4px;}
+  .rec-head{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+  .rec-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;background:var(--ok-bg);color:var(--ok-text);}
+  .rec-title{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-.01em;}
+  .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0;}
+  .rec-item .rk{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+  .rec-item .rv{font-size:13px;font-weight:600;color:var(--text);line-height:1.5;}
+  .rec-why{font-size:12.5px;color:var(--text-2);line-height:1.75;margin-top:14px;padding-top:14px;border-top:.5px solid var(--border);}
+  .rec-tl-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 10px;}
+  .tl-row{display:flex;gap:14px;padding:13px 0;border-bottom:.5px solid var(--border);align-items:flex-start;}
+  .tl-row:last-child{border-bottom:none;}
+  .tl-date{font-size:11px;color:var(--text-3);min-width:72px;padding-top:2px;font-weight:600;}
+  .tl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+  .tl-content{flex:1;}
+  .tl-title{font-size:13px;font-weight:400;color:var(--text);line-height:1.5;}
+  .tl-title b{color:var(--s301-text);font-weight:700;}
+  .tl-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;margin-top:7px;}
+  .rec-why a{color:var(--s122-text);text-decoration:none;border-bottom:.5px solid var(--s122-text);font-size:12px;}
+  .footnote{font-size:11px;color:var(--text-3);line-height:1.6;}
+  .footnote b{color:var(--text-2);}
+  .desc-lines{font-size:12.5px;color:var(--text-2);line-height:1.9;margin-bottom:14px;}
+  .desc-lines span{display:block;}
+  @media(max-width:760px){
+    .topnav{padding:0 14px;} .nav-sub,.nav-tag{display:none;}
+    .proj-grid,.rec-grid{grid-template-columns:1fr;}
+    .quad-grid{grid-template-columns:1fr;}
+    table.hm{font-size:10px;} table.hm th,table.hm td{padding:7px 6px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-brand">
+    <div class="nav-logo"><i class="ti ti-chart-bar-popular"></i></div>
+    <span class="nav-title">Baby D/C Review</span>
+    <span class="nav-sub">Aurora World 생산운영팀</span>
+  </div>
+  <div class="nav-right">
+    <a class="btn" href="https://jaehyunlee-cmyk.github.io/aurora-hub/"><i class="ti ti-arrow-left"></i> Home</a>
+    <span class="nav-tag">2026-06</span>
+    <button class="btn btn-primary" onclick="window.print()"><i class="ti ti-share"></i> 공유</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-header">
+    <h1>중국 아웃소싱 Baby 3% D/C 해제 검토</h1>
+    <p>목적지 미국 × 중국 생산 · 납기일 2025-11-13 이후 · 환율 ₩1,450 / $</p>
+  </div>
+
+  <div class="toggle-row">
+    <span class="tlab">3% D/C 상태</span>
+    <div class="seg" id="seg">
+      <button class="active" data-v="apply">적용 (현행 3%)</button>
+      <button data-v="release">해제 (0%)</button>
+    </div>
+  </div>
+
+  <div class="quad-grid three">
+    <div class="metric-card hl">
+      <div class="metric-label">KR HQ 마진 <small>(SCM 기준)</small></div>
+      <div class="metric-value" data-apply="27.0%" data-release="23.2%">27.0%</div>
+      <div class="metric-sub" data-apply="(Master - Baby) / Baby" data-release="▼ 3.8%p 축소">(Master - Baby) / Baby</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Y2026 추가 지급액 <small>(8–12월 · 5개월)</small></div>
+      <div class="metric-value" data-apply="$0" data-release="$113K">$0</div>
+      <div class="metric-sub"><ul><li>Section 122 만료 후 '26.08 출고분부터 해제 가정</li><li>2026년 : 5개월치(08–12월)만 적용</li></ul></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Y2027 추가 지급액 <small>(1 YEAR)</small></div>
+      <div class="metric-value" data-apply="$0" data-release="$759K">$0</div>
+      <div class="metric-sub"><ul><li>2027년 : 2025년 동기간 실적을 추정 기준으로 사용</li><li>완성월 평균 $63K × 12</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="rec-head">
+        <span class="rec-badge">Recommendation</span>
+      </div>
+      <div class="rec-title">3% D/C 해제 (0%) — Section 122 만료 연계 8월 출고분부터</div>
+      <div class="rec-grid">
+        <div class="rec-item">
+          <div class="rk">적용 시점</div>
+          <div class="rv">2026년 8월 출고분부터 (Section 122 만료 7/24와 연계)</div>
+        </div>
+        <div class="rec-item">
+          <div class="rk">재무 영향</div>
+          <div class="rv">Y2026 약 $113K · Y2027 약 $759K (연 11.0억원)</div>
+        </div>
+        <div class="rec-item">
+          <div class="rk">흡수 방식</div>
+          <div class="rv">본사 전액 흡수 / Master 전가 / 절반 분담 중 의사결정</div>
+        </div>
+      </div>
+      <div class="rec-why">
+        <div class="rec-tl-label">관세 환경 변화 경과</div>
+        <div class="tl-row">
+          <div class="tl-date">'25.03</div>
+          <div class="tl-dot" style="background:#791F1F;"></div>
+          <div class="tl-content">
+            <div class="tl-title">합산 <b>27.5%</b> 관세에 대응해 Baby 5% D/C 도입</div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">'25.11</div>
+          <div class="tl-dot" style="background:#0C447C;"></div>
+          <div class="tl-content">
+            <div class="tl-title">관세 인하(<b>17.5%</b>)에 맞춰 D/C 3%로 조정</div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">'26.02</div>
+          <div class="tl-dot" style="background:#27500A;"></div>
+          <div class="tl-content">
+            <div class="tl-title">IEEPA 위헌 판결 — 기납부 관세 CAPE 환급 진행 중</div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">'26.06</div>
+          <div class="tl-dot" style="background:var(--text-3);"></div>
+          <div class="tl-content">
+            <div class="tl-title">완구(HTS 9503.00.2100)는 List 4B 유예로 S301도 현재 <b>0%</b> 적용 · <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/us-tariff-watch.html">→ US Tariff Watch</a></div>
+          </div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-date">'26.07.24</div>
+          <div class="tl-dot" style="background:var(--warn-border);"></div>
+          <div class="tl-content">
+            <div class="tl-title">Section 122 만료 시 실효관세 <b>7.5%</b> (S301만 잔존)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">월별 추가 지급액 추이</span>
+      <div class="legend">
+        <span class="legend-item"><span class="legend-swatch" style="background:#7B4B36"></span>월별 추가 지급액 ($K, 3% 환산)</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="bars" id="bars"></div>
+      <table class="hm" style="margin-top:20px">
+        <thead>
+          <tr>
+            <th class="lc">납기 월</th>
+            <th>N.CHINA</th>
+            <th>S.CHINA</th>
+            <th>Baby 합계</th>
+            <th>3% 추가 지급</th>
+            <th>라인</th>
+          </tr>
+        </thead>
+        <tbody id="trows"></tbody>
+        <tfoot id="tfoot"></tfoot>
+      </table>
+      <p class="footnote" style="margin-top:12px">※ Baby 단가 미확정 건(592건)은 Master / 1.3 으로 임시 산출. · 13개월 누계 <b>$649K</b> · 완성월(’25.12~’26.06) 기준 연환산 <b>$759K</b>.</p>
+    </div>
+  </div>
+
+  <p class="footnote" style="text-align:center;margin-top:8px">본 자료는 ERP(D365) 납기요청일 기준 추출 데이터를 바탕으로 한 내부 검토용이며, 실제 지출은 향후 수주 물량·관세 환경·환율 변동에 따라 달라질 수 있습니다.</p>
+</main>
+
+<script>
+const MONTHLY=[
+  {m:"'25.11",n:735033,s:198481,baby:933514,add:28872,rows:143,tmp:0},
+  {m:"'25.12",n:871553,s:563460,baby:1435013,add:44382,rows:190,tmp:0},
+  {m:"'26.1", n:1108541,s:286192,baby:1394733,add:43136,rows:247,tmp:0},
+  {m:"'26.2", n:724715,s:190578,baby:915293,add:28308,rows:151,tmp:0},
+  {m:"'26.3", n:1532368,s:311548,baby:1843916,add:57028,rows:229,tmp:0},
+  {m:"'26.4", n:1718869,s:1368380,baby:3087249,add:95482,rows:317,tmp:0},
+  {m:"'26.5", n:2287860,s:1084732,baby:3372592,add:104307,rows:518,tmp:0},
+  {m:"'26.6", n:1833516,s:443631,baby:2277147,add:70427,rows:267,tmp:1},
+  {m:"'26.7", n:1529422,s:546763,baby:2076185,add:64212,rows:292,tmp:150},
+  {m:"'26.8", n:1981811,s:603456,baby:2585267,add:79957,rows:330,tmp:309},
+  {m:"'26.9", n:279092,s:0,baby:279092,add:8632,rows:48,tmp:48},
+  {m:"'26.10",n:565523,s:0,baby:565523,add:17490,rows:63,tmp:63},
+  {m:"'26.11",n:211292,s:0,baby:211292,add:6535,rows:21,tmp:21}
+];
+const k=n=>n===0?"—":"$"+Math.round(n/1000)+"K";
+const kv=n=>"$"+Math.round(n/1000)+"K";
+
+const maxV=Math.max(...MONTHLY.map(d=>d.add));
+document.getElementById('bars').innerHTML=MONTHLY.map(d=>{
+  const h=Math.max(d.add/maxV*82, d.add>0?1.5:0);
+  return `<div class="bar-col">
+    <div class="bar-val">${d.add>0?Math.round(d.add/1000):''}</div>
+    <div class="bar" style="height:${h}%"></div>
+    <div class="bar-lab">${d.m}</div>
+  </div>`;
+}).join('');
+
+document.getElementById('trows').innerHTML=MONTHLY.map(d=>`
+  <tr>
+    <td class="lc-c">${d.m}${d.tmp>0?`<span class="tmp-mark">(임시${d.tmp})</span>`:''}</td>
+    <td>${kv(d.n)}</td>
+    <td>${kv(d.s)}</td>
+    <td>${kv(d.baby)}</td>
+    <td class="add">${kv(d.add)}</td>
+    <td class="dim">${d.rows}</td>
+  </tr>`).join('');
+
+const tot=MONTHLY.reduce((a,d)=>({n:a.n+d.n,s:a.s+d.s,baby:a.baby+d.baby,add:a.add+d.add,rows:a.rows+d.rows}),{n:0,s:0,baby:0,add:0,rows:0});
+document.getElementById('tfoot').innerHTML=`<tr class="tr">
+  <td class="lc-c">합계 (13개월)</td>
+  <td>${kv(tot.n)}</td><td>${kv(tot.s)}</td><td>${kv(tot.baby)}</td>
+  <td class="add">${kv(tot.add)}</td><td class="dim">${tot.rows}</td>
+</tr>`;
+
+const seg=document.getElementById('seg'), btns=seg.querySelectorAll('button');
+function apply(v){
+  btns.forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  document.querySelectorAll('.metric-value[data-apply]').forEach(el=>{
+    el.textContent=el.dataset[v];
+    el.classList.toggle('shift',v==='release'&&el.dataset.release!==el.dataset.apply&&!el.closest('.hl'));
+  });
+  document.querySelectorAll('.metric-sub[data-apply]').forEach(el=>{
+    if(el.dataset[v]) el.textContent=el.dataset[v];
+  });
+}
+btns.forEach(b=>b.addEventListener('click',()=>apply(b.dataset.v)));
+</script>
+</body>
+</html>
