@@ -349,7 +349,7 @@
       <div class="legend">
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(92,26,0,.85);"></div>IEEPA</div>
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(55,138,221,.85);"></div>Section 122</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:repeating-linear-gradient(-45deg,rgba(239,159,39,.35),rgba(239,159,39,.35) 3px,rgba(186,117,23,.9) 3px,rgba(186,117,23,.9) 4.5px);"></div>신규 S301 (제안)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(239,159,39,.45);border:1.5px solid rgba(186,117,23,.9);"></div>신규 S301 (제안)</div>
       </div>
     </div>
     <div class="card-body">
@@ -357,7 +357,7 @@
         <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
       </div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
-        주황 점선: S122 만료 (2026-07-24) — 이후 빗금 구간은 신규 S301 제안치 (중국 12.5% / 인니 10%, 미확정) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24)
+        주황 점선: S122 만료 (2026-07-24) — 이후 주황 반투명 구간은 신규 S301 제안치 (중국 12.5% / 인니 10%, 미확정) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24)
       </div>
     </div>
   </div>
@@ -648,25 +648,16 @@ const chartData={
   china:{
     ieepa:[0,10,20,20,20,20,20,20,20,20,10,10,10,0,0,0,0,0,0,0,0,0,0,0],
     s122: [0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,0,0,0,0,0],
-    s301: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    news301:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12.5,12.5,12.5,12.5,12.5]
   },
   indonesia:{
     ieepa:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     s122: [0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,0,0,0,0,0],
-    s301: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    news301:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10]
   }
 };
 let myChart=null;
 
-// 빗금 패턴 (제안/추정 표시용)
-function makeHatch(){
-  const c=document.createElement('canvas');c.width=8;c.height=8;
-  const x=c.getContext('2d');
-  x.fillStyle='rgba(239,159,39,.3)';x.fillRect(0,0,8,8);
-  x.strokeStyle='rgba(186,117,23,.85)';x.lineWidth=1.5;
-  x.beginPath();x.moveTo(-2,10);x.lineTo(10,-2);x.stroke();
-  try{return x.createPattern(c,'repeat');}catch(e){return 'rgba(239,159,39,.5)';}
-}
 
 function buildChart(country){
   const ctx=document.getElementById('tariffChart');
@@ -682,7 +673,7 @@ function buildChart(country){
       datasets:[
 {label:'Section 122',data:d.s122,backgroundColor:'rgba(55,138,221,.85)',stack:'t',borderWidth:0},
         {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0},
-        {label:'신규 S301 (제안)',data:d.news301,backgroundColor:makeHatch(),stack:'t',borderWidth:0}
+        {label:'신규 S301 (제안)',data:d.news301,backgroundColor:'rgba(239,159,39,.45)',borderColor:'rgba(186,117,23,.9)',borderWidth:1.5,stack:'t'}
       ]
     },
     options:{
@@ -727,11 +718,11 @@ function switchChart(country,btn){
 function updateCountdown(){
   const now=new Date(),exp=new Date('2026-07-24');
   const days=Math.max(0,Math.ceil((exp-now)/(1000*60*60*24)));
-  document.getElementById('countdown').textContent='D-'+days;
+  const cd=document.getElementById('countdown');if(cd)cd.textContent='D-'+days;
   const tl=document.getElementById('tl-countdown');if(tl)tl.textContent=days;
   const today=now.toISOString().slice(0,10);
-  document.getElementById('hdr-date').textContent=today;
-  document.getElementById('nav-date').textContent=today;
+  const hd=document.getElementById('hdr-date');if(hd)hd.textContent=today;
+  const nd=document.getElementById('nav-date');if(nd)nd.textContent=today;
 }
 
 
