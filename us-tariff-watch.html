@@ -238,7 +238,10 @@
 
   <div class="warn-bar">
     <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
-    <div><strong>2026-06-11</strong> CAFC(연방순회항소법원)가 CIT 금지명령에 스테이 발부 — CBP는 7/24까지 S122 징수 계속. <strong>2026-06-02</strong> USTR, 강제노동 기반 신규 Section 301 관세 제안 (중국 12.5% · 인도네시아 10%) — 7/7 공청회 완료, 7/24 직후 최종 확정 예상.</div>
+    <div>
+      <div style="margin-bottom:6px;"><strong>2026-06-11</strong> &nbsp;CIT(미국 국제무역법원)가 Section 122 관세를 위법으로 판결했으나, 상급 법원인 CAFC(연방순회항소법원)가 그 판결의 효력을 일시 정지시킴 → CBP(미국 관세국경보호청, 세관)는 만료일인 <strong>7/24까지 Section 122 관세(10%)를 계속 징수</strong>.</div>
+      <div><strong>2026-06-02</strong> &nbsp;USTR(미국 무역대표부)이 강제노동 문제를 근거로 <strong>새로운 Section 301 관세를 제안</strong> — 중국 12.5% · 인도네시아 10%. 7/7 공청회까지 완료되어 <strong>7/24 만료 직후 확정·발효 예상</strong>.</div>
+    </div>
   </div>
 
 
@@ -346,6 +349,7 @@
       <div class="legend">
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(92,26,0,.85);"></div>IEEPA</div>
         <div class="legend-item"><div class="legend-swatch" style="background:rgba(55,138,221,.85);"></div>Section 122</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:repeating-linear-gradient(-45deg,rgba(239,159,39,.35),rgba(239,159,39,.35) 3px,rgba(186,117,23,.9) 3px,rgba(186,117,23,.9) 4.5px);"></div>신규 S301 (제안)</div>
       </div>
     </div>
     <div class="card-body">
@@ -353,7 +357,7 @@
         <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
       </div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
-        주황 점선: S122 만료 기준선 (2026-07-24) — 이후 중국 0%, 인도네시아 미정 · 빨간 점선: IEEPA 위헌 종료 (2026-02-24) · Section 301: List 4B 유예 0%
+        주황 점선: S122 만료 (2026-07-24) — 이후 빗금 구간은 신규 S301 제안치 (중국 12.5% / 인니 10%, 미확정) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24)
       </div>
     </div>
   </div>
@@ -654,6 +658,16 @@ const chartData={
 };
 let myChart=null;
 
+// 빗금 패턴 (제안/추정 표시용)
+function makeHatch(){
+  const c=document.createElement('canvas');c.width=8;c.height=8;
+  const x=c.getContext('2d');
+  x.fillStyle='rgba(239,159,39,.3)';x.fillRect(0,0,8,8);
+  x.strokeStyle='rgba(186,117,23,.85)';x.lineWidth=1.5;
+  x.beginPath();x.moveTo(-2,10);x.lineTo(10,-2);x.stroke();
+  try{return x.createPattern(c,'repeat');}catch(e){return 'rgba(239,159,39,.5)';}
+}
+
 function buildChart(country){
   const ctx=document.getElementById('tariffChart');
   if(myChart)myChart.destroy();
@@ -666,8 +680,9 @@ function buildChart(country){
     data:{
       labels,
       datasets:[
-{label:'Section 122',data:d.s122,backgroundColor:labels.map((_,i)=>i>=19?'rgba(55,138,221,.3)':'rgba(55,138,221,.85)'),stack:'t',borderWidth:0},
-        {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0}
+{label:'Section 122',data:d.s122,backgroundColor:'rgba(55,138,221,.85)',stack:'t',borderWidth:0},
+        {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0},
+        {label:'신규 S301 (제안)',data:d.news301,backgroundColor:makeHatch(),stack:'t',borderWidth:0}
       ]
     },
     options:{
@@ -693,7 +708,7 @@ function buildChart(country){
         c.fillStyle=tc;c.font='500 10px Helvetica Neue,sans-serif';c.textAlign='center';
         const xMid=(x1+x.right)/2;
         c.fillText('S122 만료 후',xMid,y.top+14);
-        c.fillText('→ 0% (중국)',xMid,y.top+26);
+        c.fillText('→ 신규 S301 (제안)',xMid,y.top+26);
         // IEEPA 종료선
         const x2=x.getPixelForValue(13.5);
         c.strokeStyle='rgba(226,75,74,.5)';c.lineWidth=1;c.setLineDash([3,3]);
