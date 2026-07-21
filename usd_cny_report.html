@@ -21,7 +21,7 @@
   .nav {
     background: #fff;
     border-bottom: 1px solid #e8eaf0;
-    padding: 0 28px;
+    padding: 0 28px 0 130px;  /* 좌측: 고정 Hub 버튼 공간 확보 */
     height: 58px;
     display: flex;
     align-items: center;
@@ -204,12 +204,65 @@
   @media (max-width: 800px) {
     .snap-grid, .scenario-grid { grid-template-columns: 1fr; }
     .wrap { padding: 24px 16px 48px; }
-    .nav { padding: 0 16px; }
+    .nav { padding: 0 16px 0 96px; }
     .tl-row { grid-template-columns: 80px 16px 1fr 70px; }
+  }
+
+  /* Aurora Hub 표준 홈 버튼 */
+  .aurora-home-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px 8px 12px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 100px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #3a3f47;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+  .aurora-home-btn:hover {
+    background: #16181d;
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  }
+  .aurora-home-btn .arrow {
+    font-size: 15px;
+    line-height: 1;
+    transition: transform 0.18s;
+  }
+  .aurora-home-btn:hover .arrow {
+    transform: translateX(-2px);
+  }
+  @media (max-width: 640px) {
+    .aurora-home-btn {
+      top: 14px;
+      left: 14px;
+      padding: 7px 12px 7px 10px;
+      font-size: 12px;
+    }
   }
 </style>
 </head>
 <body>
+
+<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
+  <span class="arrow">←</span>
+  <span>Hub</span>
+</a>
 
 <!-- NAV — IDR과 동일한 구조 -->
 <nav class="nav">
@@ -223,7 +276,6 @@
   </div>
   <!-- 우측: Home 버튼 + 갱신시각 -->
   <div class="nav-right">
-    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Home</a>
     <span class="nav-updated" id="navUpdated"><span class="dot-live"></span>불러오는 중...</span>
   </div>
 </nav>
