@@ -139,7 +139,7 @@ h1 strong { font-weight: 600; }
   background: var(--accent-color, var(--gold));
 }
 
-.card-inner { padding: 22px 24px 18px; }
+.card-inner { padding: 18px 22px 16px; position: relative; }
 
 .card-top {
   display: flex;
@@ -166,21 +166,15 @@ h1 strong { font-weight: 600; }
   color: var(--text);
   margin-bottom: 6px;
   letter-spacing: -0.02em;
+  padding-right: 34px;
 }
 
 .card-sub {
   font-size: 12.5px;
   color: var(--text-2);
-  line-height: 1.5;
-  margin-bottom: 16px;
-}
-
-.card-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
+  line-height: 1.45;
+  margin-bottom: 0;
+  padding-right: 34px;
 }
 
 .card-tags { display: flex; gap: 5px; flex-wrap: wrap; flex: 1; }
@@ -197,8 +191,11 @@ h1 strong { font-weight: 600; }
 }
 
 .card-arrow {
-  width: 28px;
-  height: 28px;
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 26px;
+  height: 26px;
   border: 1px solid var(--border-md);
   border-radius: 50%;
   display: flex;
@@ -270,15 +267,7 @@ footer {
       <div class="card-inner">
         <div class="card-title">Petrochemical Price Monitor</div>
         <div class="card-sub">브렌트유 · 나프타(RBOB) · 천연가스<br>석유화학 원자재 가격 실시간 추적</div>
-        <div class="card-meta">
-          <div class="card-tags">
-            <span class="tag">BZ=F</span>
-            <span class="tag">RB=F</span>
-            <span class="tag">NG=F</span>
-            <span class="tag">IDR/USD</span>
-          </div>
-          <div class="card-arrow">↗</div>
-        </div>
+        <div class="card-arrow">↗</div>
       </div>
     </a>
 
@@ -288,14 +277,7 @@ footer {
       <div class="card-inner">
         <div class="card-title">USD/IDR Exchange Rate Monitor</div>
         <div class="card-sub">인도네시아 루피아 환율 추이<br>배경 분석 · 시나리오 · Action Trigger</div>
-        <div class="card-meta">
-          <div class="card-tags">
-            <span class="tag">Cianjur</span>
-            <span class="tag">USD/IDR</span>
-            <span class="tag">BI Rate</span>
-          </div>
-          <div class="card-arrow">↗</div>
-        </div>
+        <div class="card-arrow">↗</div>
       </div>
     </a>
 
@@ -305,14 +287,7 @@ footer {
       <div class="card-inner">
         <div class="card-title">USD/CNY Exchange Rate Monitor</div>
         <div class="card-sub">중국 위안화 환율 현황 · 향후 전망<br>변동 경과 · 북방·남방 협력사 영향</div>
-        <div class="card-meta">
-          <div class="card-tags">
-            <span class="tag">USD/CNY</span>
-            <span class="tag">PBOC</span>
-            <span class="tag">China</span>
-          </div>
-          <div class="card-arrow">↗</div>
-        </div>
+        <div class="card-arrow">↗</div>
       </div>
     </a>
 
@@ -322,15 +297,7 @@ footer {
       <div class="card-inner">
         <div class="card-title">US Tariff Watch</div>
         <div class="card-sub">미국 관세 동향 실시간 모니터링<br>중국·인도네시아 관세율 · 타임라인</div>
-        <div class="card-meta">
-          <div class="card-tags">
-            <span class="tag">Sec.301</span>
-            <span class="tag">Sec.122</span>
-            <span class="tag">IEEPA</span>
-            <span class="tag">China / ID</span>
-          </div>
-          <div class="card-arrow">↗</div>
-        </div>
+        <div class="card-arrow">↗</div>
       </div>
     </a>
 
@@ -340,14 +307,7 @@ footer {
       <div class="card-inner">
         <div class="card-title">Indonesia Risk Watch</div>
         <div class="card-sub">인도네시아 경제 리스크 모니터링<br>환율 기준선 · 신용등급 · 구간별 대응</div>
-        <div class="card-meta">
-          <div class="card-tags">
-            <span class="tag">USD/IDR</span>
-            <span class="tag">IMF Watch</span>
-            <span class="tag">Cianjur</span>
-          </div>
-          <div class="card-arrow">↗</div>
-        </div>
+        <div class="card-arrow">↗</div>
       </div>
     </a>
 
@@ -362,10 +322,7 @@ footer {
         </div>
         <div class="card-title">&nbsp;</div>
         <div class="card-sub">&nbsp;</div>
-        <div class="card-meta">
-          <div class="card-tags"><span class="tag">TBD</span></div>
-          <div class="card-arrow">+</div>
-        </div>
+        <div class="card-arrow">+</div>
       </div>
     </div>
   </div>
