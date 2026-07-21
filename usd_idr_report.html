@@ -49,6 +49,52 @@
     border:0.5px solid var(--border-strong);border-radius:999px;
     padding:5px 14px;background:transparent;transition:all .15s ease}
   .nav-home:hover{background:var(--surface2);color:var(--text-primary)}
+  .aurora-home-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px 8px 12px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 100px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #3a3f47;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+  .aurora-home-btn:hover {
+    background: #16181d;
+    color: #ffffff;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  }
+  .aurora-home-btn .arrow {
+    font-size: 15px;
+    line-height: 1;
+    transition: transform 0.18s;
+  }
+  .aurora-home-btn:hover .arrow {
+    transform: translateX(-2px);
+  }
+  @media (max-width: 640px) {
+    .aurora-home-btn {
+      top: 14px;
+      left: 14px;
+      padding: 7px 12px 7px 10px;
+      font-size: 12px;
+    }
+  }
   .header{display:none}
   .header-title{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:5px}
   .header-sub{font-size:13px;color:var(--text-muted);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}
@@ -141,6 +187,10 @@
 </style>
 </head>
 <body>
+<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
+  <span class="arrow">←</span>
+  <span>Hub</span>
+</a>
 <div class="nav-bar">
     <div class="nav-left">
       <div class="nav-icon-box">💱</div>
@@ -150,7 +200,6 @@
       </div>
     </div>
     <div class="nav-right">
-      <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Home</a>
       <span class="nav-date" id="header-date">불러오는 중...</span>
     </div>
 </div>
