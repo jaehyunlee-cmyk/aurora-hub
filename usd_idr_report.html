@@ -29,72 +29,24 @@
     margin-bottom:0;
     width:100%;
   }
-  .nav-left{display:flex;align-items:center;gap:12px}
-  .nav-icon-box{
-    width:40px;height:40px;border-radius:9px;
-    background:linear-gradient(135deg,#1a7a6a,#0f5a4a);
-    display:flex;align-items:center;justify-content:center;
-    font-size:20px;flex-shrink:0;
-  }
+  .nav-left{display:flex;align-items:center;gap:16px}
   .nav-title{font-size:15px;font-weight:700;color:var(--text-primary);letter-spacing:-.01em}
   .nav-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
   .nav-right{display:flex;align-items:center;gap:8px}
   .nav-date{
     font-size:12px;color:var(--text-muted);
-    border:0.5px solid var(--border-strong);border-radius:999px;
+    display:inline-flex;align-items:center;gap:6px;
     padding:5px 12px;background:transparent;
   }
-  .nav-home{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;
-    color:var(--text-muted);text-decoration:none;
-    border:0.5px solid var(--border-strong);border-radius:999px;
-    padding:5px 14px;background:transparent;transition:all .15s ease}
-  .nav-home:hover{background:var(--surface2);color:var(--text-primary)}
-  .aurora-home-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 9999;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 14px 8px 12px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 100px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: #3a3f47;
-    text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+  .nav-date::before{
+    content:'';width:7px;height:7px;border-radius:50%;
+    background:#3aab6f;flex-shrink:0;
   }
-  .aurora-home-btn:hover {
-    background: #16181d;
-    color: #ffffff;
-    border-color: transparent;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
-  }
-  .aurora-home-btn .arrow {
-    font-size: 15px;
-    line-height: 1;
-    transition: transform 0.18s;
-  }
-  .aurora-home-btn:hover .arrow {
-    transform: translateX(-2px);
-  }
-  @media (max-width: 640px) {
-    .aurora-home-btn {
-      top: 14px;
-      left: 14px;
-      padding: 7px 12px 7px 10px;
-      font-size: 12px;
-    }
-  }
+  .nav-home{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+    color:#fff;text-decoration:none;
+    background:#16181d;border-radius:999px;
+    padding:9px 18px;transition:all .18s ease;flex-shrink:0}
+  .nav-home:hover{background:#000;transform:translateY(-1px)}
   .header{display:none}
   .header-title{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:5px}
   .header-sub{font-size:13px;color:var(--text-muted);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif}
@@ -187,13 +139,9 @@
 </style>
 </head>
 <body>
-<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
-  <span class="arrow">←</span>
-  <span>Hub</span>
-</a>
 <div class="nav-bar">
     <div class="nav-left">
-      <div class="nav-icon-box">💱</div>
+      <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Hub</a>
       <div>
         <div class="nav-title">USD/IDR Exchange Rate Monitor</div>
         <div class="nav-sub">Aurora World 생산운영팀 · 인도네시아 Cianjur 법인 · USD/IDR</div>
@@ -357,7 +305,7 @@
 </div>
 <script>
 // ── 날짜 ──────────────────────────────────────────
-function getTodayKorean(){const n=new Date();return `${n.getFullYear()}년 ${n.getMonth()+1}월 ${n.getDate()}일 기준`;}
+function getTodayKorean(){const n=new Date();const mm=String(n.getMonth()+1).padStart(2,'0');const dd=String(n.getDate()).padStart(2,'0');let h=n.getHours();const ap=h<12?'오전':'오후';h=h%12;if(h===0)h=12;const min=String(n.getMinutes()).padStart(2,'0');return `${mm}. ${dd}. ${ap} ${String(h).padStart(2,'0')}:${min} 기준`;}
 function getTodayShort(){const n=new Date();return `${n.getMonth()+1}월 ${n.getDate()}일`;}
 document.getElementById('header-date').textContent=getTodayKorean();
 
