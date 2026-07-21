@@ -21,7 +21,7 @@
   .nav {
     background: #fff;
     border-bottom: 1px solid #e8eaf0;
-    padding: 0 28px 0 130px;  /* 좌측: 고정 Hub 버튼 공간 확보 */
+    padding: 0 28px 0 150px;  /* 좌측: 고정 Hub 버튼 공간 확보 */
     height: 58px;
     display: flex;
     align-items: center;
@@ -313,12 +313,12 @@
             실제 환율
           </div>
           <div class="legend-item">
-            <div class="legend-line base"></div>
-            전망 (중간값)
-          </div>
-          <div class="legend-item">
             <div class="legend-line bull"></div>
             전망 범위 (강세)
+          </div>
+          <div class="legend-item">
+            <div class="legend-line base"></div>
+            전망 (중간값)
           </div>
           <div class="legend-item">
             <div class="legend-line bear"></div>
@@ -333,18 +333,6 @@
 
     <!-- 시나리오 카드 3개 -->
     <div class="scenario-grid">
-      <div class="sc-card base">
-        <div class="sc-tag">현재 방향 유지</div>
-        <div class="sc-name">관리된 소폭 약세</div>
-        <div class="sc-range">7.20 – 7.40</div>
-        <div class="sc-source">애널리스트 주요 예측 구간 — Goldman Sachs · Morgan Stanley · Nomura</div>
-        <div class="sc-desc">
-          PBOC(중국인민은행)가 고시환율 조정을 통해 급격한 변동을 억제하면서 위안화가 소폭 약세 기조를 유지하는 시나리오. 미·중 무역 갈등이 지속되나 양측 모두 급격한 충돌을 피하며 현 수준을 관리.
-        </div>
-        <div class="sc-premise">
-          <strong>전제 조건:</strong> 미·중 관세 협상 현상 유지 · PBOC(중국인민은행) 고시환율 7.20~7.35 방어 · 달러 인덱스 현 수준 유지
-        </div>
-      </div>
       <div class="sc-card bull">
         <div class="sc-tag">환율 안정·하향</div>
         <div class="sc-name">위안화 강세 전환</div>
@@ -355,6 +343,18 @@
         </div>
         <div class="sc-premise">
           <strong>전제 조건:</strong> 미·중 고위급 합의 타결 · Fed 연내 금리 인하 2회 이상 · 중국 GDP 5% 이상 회복
+        </div>
+      </div>
+      <div class="sc-card base">
+        <div class="sc-tag">현재 방향 유지</div>
+        <div class="sc-name">관리된 소폭 약세</div>
+        <div class="sc-range">7.20 – 7.40</div>
+        <div class="sc-source">애널리스트 주요 예측 구간 — Goldman Sachs · Morgan Stanley · Nomura</div>
+        <div class="sc-desc">
+          PBOC(중국인민은행)가 고시환율 조정을 통해 급격한 변동을 억제하면서 위안화가 소폭 약세 기조를 유지하는 시나리오. 미·중 무역 갈등이 지속되나 양측 모두 급격한 충돌을 피하며 현 수준을 관리.
+        </div>
+        <div class="sc-premise">
+          <strong>전제 조건:</strong> 미·중 관세 협상 현상 유지 · PBOC(중국인민은행) 고시환율 7.20~7.35 방어 · 달러 인덱스 현 수준 유지
         </div>
       </div>
       <div class="sc-card bear">
