@@ -185,9 +185,59 @@
     .def-grid{grid-template-columns:1fr;}
     .tl-date{min-width:62px;font-size:10px;}
   }
+.aurora-home-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px 8px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 100px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #3a3f47;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.aurora-home-btn:hover {
+  background: #16181d;
+  color: #ffffff;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+.aurora-home-btn .arrow {
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.18s;
+}
+.aurora-home-btn:hover .arrow {
+  transform: translateX(-2px);
+}
+@media (max-width: 640px) {
+  .aurora-home-btn {
+    top: 14px;
+    left: 14px;
+    padding: 7px 12px 7px 10px;
+    font-size: 12px;
+  }
+}
 </style>
 </head>
 <body>
+<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
+  <span class="arrow">←</span>
+  <span>Hub</span>
+</a>
 
 <nav class="topnav">
   <div class="nav-brand">
@@ -231,8 +281,8 @@
     <div class="metric-card">
       <div class="metric-label">다음 주요 이벤트</div>
       <div class="metric-value" style="font-size:16px;padding-top:6px;">신규 S301 확정</div>
-      <div class="metric-sub">의견수렴 절차 전체 완료 (7/14)<br>최종 고시 대기 — 이번 주중 가능</div>
-      <div class="metric-badge badge-warn">확정 대기</div>
+      <div class="metric-sub">의견수렴 절차 전체 완료 (~7/16)<br>7/24 발효 목표 시 확정 임박</div>
+      <div class="metric-badge badge-warn">발표 임박</div>
     </div>
   </div>
 
@@ -240,9 +290,9 @@
     <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
     <div style="line-height:1.9;">
       <div style="margin-bottom:8px;">
-        <div><strong>신규 S301 — 최종 확정 대기</strong></div>
-        <div>· 공청회(7/7~7/9) · 리버틀(7/14) 등 의견수렴 절차 전체 완료 → USTR(미국 무역대표부) 최종 확정 고시만 남음</div>
-        <div>· 발효 예상: <strong>S122 만료(7/24) 전후</strong></div>
+        <div><strong>신규 S301 — 최종 확정 발표 임박 (S122 만료 D-3)</strong></div>
+        <div>· 공청회(7/7~7/9) · 리버틀(7/16 마감) 등 의견수렴 절차 전체 완료 → USTR(미국 무역대표부) 최종 확정 고시만 남음</div>
+        <div>· 7/24 발효 목표 시 <strong>이번 주 초 확정 필요</strong> — 7/15 브라질 S301 최종 조치 발표로 USTR 최종 조치 사이클 개시</div>
         <div>· 제안 세율: 중국 <strong>12.5%</strong> · 인도네시아 <strong>10%</strong></div>
       </div>
       <div>
@@ -342,7 +392,7 @@
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;line-height:1.7;">
         ※ IEEPA(중국 한정): 2025-02-04(10%) → 2025-03-04(20%) → 2025-11-10(10%↓) → 2026-02-24 위헌 소멸<br>
         ※ 기존 Section 301(2018-19 대중국): HTS 9503 → List 4B 유예 → 현재 0%. 단, <strong>신규 강제노동 S301(2026-06-02 제안)은 별개 조치</strong> — 국가 전체 대상. 완구의 Annex A 면제 여부 미확인, 면제 가능성 낮음(추정)<br>
-        ※ 2026 Aug 이후 수치: USTR 제안 단계 — 공청회(7/7~9)·리버틀(7/14) 완료, 7/24 전후 최종 확정 예상. "?"는 미확정 표기<br>
+        ※ 2026 Aug 이후 수치: USTR 제안 단계 — 공청회(7/7~9)·리버틀(7/16) 완료, 7/24 전후 최종 확정 예상. "?"는 미확정 표기<br>
         ※ 본 표는 <strong>추가관세 레이어만</strong> 표시 — HTS 9503.00.2100의 MFN 기본관세 <strong>4.7%는 별도·상시 적용</strong> (총부담 = 표 수치 + 4.7%)
       </div>
     </div>
@@ -475,6 +525,8 @@
       <div>· 범주형 면제(USMCA·CAFTA-DR 섬유·S232 대상품·정보자료·기부품 등)에도 <strong>완구 미해당</strong> — 면제 경로 사실상 없음</div>
       <div>· 최종 세율·품목은 7/24 전후 USTR 확정 고시로 결정</div>
       <div>· 신규 S301도 <strong>법적 도전(소송) 예상</strong> — 확정 후에도 IEEPA처럼 법원에서 변동 가능성 존재</div>
+      <div>· <strong>통관 타이밍 주의</strong>: 관세 인하를 기대하고 Entry Date를 7/24 이후로 늦추면, 중국분은 신규 S301 적용 시 오히려 10% → <strong>12.5%로 인상</strong>될 수 있음</div>
+      <div>· <strong>S122 환급 가능성</strong>: 소송에서 최종 위법 확정 시 2/24~7/24 납부분 <strong>전액 환급 청구 대상</strong> (IEEPA CAPE 환급과 동일 구조) — 납부 기록 보관 필요</div>
     </div>
   </div>
 
@@ -615,16 +667,25 @@
         <div class="tl-dot" style="background:#BA7517;"></div>
         <div class="tl-content">
           <div class="tl-title">신규 Section 301 공청회 완료 (USITC, 3일간)</div>
-          <div class="tl-desc">서면 의견 접수 마감(7/6) 후 3일간 공청회 진행 완료. 리버틀(반박) 의견 마감: 7/14. 이후 USTR 최종 확정만 남음.</div>
+          <div class="tl-desc">서면 의견 접수 마감(7/6) 후 3일간 공청회 진행 완료. 리버틀(반박) 의견 마감: 7/16. 이후 USTR 최종 확정만 남음.</div>
           <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-07-14</div>
+        <div class="tl-date">2026-07-15</div>
+        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-content">
+          <div class="tl-title">USTR, 브라질 Section 301 최종 조치 발표 (참고)</div>
+          <div class="tl-desc">오로라월드와 직접 무관한 별개 조사이나, USTR이 S301 최종 조치 사이클을 개시했다는 신호 — 강제노동 건 최종 확정도 임박 시사.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-07-16</div>
         <div class="tl-dot" style="background:#BA7517;outline:2px solid #EF9F27;outline-offset:1px;"></div>
         <div class="tl-content">
           <div class="tl-title">리버틀 의견 마감 — 신규 S301 의견수렴 절차 전체 종료</div>
-          <div class="tl-desc">공청회 종료 5일 후 마감 규정에 따라 절차상 마지막 단계 완료. USTR 최종 확정 고시만 남음 — S122 만료(7/24) 전후 발효 유력.</div>
+          <div class="tl-desc">공청회 종료(7/9) 후 5영업일 마감 규정에 따라 절차상 마지막 단계 완료. USTR 최종 확정 고시만 남음 — S122 만료(7/24) 전후 발효 유력.</div>
           <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
         </div>
       </div>
