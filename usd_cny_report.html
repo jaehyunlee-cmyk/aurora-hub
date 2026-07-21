@@ -21,7 +21,7 @@
   .nav {
     background: #fff;
     border-bottom: 1px solid #e8eaf0;
-    padding: 0 28px 0 150px;  /* 좌측: 고정 Hub 버튼 공간 확보 */
+    padding: 0 28px;
     height: 58px;
     display: flex;
     align-items: center;
@@ -30,6 +30,19 @@
   }
   /* 좌측: 로고박스 + 제목/설명 묶음 */
   .nav-left { display: flex; align-items: center; gap: 12px; }
+  .nav-hub-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px 7px 12px;
+    background: #16181d; color: #fff;
+    border-radius: 100px; text-decoration: none;
+    font-size: 13px; font-weight: 500; white-space: nowrap;
+    transition: background 0.18s, transform 0.18s;
+    flex-shrink: 0;
+  }
+  .nav-hub-btn:hover { background: #2a2d35; transform: translateY(-1px); }
+  .nav-hub-btn .arrow { font-size: 15px; transition: transform 0.18s; }
+  .nav-hub-btn:hover .arrow { transform: translateX(-2px); }
+  .nav-divider-line { width: 1px; height: 26px; background: #e8eaf0; flex-shrink: 0; }
   .nav-logo {
     width: 36px; height: 36px; border-radius: 8px;
     background: #1a1d2e;
@@ -204,7 +217,7 @@
   @media (max-width: 800px) {
     .snap-grid, .scenario-grid { grid-template-columns: 1fr; }
     .wrap { padding: 24px 16px 48px; }
-    .nav { padding: 0 16px 0 96px; }
+    .nav { padding: 0 16px; }
     .tl-row { grid-template-columns: 80px 16px 1fr 70px; }
   }
 
@@ -259,16 +272,15 @@
 </head>
 <body>
 
-<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
-  <span class="arrow">←</span>
-  <span>Hub</span>
-</a>
 
 <!-- NAV — IDR과 동일한 구조 -->
 <nav class="nav">
   <!-- 좌측: 로고 + 제목 + 설명 -->
   <div class="nav-left">
-    <div class="nav-logo">💱</div>
+    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-hub-btn">
+      <span class="arrow">←</span> Hub
+    </a>
+    <div class="nav-divider-line"></div>
     <div class="nav-text">
       <span class="nav-title">USD/CNY Exchange Rate Monitor</span>
       <span class="nav-sub">Aurora World 생산운영팀 · 중국 북방·남방 협력사 · USD/CNY</span>
