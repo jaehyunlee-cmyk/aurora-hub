@@ -6,19 +6,27 @@
 <title>Indonesia Risk Watch | Aurora World 생산운영팀</title>
 <style>
   :root{
-    --bg:#f4f3f0; --panel:#ffffff; --panel2:#eeede9;
-    --line:rgba(0,0,0,0.09); --line-md:rgba(0,0,0,0.16);
-    --text:#1a1916; --muted:#5a5854; --faint:#9a9894;
-    --green:#1a6e3c; --amber:#8c5200; --red:#a82020; --blue:#1a56a0; --gold:#a07828;
-    --green-dim:#e6f0e9; --amber-dim:#fef3dc; --red-dim:#fdeaea; --blue-dim:#e8f0fb;
-    --green-rail:#9cc4ab; --amber-rail:#e6c98c; --red-rail:#dba29c;
-    --r:12px; --shadow:0 2px 12px rgba(0,0,0,0.07);
-    --sans:'Helvetica Neue',Helvetica,Arial,'Noto Sans KR',sans-serif;
+    /* ── Aurora Cianjur Design System v1 ── */
+    --ink:#16181D; --graphite:#3A3F47; --slate:#6B717B; --mist:#A8AEB8;
+    --cloud:#E6E8EC; --paper:#F7F8FA; --white:#FFFFFF;
+    --accent:#2B6CFF; --accent-ink:#0B3FB0;
+    --ok:#1E9E6A; --warn:#D8952B; --stop:#D24B45;
+
+    /* ── legacy 변수명 → v1 토큰 매핑 (하위 CSS 호환) ── */
+    --bg:var(--paper); --panel:var(--white); --panel2:var(--paper);
+    --line:var(--cloud); --line-md:var(--mist);
+    --text:var(--ink); --muted:var(--graphite); --faint:var(--slate);
+    --green:var(--ok); --amber:var(--warn); --red:var(--stop);
+    --blue:var(--accent); --gold:var(--accent);
+    --green-dim:#e4f4ec; --amber-dim:#faf0dc; --red-dim:#fbe9e8; --blue-dim:#e8f0ff;
+    --green-rail:#a6dcc3; --amber-rail:#eccf95; --red-rail:#e5a9a4;
+    --r:10px; --shadow:none;
+    --sans:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;font-size:15px;-webkit-font-smoothing:antialiased}
-  a{color:var(--blue);text-decoration:none}
-  a:hover{text-decoration:underline}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{color:var(--accent-ink);text-decoration:underline}
   .wrap{max-width:1100px;margin:0 auto;padding:0 22px 80px}
 
   /* ── top bar ── */
@@ -28,7 +36,7 @@
   .title-block .sub{font-size:12.5px;color:var(--muted);margin-top:1px}
   .topbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px}
   .topbar .right .home{color:var(--muted)}
-  .topbar .right .refresh{font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line-md);padding:5px 11px;border-radius:7px;cursor:pointer;font-family:var(--sans)}
+  .topbar .right .refresh{font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line-md);padding:5px 11px;border-radius:8px;cursor:pointer;font-family:var(--sans)}
   .topbar .right .refresh:hover{color:var(--blue);border-color:var(--blue)}
 
   /* ── status banner ── */
@@ -51,7 +59,7 @@
   .rail-title{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
   .rail-title h2{font-size:15px;font-weight:700}
   .rail-title .status{font-size:13px;color:var(--muted)}
-  .rail{position:relative;height:13px;border-radius:7px;margin:36px 6px 8px;background:linear-gradient(90deg,
+  .rail{position:relative;height:13px;border-radius:8px;margin:36px 6px 8px;background:linear-gradient(90deg,
     var(--green-rail) 0%, var(--green-rail) 50%,
     var(--amber-rail) 50%, var(--amber-rail) 80%,
     var(--red-rail) 80%, var(--red-rail) 100%)}
@@ -66,17 +74,17 @@
   /* ── sections ── */
   section{margin-top:42px}
   .sec-head{display:flex;align-items:baseline;gap:11px;margin-bottom:5px}
-  .sec-head h2{font-size:19px;font-weight:700}
-  .sec-head .sec-no{font-size:12px;color:var(--gold);font-weight:700;letter-spacing:.04em}
+  .sec-head h2{font-size:22px;font-weight:650;letter-spacing:-.01em}
+  .sec-head .sec-no{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.04em}
   .sec-desc{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6}
 
-  .src-note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:9px;padding:15px 19px;margin-bottom:20px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)}
+  .src-note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:10px;padding:15px 19px;margin-bottom:20px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)}
   .src-note b{color:var(--text);font-weight:700}
   .stage-scale{font-size:12.5px;color:var(--muted);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 17px;margin-bottom:20px;overflow-x:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
   .stage-scale .here{color:var(--red);font-weight:700}
 
   /* ── tables ── */
-  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:11px;background:var(--panel);box-shadow:var(--shadow)}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow)}
   table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
   th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
   th{font-size:11.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;background:var(--panel2);font-weight:700;white-space:nowrap}
@@ -86,13 +94,13 @@
   .ind-tbl td:nth-child(2){color:var(--text);font-weight:500;white-space:normal}
   .sig{width:54px;text-align:center;white-space:nowrap}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block;vertical-align:middle}
-  .dot.g{background:var(--green)} .dot.a{background:#c08a10} .dot.r{background:var(--red)}
+  .dot.g{background:var(--green)} .dot.a{background:var(--warn)} .dot.r{background:var(--red)}
   .v{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
   .spark{width:80px;padding-top:13px}
   .d{color:var(--muted);font-size:12.5px}
   .s{font-size:11px;color:var(--faint);white-space:nowrap}
   .mono{font-variant-numeric:tabular-nums}
-  .col-g{border-top:3px solid var(--green)} .col-a{border-top:3px solid #c08a10} .col-r{border-top:3px solid var(--red)}
+  .col-g{border-top:3px solid var(--green)} .col-a{border-top:3px solid var(--warn)} .col-r{border-top:3px solid var(--red)}
   .zone-active{background:var(--amber-dim)}
   /* 구간 표 3등분: 첫 컬럼 고정, 나머지 3개 균등 */
   #scnTable, #apTable{table-layout:fixed}
@@ -128,7 +136,7 @@
   .tag.market{background:var(--amber-dim);color:var(--amber)}
 
   /* ── details ── */
-  details{background:var(--panel);border:1px solid var(--line);border-radius:11px;margin-top:13px;box-shadow:var(--shadow)}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:13px;box-shadow:var(--shadow)}
   summary{cursor:pointer;padding:15px 20px;font-weight:700;font-size:14px;list-style:none;display:flex;align-items:center;gap:10px}
   summary::before{content:'▸';color:var(--faint);transition:transform .2s}
   details[open] summary::before{transform:rotate(90deg)}
@@ -158,7 +166,7 @@
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(0, 0, 0, 0.10);
   border-radius: 100px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Arial, 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -207,7 +215,6 @@
     <div class="sub">Aurora World 생산운영팀 · 인도네시아 Cianjur 법인 · USD/IDR</div>
   </div>
   <div class="right">
-    <a class="home" href="https://jaehyunlee-cmyk.github.io/aurora-hub/">← <span>Home</span></a>
     <button class="refresh" onclick="location.reload()">↻ 새로고침</button>
   </div>
 </div>
