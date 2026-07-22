@@ -8,43 +8,38 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg:#f8f7f4;--surface:#fff;--surface2:#f2f1ee;
-    --border:rgba(0,0,0,.1);--border-md:rgba(0,0,0,.18);
-    --text:#1a1a18;--text-2:#5f5e5a;--text-3:#8a8985;
-    --s122-bg:#E6F1FB;--s122-text:#0C447C;
-    --s301-bg:#FAECE7;--s301-text:#712B13;
-    --warn-bg:#FAEEDA;--warn-text:#412402;--warn-border:#EF9F27;
-    --danger-bg:#FCEBEB;--danger-text:#791F1F;
-    --ok-bg:#EAF3DE;--ok-text:#27500A;
-    --neutral-bg:#F1EFE8;--neutral-text:#444441;
-    --r-md:8px;--r-lg:12px;--r-xl:16px;
+    /* Aurora Cianjur Design System v2 */
+    --ink:#16181D;--graphite:#3A3F47;--slate:#6B717B;--mist:#A8AEB8;
+    --cloud:#E6E8EC;--paper:#F7F8FA;--white:#FFFFFF;
+    --accent:#2B6CFF;--accent-ink:#0B3FB0;
+    --ok-c:#1E9E6A;--warn-c:#D8952B;--stop-c:#D24B45;
+    /* 페이지 매핑 */
+    --bg:var(--paper);--surface:var(--white);--surface2:var(--paper);
+    --border:var(--cloud);--border-md:var(--mist);
+    --text:var(--ink);--text-2:var(--graphite);--text-3:var(--slate);
+    --s122-bg:#EAF1FF;--s122-text:var(--accent-ink);
+    --s301-bg:#FBF3E2;--s301-text:#7A5411;
+    --warn-bg:#FBF3E2;--warn-text:#6E4A0E;--warn-border:var(--warn-c);
+    --danger-bg:#FBEAE9;--danger-text:#A0322C;
+    --ok-bg:#E8F5EF;--ok-text:#14724C;
+    --neutral-bg:#F0F1F3;--neutral-text:var(--graphite);
+    --r-md:8px;--r-lg:10px;--r-xl:10px;
   }
-  @media(prefers-color-scheme:dark){:root{
-    --bg:#181816;--surface:#232320;--surface2:#2c2c2a;
-    --border:rgba(255,255,255,.1);--border-md:rgba(255,255,255,.18);
-    --text:#f0efe8;--text-2:#a8a7a0;--text-3:#6a6965;
-    --s122-bg:#042C53;--s122-text:#85B7EB;
-    --s301-bg:#4A1B0C;--s301-text:#F0997B;
-    --warn-bg:#412402;--warn-text:#FAC775;--warn-border:#BA7517;
-    --danger-bg:#501313;--danger-text:#F09595;
-    --ok-bg:#173404;--ok-text:#C0DD97;
-    --neutral-bg:#2C2C2A;--neutral-text:#B4B2A9;
-  }}
-  body{font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;}
-  .topnav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px;}
+  body{font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;}
+  .topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px;}
   .nav-brand{display:flex;align-items:center;gap:12px;min-width:0;}
   .nav-logo{width:32px;height:32px;background:var(--text);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .nav-logo i{color:var(--surface);font-size:17px;}
   .nav-titles{display:flex;flex-direction:column;gap:1px;min-width:0;}
-  .nav-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.01em;white-space:nowrap;}
-  .nav-sub{font-size:11px;color:var(--text-3);white-space:nowrap;}
+  .nav-title{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.01em;white-space:nowrap;}
+  .nav-sub{font-size:12px;color:var(--text-3);white-space:nowrap;}
   .nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-  .nav-home{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 12px;border-radius:var(--r-md);border:.5px solid var(--border-md);background:var(--surface);color:var(--text-2);text-decoration:none;transition:background .15s,color .15s;white-space:nowrap;}
+  .nav-home{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 12px;border-radius:var(--r-md);border:1px solid var(--border-md);background:var(--surface);color:var(--text-2);text-decoration:none;transition:background .15s,color .15s;white-space:nowrap;}
   .nav-home:hover{background:var(--surface2);color:var(--text);}
   .nav-home i{font-size:13px;}
-  .nav-date{font-size:11px;color:var(--text-3);padding:4px 10px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);white-space:nowrap;}
-  .nav-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:.5px solid var(--border);}
-  .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 14px;border-radius:var(--r-md);border:.5px solid var(--border-md);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:background .15s,color .15s;}
+  .nav-date{font-size:11px;color:var(--text-3);padding:4px 10px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);white-space:nowrap;}
+  .nav-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);}
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 14px;border-radius:var(--r-md);border:1px solid var(--border-md);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;transition:background .15s,color .15s;}
   .btn:hover{background:var(--surface2);color:var(--text);}
   .btn-primary{background:var(--text);color:var(--surface);border-color:var(--text);}
   .btn-primary:hover{opacity:.88;}
@@ -55,7 +50,7 @@
   .page-header h1{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:4px;}
   .page-header p{font-size:13px;color:var(--text-2);}
   .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
-  .metric-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
+  .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
   .metric-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
   .metric-value{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:8px;letter-spacing:-.02em;}
   .metric-sub{font-size:12px;color:var(--text-2);line-height:1.6;}
@@ -64,16 +59,16 @@
   .badge-warn{background:var(--warn-bg);color:var(--warn-text);}
   .badge-ok{background:var(--ok-bg);color:var(--ok-text);}
   .badge-neutral{background:var(--neutral-bg);color:var(--neutral-text);}
-  .warn-bar{background:var(--warn-bg);border:.5px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--warn-text);margin-bottom:24px;display:flex;gap:10px;line-height:1.6;}
+  .warn-bar{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--warn-text);margin-bottom:24px;display:flex;gap:10px;line-height:1.6;}
   .section-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-  .card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
-  .card-header{padding:12px 18px;border-bottom:.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
+  .card-header{padding:12px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   .card-title{font-size:13px;font-weight:600;color:var(--text);}
   .card-body{padding:18px;}
   .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text-2);align-items:center;}
   .legend-item{display:flex;align-items:center;gap:5px;}
   .legend-swatch{width:22px;height:11px;border-radius:2px;flex-shrink:0;}
-  .legend-dline{width:18px;border-top:2px dashed #BA7517;}
+  .legend-dline{width:18px;border-top:2px dashed #B07314;}
 
   /* ── HEATMAP (단일 테이블, 색상 없음) ── */
   .heatmap-scroll{overflow-x:visible;}
@@ -82,35 +77,35 @@
   table.hm th{
     padding:5px 3px;text-align:center;font-size:9px;font-weight:600;
     color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;
-    border-bottom:.5px solid var(--border);background:var(--surface2);white-space:nowrap;
+    border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;
   }
   table.hm th.lc{text-align:left;padding-left:8px;}
   /* 연도 구분 헤더 */
   table.hm th.yr{
     background:var(--surface2);color:var(--text-2);
     font-size:11px;font-weight:700;letter-spacing:.06em;
-    border-bottom:.5px solid var(--border);
+    border-bottom:1px solid var(--border);
   }
   /* 7/24 만료선 */
-  table.hm th.dth{border-left:2px dashed #BA7517!important;}
+  table.hm th.dth{border-left:2px dashed #B07314!important;}
   /* 연도 경계선 */
-  table.hm th.yrb{border-left:1.5px solid var(--border-md)!important;}
+  table.hm th.yrb{border-left:1px solid var(--border-md)!important;}
 
   table.hm td{
     padding:5px 3px;text-align:center;font-size:10px;
-    font-weight:500;border-bottom:.5px solid var(--border);
+    font-weight:500;border-bottom:1px solid var(--border);
     white-space:nowrap;color:var(--text);
   }
   table.hm td.lc-c{text-align:left;padding-left:8px;font-weight:700;color:var(--text);background:var(--surface);}
   table.hm td.lc-s{text-align:left;padding-left:6px;font-size:9px;font-weight:400;color:var(--text-2);background:var(--surface);}
-  table.hm tr.tr td{background:var(--surface2)!important;border-top:.5px solid var(--border-md);font-weight:700;}
+  table.hm tr.tr td{background:var(--surface2)!important;border-top:1px solid var(--border-md);font-weight:700;}
   table.hm tr.sp td{height:10px;background:var(--bg)!important;border:none;}
   table.hm tr:last-child td{border-bottom:none;}
 
   /* 7/24 만료선 셀 */
-  table.hm td.dtd{border-left:2px dashed #BA7517!important;}
+  table.hm td.dtd{border-left:2px dashed #B07314!important;}
   /* 연도 경계선 셀 */
-  table.hm td.yrb{border-left:1.5px solid var(--border-md)!important;}
+  table.hm td.yrb{border-left:1px solid var(--border-md)!important;}
 
   /* 색상 없이 텍스트로만 구분 */
   .val-active{color:var(--text);font-weight:600;}
@@ -123,21 +118,21 @@
 
   /* ── CHART ── */
   .chart-tabs{display:flex;gap:6px;margin-bottom:14px;}
-  .chart-tab{font-size:12px;padding:5px 14px;border-radius:20px;border:.5px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:all .15s;}
+  .chart-tab{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text-2);cursor:pointer;font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;transition:all .15s;}
   .chart-tab.active{background:var(--text);color:var(--surface);border-color:var(--text);}
 
   /* ── DEF CARDS ── */
   .def-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;align-items:stretch;}
-  .def-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;}
+  .def-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;}
   .def-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
   .def-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;}
   .def-status{font-size:10px;color:var(--text-3);}
   .def-fullname{font-size:11px;color:var(--text-3);margin-bottom:8px;font-style:italic;}
   .def-body{font-size:12px;color:var(--text-2);line-height:1.65;}
-  .def-foot{font-size:11px;color:var(--text-3);margin-top:auto;padding-top:10px;border-top:.5px solid var(--border);}
+  .def-foot{font-size:11px;color:var(--text-3);margin-top:auto;padding-top:10px;border-top:1px solid var(--border);}
 
   /* ── TIMELINE ── */
-  .tl-row{display:flex;gap:14px;padding:14px 0;border-bottom:.5px solid var(--border);align-items:flex-start;}
+  .tl-row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
   .tl-row:last-child{border-bottom:none;}
   .tl-date{font-size:11px;color:var(--text-3);min-width:90px;padding-top:3px;}
   .tl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;}
@@ -164,19 +159,19 @@
   /* ── SHARE MODAL ── */
   .share-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;}
   .share-modal-backdrop.open{display:flex;}
-  .share-modal{background:var(--surface);border-radius:var(--r-xl);padding:28px;width:100%;max-width:400px;margin:16px;border:.5px solid var(--border-md);}
+  .share-modal{background:var(--surface);border-radius:var(--r-xl);padding:28px;width:100%;max-width:400px;margin:16px;border:1px solid var(--border-md);}
   .share-modal h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
   .share-modal p{font-size:13px;color:var(--text-2);margin-bottom:18px;}
   .share-url-box{display:flex;gap:8px;margin-bottom:20px;}
-  .share-url-box input{flex:1;font-size:12px;padding:8px 12px;border:.5px solid var(--border-md);border-radius:var(--r-md);background:var(--surface2);color:var(--text);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;}
+  .share-url-box input{flex:1;font-size:12px;padding:8px 12px;border:1px solid var(--border-md);border-radius:var(--r-md);background:var(--surface2);color:var(--text);font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;}
   .share-methods{display:flex;flex-direction:column;gap:8px;}
-  .share-method-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);border:.5px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text);font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;transition:background .15s;}
+  .share-method-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text);font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;transition:background .15s;}
   .share-method-btn:hover{background:var(--surface);border-color:var(--border-md);}
   .share-method-btn i{font-size:18px;color:var(--text-3);}
   .sm-label{font-weight:600;font-size:13px;color:var(--text);}
   .sm-sub{font-size:11px;color:var(--text-3);}
   .modal-close{float:right;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;}
-  footer{text-align:center;padding:24px;font-size:11px;color:var(--text-3);border-top:.5px solid var(--border);margin-top:20px;}
+  footer{text-align:center;padding:24px;font-size:11px;color:var(--text-3);border-top:1px solid var(--border);margin-top:20px;}
   @media(max-width:600px){
     .main{padding:16px 14px 40px;}
     .topnav{padding:0 14px;}
@@ -185,73 +180,26 @@
     .def-grid{grid-template-columns:1fr;}
     .tl-date{min-width:62px;font-size:10px;}
   }
-.aurora-home-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px 8px 12px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  border-radius: 100px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: #3a3f47;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
-}
-.aurora-home-btn:hover {
-  background: #16181d;
-  color: #ffffff;
-  border-color: transparent;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
-}
-.aurora-home-btn .arrow {
-  font-size: 15px;
-  line-height: 1;
-  transition: transform 0.18s;
-}
-.aurora-home-btn:hover .arrow {
-  transform: translateX(-2px);
-}
-@media (max-width: 640px) {
-  .aurora-home-btn {
-    top: 14px;
-    left: 14px;
-    padding: 7px 12px 7px 10px;
-    font-size: 12px;
-  }
-}
+.hub-btn{display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:#fff;border-radius:14px;
+  padding:10px 18px;font-size:14px;font-weight:600;letter-spacing:.01em;
+  text-decoration:none;flex-shrink:0;transition:background .15s;}
+.hub-btn:hover{background:var(--graphite);}
+.hub-btn .arrow{font-size:15px;line-height:1;}
+@media(max-width:640px){.hub-btn{padding:8px 14px;font-size:13px;}}
 </style>
 </head>
 <body>
-<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
-  <span class="arrow">←</span>
-  <span>Hub</span>
-</a>
-
 <nav class="topnav">
   <div class="nav-brand">
-    <div class="nav-logo"><i class="ti ti-chart-bar-popular"></i></div>
+    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="hub-btn"><span class="arrow">←</span><span>Hub</span></a>
     <div class="nav-titles">
       <span class="nav-title">US Tariff Watch</span>
-      <span class="nav-sub">Aurora World 생산운영팀 · Section 122 / 301 / IEEPA</span>
+      <span class="nav-sub">Aurora World 생산운영팀 · 중국·인도네시아 관세 · Section 122 / 301 / IEEPA</span>
     </div>
   </div>
   <div class="nav-right">
-    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">
-      <i class="ti ti-arrow-left"></i> Home
-    </a>
-    <span class="nav-date" id="nav-date">2026-06-01</span>
+    <span class="nav-date" id="nav-date">2026-07-22</span>
     <button class="btn btn-primary" onclick="openShare()"><i class="ti ti-share"></i> 공유</button>
   </div>
 </nav>
@@ -263,14 +211,14 @@
       <div class="metric-value">10%</div>
       <div class="metric-sub">Section 122 &nbsp;10%<br>Section 301 &nbsp;미적용 (List 4B 유예)</div>
       <div class="metric-badge badge-warn">~ 2026-07-24</div>
-      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">만료 후 → 신규 S301 <strong>12.5%</strong> 제안 중</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">만료 후 → <strong>0%</strong>(신규 S301 확정 전) ~ <strong>12.5%</strong>(확정 시) · List 4B 원문 확인</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">인도네시아 실효관세</div>
       <div class="metric-value">10%</div>
       <div class="metric-sub">Section 122 &nbsp;10%<br>Section 301 &nbsp;미부과 (조사 중)</div>
       <div class="metric-badge badge-warn">~ 2026-07-24</div>
-      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">만료 후 → 신규 S301 <strong>10%</strong> 제안 중</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">만료 후 → 신규 S301 <strong>10%</strong> 제안 vs 근거 조항 부재 시 <strong>0%</strong> 가능성 · 미확정</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">Section 122 만료</div>
@@ -281,8 +229,8 @@
     <div class="metric-card">
       <div class="metric-label">다음 주요 이벤트</div>
       <div class="metric-value" style="font-size:16px;padding-top:6px;">신규 S301 확정</div>
-      <div class="metric-sub">의견수렴 절차 전체 완료 (~7/16)<br>7/24 발효 목표 시 확정 임박</div>
-      <div class="metric-badge badge-warn">발표 임박</div>
+      <div class="metric-sub">7/22 기준 <strong>미발표</strong> — Greer "발표 임박"(CNBC)<br>Bloomberg: 이번 주 내 발표 전망</div>
+      <div class="metric-badge badge-warn">발표 임박 (D-2)</div>
     </div>
   </div>
 
@@ -290,10 +238,11 @@
     <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
     <div style="line-height:1.9;">
       <div style="margin-bottom:8px;">
-        <div><strong>신규 S301 — 최종 확정 발표 임박 (S122 만료 D-3)</strong></div>
-        <div>· 공청회(7/7~7/9) · 리버틀(7/16 마감) 등 의견수렴 절차 전체 완료 → USTR(미국 무역대표부) 최종 확정 고시만 남음</div>
-        <div>· 7/24 발효 목표 시 <strong>이번 주 초 확정 필요</strong> — 7/15 브라질 S301 최종 조치 발표로 USTR 최종 조치 사이클 개시</div>
-        <div>· 제안 세율: 중국 <strong>12.5%</strong> · 인도네시아 <strong>10%</strong></div>
+        <div><strong>신규 S301(강제노동) — 7/22 기준 최종 확정 미발표, "임박" 상태</strong></div>
+        <div>· 의견수렴 절차 전체 완료(리버틀 ~7/16) → USTR(미국 무역대표부) 최종 확정 고시만 남음</div>
+        <div>· Greer USTR 대표 CNBC 발언: 발표 임박, 의회·이해관계자 보고 후 공개 가능 · Bloomberg: 이번 주 발표 전망</div>
+        <div>· 브라질 S301 25%는 <strong>오늘(7/22) 발효</strong> — USTR 최종 조치 사이클 진행 중 확인</div>
+        <div>· 제안 세율: 중국 <strong>12.5%</strong> · 인도네시아 <strong>10%</strong> — 확정 전까지 양국 모두 <strong>0%</strong> 가능 (완구 List 4A설은 원문 확인으로 반증, 하단 분석 참조)</div>
       </div>
       <div>
         <div><strong>S122 징수는 7/24까지 계속</strong></div>
@@ -315,8 +264,8 @@
             <tr>
               <th class="lc" style="width:76px;">국가</th>
               <th class="lc" style="width:88px;">Section</th>
-              <th colspan="12" style="text-align:center;border-bottom:.5px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2025</th>
-              <th colspan="12" class="yrb" style="text-align:center;border-bottom:.5px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2026</th>
+              <th colspan="12" style="text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2025</th>
+              <th colspan="12" class="yrb" style="text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2026</th>
             </tr>
             <tr>
               <th class="lc" style="width:76px;"></th>
@@ -346,9 +295,9 @@
             </tr>
             <tr>
               <td class="lc-s">Section 301</td>
-              <td class="val-exp" colspan="12" style="text-align:center;">List 4B 유예 — 미적용 (0%)</td>
-              <td class="val-exp yrb" colspan="7" style="text-align:center;">List 4B 유예 — 미적용 (0%)</td>
-              <td class="val-tbd dth" colspan="5" style="text-align:center;">신규 S301 12.5% 제안 (7/24~ 예상)</td>
+              <td class="val-exp" colspan="12" style="text-align:center;">List 4B 유예 — 미적용 (0%) · 원문 확인</td>
+              <td class="val-exp yrb" colspan="7" style="text-align:center;">List 4B 유예 — 미적용 (0%) · 원문 확인</td>
+              <td class="val-tbd dth" colspan="5" style="text-align:center;">신규 S301 12.5% 제안 — 확정 전 0%</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
@@ -356,7 +305,7 @@
               <td class="val-total">10%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total-hi">20%</td><td class="val-total">10%</td><td class="val-total">10%</td>
               <td class="val-total yrb">10%</td>
               <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <td class="val-tbd dth">12.5%?</td><td class="val-tbd">12.5%?</td><td class="val-tbd">12.5%?</td><td class="val-tbd">12.5%?</td><td class="val-tbd">12.5%?</td>
+              <td class="val-tbd dth">0~12.5%?</td><td class="val-tbd">0~12.5%?</td><td class="val-tbd">0~12.5%?</td><td class="val-tbd">0~12.5%?</td><td class="val-tbd">0~12.5%?</td>
             </tr>
             <tr class="sp"><td colspan="26"></td></tr>
             <!-- ── Indonesia ── -->
@@ -377,23 +326,24 @@
               <td class="lc-s">Section 301</td>
               <td class="val-zero" colspan="12" style="text-align:center;"></td>
               <td class="val-zero yrb" colspan="7" style="text-align:center;"></td>
-              <td class="val-tbd dth" colspan="5" style="text-align:center;">신규 S301 10% 제안 (7/24~ 예상)</td>
+              <td class="val-tbd dth" colspan="5" style="text-align:center;">신규 S301 10% 제안 — 미확정 시 0% 가능</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
               <td class="val-zero" colspan="12" style="text-align:center;"></td>
               <td class="val-zero yrb"></td>
               <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <td class="val-tbd dth">10%?</td><td class="val-tbd">10%?</td><td class="val-tbd">10%?</td><td class="val-tbd">10%?</td><td class="val-tbd">10%?</td>
+              <td class="val-tbd dth">0~10%?</td><td class="val-tbd">0~10%?</td><td class="val-tbd">0~10%?</td><td class="val-tbd">0~10%?</td><td class="val-tbd">0~10%?</td>
             </tr>
           </tbody>
         </table>
       </div></div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;line-height:1.7;">
         ※ IEEPA(중국 한정): 2025-02-04(10%) → 2025-03-04(20%) → 2025-11-10(10%↓) → 2026-02-24 위헌 소멸<br>
-        ※ 기존 Section 301(2018-19 대중국): HTS 9503 → List 4B 유예 → 현재 0%. 단, <strong>신규 강제노동 S301(2026-06-02 제안)은 별개 조치</strong> — 국가 전체 대상. 완구의 Annex A 면제 여부 미확인, 면제 가능성 낮음(추정)<br>
-        ※ 2026 Aug 이후 수치: USTR 제안 단계 — 공청회(7/7~9)·리버틀(7/16) 완료, 7/24 전후 최종 확정 예상. "?"는 미확정 표기<br>
-        ※ 본 표는 <strong>추가관세 레이어만</strong> 표시 — HTS 9503.00.2100의 MFN 기본관세 <strong>4.7%는 별도·상시 적용</strong> (총부담 = 표 수치 + 4.7%)
+        ※ 기존 Section 301(2018-19 대중국): HTS 9503.00.00은 <strong>List 4B(유예·0%) 소속 — 84 FR 43304 U.S. note 20(s) 원문 전수 확인(2026-07-22)</strong>. List 4A(9903.88.15) 열거 목록에 9503 부재, CBP 판례 3건(N323790·N326979·N337145) 및 실납부(10%만)와 정합. 딥리서치의 "List 4A 7.5% 잔존" 주장은 반증<br>
+        ※ <strong>신규 강제노동 S301(2026-06-02 제안)은 별개 조치</strong> — 국가 전체 대상. 완구의 Annex A 면제 여부 미확인, 면제 가능성 낮음(추정)<br>
+        ※ 2026 Aug 이후 수치: 미확정 — 신규 S301은 7/22 기준 최종 고시 미발표. "?"는 미확정 표기<br>
+        ※ MFN 기본관세: HTSUS 9503.00.00은 Column 1-General <strong>Free 가능성</strong> — 기존 4.7% 표기는 <strong>확인 필요</strong>로 정정(9503.00.2100은 미국 통관 코드가 아닐 수 있음). 스태킹 총부담 수치는 코드 확정 시까지 보류
       </div>
     </div>
   </div>
@@ -407,9 +357,9 @@
         <button class="chart-tab" onclick="switchChart('indonesia',this)">Indonesia</button>
       </div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(92,26,0,.85);"></div>IEEPA</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(55,138,221,.85);"></div>Section 122</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(239,159,39,.45);border:1.5px solid rgba(186,117,23,.9);"></div>신규 S301 (제안)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(58,63,71,.85);"></div>IEEPA</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(43,108,255,.8);"></div>Section 122</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:rgba(216,149,43,.38);border:1.5px solid rgba(176,115,20,.9);"></div>신규 S301 (제안)</div>
       </div>
     </div>
     <div class="card-body">
@@ -417,7 +367,7 @@
         <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
       </div>
       <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
-        주황 점선: S122 만료 (2026-07-24) — 이후 주황 반투명 구간은 신규 S301 제안치 (중국 12.5% / 인니 10%, 미확정) · 빨간 점선: IEEPA 위헌 종료 (2026-02-24)
+        주황 점선: S122 만료 (2026-07-24) — 이후 주황 반투명 구간은 상단 시나리오(신규 S301 제안치: 중국 12.5% / 인니 10%, 미확정). 확정 전까지 양국 모두 0% 가능 — 완구는 기존 301(List 4B) 유예로 잔존 관세 없음 · 빨간 점선: IEEPA 위헌 종료 (2026-02-24)
       </div>
     </div>
   </div>
@@ -427,26 +377,27 @@
   <div class="section-label"><i class="ti ti-search"></i> 오로라월드 관세 구조 분석</div>
   <div class="card" style="margin-bottom:8px;">
     <div style="display:grid;grid-template-columns:auto 1fr auto;">
-      <div style="padding:16px;background:var(--surface2);border-right:.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:88px;gap:4px;">
+      <div style="padding:16px;background:var(--surface2);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:88px;gap:4px;">
         <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">HTS 코드</div>
-        <div style="font-size:12px;font-weight:600;color:var(--text);font-family:monospace;">9503.00.2100</div>
-        <div style="font-size:10px;color:var(--text-3);margin-top:2px;">무역팀 확인</div>
+        <div style="font-size:12px;font-weight:600;color:var(--text);">9503.00.2100</div>
+        <div style="font-size:10px;color:var(--text-3);margin-top:2px;">무역팀 확인 · 수출 신고 코드 추정</div>
+        <div style="font-size:10px;color:var(--warn-text);">미국 통관 10자리 확인 중</div>
       </div>
       <div style="padding:16px;display:flex;flex-direction:column;justify-content:center;gap:8px;">
         <div style="font-size:14px;font-weight:600;color:var(--text);">사람 형상 인형 (Dolls representing human beings)</div>
-        <div style="font-size:12px;color:var(--text-2);line-height:1.5;">오로라월드 전 제품 공통 적용 코드 · MFN 기본관세 4.7% (상시 적용, 추가관세와 중첩) · Chapter 95 완구류 헤딩</div>
+        <div style="font-size:12px;color:var(--text-2);line-height:1.5;">오로라월드 전 무역서류 공통 코드 — 단, EU CN/한국 HSK 계열로 추정. 미국 통관은 9503.00.0071/0073/0090 계열(연령 라벨 기준) 가능성 · MFN: HTSUS 9503.00.00 Column 1-General <strong>Free 가능성 (4.7%는 확인 필요)</strong></div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--s122-bg);color:var(--s122-text);border:.5px solid var(--border);">HTS 9503.00.2100</span>
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--s122-bg);color:var(--s122-text);border:1px solid var(--border);">HTS 9503 (완구)</span>
           <span style="color:var(--text-3);font-size:13px;">→</span>
-          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--warn-bg);color:var(--warn-text);border:.5px solid var(--warn-border);">Section 301 List 4B</span>
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--s301-bg);color:var(--s301-text);border:1px solid var(--border);">Section 301 List 4B — 원문 확인 (84 FR 43304)</span>
           <span style="color:var(--text-3);font-size:13px;">→</span>
-          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--ok-bg);color:var(--ok-text);border:.5px solid var(--border);">유예 중 — 미적용</span>
+          <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--ok-bg);color:var(--ok-text);border:1px solid var(--border);">유예 중 — 미적용 (현행 S122 10%만 납부)</span>
         </div>
       </div>
-      <div style="padding:16px;border-left:.5px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px;min-width:100px;">
+      <div style="padding:16px;border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px;min-width:100px;">
         <div class="metric-badge badge-neutral">List 4B</div>
-        <div style="font-size:26px;font-weight:700;color:#1D9E75;letter-spacing:-.02em;">0%</div>
-        <div style="font-size:11px;color:var(--text-3);">Section 301 관세</div>
+        <div style="font-size:26px;font-weight:700;color:#1E9E6A;letter-spacing:-.02em;">0%</div>
+        <div style="font-size:11px;color:var(--text-3);">현행 S301 관세<br>(유예 — 원문 확인)</div>
       </div>
     </div>
   </div>
@@ -457,76 +408,178 @@
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
         <thead>
           <tr>
-            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">구분</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">발효일</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">세율</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">현황</th>
-            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:.5px solid var(--border);background:var(--surface2);">오로라월드</th>
+            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">구분</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">발효일</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">세율</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황</th>
+            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">오로라월드</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 1</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-07-06</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">List 1</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;">2018-07-06</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-3);">해당 없음</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 2</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-08-23</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">List 2</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;">2018-08-23</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-3);">해당 없음</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 3</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2018-09-24</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">List 3</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;">2018-09-24</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);text-align:center;">25%</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-3);">해당 없음</td>
           </tr>
           <tr>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);">List 4A</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);color:var(--text-2);text-align:center;">2019-09-01</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);font-weight:600;color:var(--text);text-align:center;">7.5%</td>
-            <td style="padding:10px;border-bottom:.5px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
-            <td style="padding:10px 14px;border-bottom:.5px solid var(--border);color:var(--text-3);">해당 없음</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">List 4A</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;">2019-09-01</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);text-align:center;">7.5%</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);text-align:center;"><span class="metric-badge badge-active">부과 중</span></td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-3);">해당 없음 — note 20(s) 원문 확인 (딥리서치 4A 주장 반증)</td>
           </tr>
-          <tr style="background:rgba(186,117,23,.04);">
+          <tr style="background:rgba(216,149,43,.05);">
             <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:var(--text);">List 4B</td>
             <td style="padding:10px;border-bottom:none;color:var(--text-2);text-align:center;">2019-12-15 (예정)</td>
             <td style="padding:10px;border-bottom:none;text-align:center;"><span style="text-decoration:line-through;color:var(--text-3);font-weight:600;">15%</span></td>
             <td style="padding:10px;border-bottom:none;text-align:center;"><span class="metric-badge badge-warn">유예 중</span></td>
-            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:#1D9E75;">✓ 해당 — 현재 0%</td>
+            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:var(--ok-text);">✓ 해당 — 유예 중 0% (원문 확인 2026-07-22)</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <div style="border-left:3px solid #1D9E75;padding:14px 18px;background:var(--ok-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:8px;">
+  <div style="border-left:3px solid #1E9E6A;padding:14px 18px;background:var(--ok-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:8px;">
     <div style="font-size:10px;color:var(--ok-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600;">결론</div>
     <div style="font-size:12px;color:var(--ok-text);line-height:2.1;">
-      <div>· HTS <code style="font-size:11px;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;">9503.00.2100</code> → Section 301 <strong>List 4B</strong> 해당</div>
-      <div>· List 4B: <strong>무기한 유예</strong> (2019-12 Phase One 합의) — 실제 부과 이력 없음</div>
-      <div>· 현재 적용 관세: <strong>Section 122 10%만</strong></div>
-      <div>· Section 122 만료: <strong>2026-07-24</strong> → 신규 강제노동 S301로 대체 예상 (중국 <strong>12.5%</strong> / 인니 <strong>10%</strong> 제안)</div>
-      <div>· 신규 S301은 MFN 기본관세에 <strong>중첩(stacking)</strong> — HTS 9503.00.2100은 MFN <strong>4.7%</strong> 별도 존재 → 확정 시 총부담: 중국 <strong>약 17.2%</strong> / 인니 <strong>약 14.7%</strong></div>
+      <div>· 현재 실납부 관세: <strong>Section 122 10%만</strong> (중국·인니 공통, 301 미포함 — Jeremy 확인)</div>
+      <div>· 완구(9503.00.00)의 기존 301 소속: <strong>List 4B(유예·0%) — 확정</strong>. 84 FR 43304 U.S. note 20(s) 원문 전수 확인 결과 List 4A 목록에 9503 부재 + CBP 판례 3건 + 실납부 3중 정합. 딥리서치 "4A 7.5% 잔존" 반증</div>
+      <div>· Section 122 만료: <strong>2026-07-24 00:01 EDT</strong> 자동 소멸 (의회 연장 없음 확인) — 5개월치 10% 부담은 하반기 COGS에서 확실히 제거</div>
+      <div>· 7/24 이후: 중국 <strong>0%(신규 S301 확정 전) ~ 12.5%(확정 시)</strong> · 인니 <strong>0% ~ 10%</strong> — 유일한 확정 변수는 신규 S301 최종 고시</div>
+      <div>· MFN: HTSUS 9503.00.00은 Column 1-General <strong>Free 가능성</strong> — 4.7% 및 스태킹 총부담 수치(17.2%/14.7%)는 코드 확정 시까지 <strong>보류</strong></div>
     </div>
   </div>
 
   <div style="border-left:3px solid var(--warn-border);padding:11px 16px;background:var(--warn-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:20px;">
     <div style="font-size:12px;color:var(--warn-text);line-height:2.0;">
       <div><i class="ti ti-alert-triangle" style="font-size:12px;vertical-align:-1px;margin-right:4px;"></i><strong>주의</strong></div>
-      <div>· 기존 List 4B: <strong>유예</strong> (소멸 아님) — 정책 결정 시 즉시 발동 가능</div>
+      <div>· 기존 List 4B: <strong>유예</strong> (소멸 아님) — 정책 결정 시 즉시 발동 가능 (발동 시 15% 예정이었음)</div>
+      <div>· <strong>잔여 확인 2건</strong>: ① 자사 물량 중 9503 외 헤딩 신고분 유무 — 가방·파우치류(4202, List 3 <strong>25%</strong> 부과 중)·홈텍스타일(9404는 List 4A <strong>7.5%</strong>) 혼재 시 해당 라인은 301 노출 (판례 N337145의 베개 사례) ② 2019년 이후 수정 고시(2024 4년 재검토 인상 등)에서 9503 추가 여부 — 공개 자료상 무관(EV·배터리·태양광 등)이나 관세사 최종 확인</div>
       <div>· <strong>신규 강제노동 S301 (2026-06-02 제안)은 List 4B와 별개 조치</strong> — 국가 전체 수입품 대상</div>
       <div>· 완구(HTS 9503)의 Annex A 면제 여부 <strong>미확인 — 면제 가능성 낮음(추정)</strong>. 원자재·국내생산불가·경제혼란 등 면제 기준에 완구 미해당 판단. 관세사 확인 진행 필요</div>
       <div>· 범주형 면제(USMCA·CAFTA-DR 섬유·S232 대상품·정보자료·기부품 등)에도 <strong>완구 미해당</strong> — 면제 경로 사실상 없음</div>
       <div>· 최종 세율·품목은 7/24 전후 USTR 확정 고시로 결정</div>
       <div>· 신규 S301도 <strong>법적 도전(소송) 예상</strong> — 확정 후에도 IEEPA처럼 법원에서 변동 가능성 존재</div>
       <div>· <strong>통관 타이밍 주의</strong>: 관세 인하를 기대하고 Entry Date를 7/24 이후로 늦추면, 중국분은 신규 S301 적용 시 오히려 10% → <strong>12.5%로 인상</strong>될 수 있음</div>
-      <div>· <strong>S122 환급 가능성</strong>: 소송에서 최종 위법 확정 시 2/24~7/24 납부분 <strong>전액 환급 청구 대상</strong> (IEEPA CAPE 환급과 동일 구조) — 납부 기록 보관 필요</div>
+      <div>· <strong>S122 환급</strong>: CIT 구제는 원고 3인 한정(완구 수입사 Basic Fun 포함) — 오로라는 <strong>protest / PSC / CIT 제소로 지금 권리 보전 필요</strong>. protest 창구는 entry별 청산일로부터 <strong>180일</strong>. 항소 결과 대기는 선택지 아님</div>
+    </div>
+  </div>
+
+  <!-- EXCESS CAPACITY 301 -->
+  <div class="section-label"><i class="ti ti-world"></i> 두 번째 신규 S301 트랙 — 16개국 Excess Capacity 조사</div>
+  <div class="card" style="margin-bottom:8px;">
+    <div class="card-body" style="padding:16px 18px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+        <div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">조사 개요</div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
+            · 개시: <strong>2026-03-11</strong> (FR doc 2026-05214 · 도켓 USTR-2026-0067/0068)<br>
+            · 대상: "structural excess capacity" 16개 경제권<br>
+            · <strong style="color:var(--text);">중국·인도네시아 모두 포함</strong> — 오로라 생산기지 두 곳 동시 조사 대상
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">진행 상황 (7/22 기준)</div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
+            · 공청회: 5/5~5/8 완료<br>
+            · 판정 목표: <strong>7/24 전후</strong> (USTR·대통령 언급, 비공식) — S122 만료일과 일치<br>
+            · <strong style="color:var(--warn-text);">7/22 현재 판정 미발표</strong> — 강제노동 건만 조사 결과 발표된 상태
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">완구의 위치</div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
+            · 중국 조사: "toys and sporting goods" 서술 문단 1회 등장, 예시 업종 목록엔 없음<br>
+            · 인니 조사: 금속·농산물·연료·섬유·건자재·시멘트 근거 — 완구 언급 없음<br>
+            · 목록은 예시(illustrative)·구제는 조사 업종에 비한정 → <strong style="color:var(--text);">포함도 배제도 아닌 상태</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--text-3);margin-bottom:20px;line-height:1.7;">※ 강제노동 60개국 조사(중국 12.5% / 인니 10% 제안)와 <strong>별개의 트랙</strong> — 두 조치가 각각 확정되면 중첩 가능성도 배제 못함. 판정 발표 시 즉시 반영 예정</div>
+
+  <!-- ACTION ITEMS -->
+  <div class="section-label"><i class="ti ti-checklist"></i> 확인 필요 항목 &amp; 액션 (2026-07-22 기준)</div>
+  <div class="card" style="margin-bottom:20px;">
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr>
+            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">항목</th>
+            <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황 · 비고</th>
+            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">담당</th>
+            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">시점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">① 환급 권리 보전 (5개월치 10%)</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;"><strong style="color:var(--warn-text);">진행 중 (7/22 Jeremy)</strong> — 브로커 선 protest 가능 의견 vs 변호사 통한 CIT 별도 소송 필요 의견 병존, 추가 확인 후 업데이트 예정 · protest 창구는 entry별 청산일부터 <strong>180일</strong> · 두 트랙 모두 유효한 보전 수단(로펌 알림 확인)</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy + 관세사/변호사</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">즉시</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">② Entry Summary 10자리 HTS 확보</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">4A/4B는 원문으로 판정 완료(4B) — 남은 용도: ① 자사 신고 헤딩 대조 (완구 외 헤딩 물량의 301 노출 점검: 4202 가방류 25% 등) ② MFN Free 확인 ③ 환급 청구 기간 산정</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">즉시</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">③ 10% 개시일 대조 (2/24 vs 3/4)</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">포고문 발효 2/24 vs 미국 재무팀 보고 Entry Date 3/4 — <strong>8일 차이</strong>는 환급 청구 대상 기간에 직결, entry summary 실물로 대조</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">미국 재무 + 관세사</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">즉시</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">④ 인도네시아산 7/24 이후 세율 확정</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">통관일 기준 HTS 제99류 subchapter II(9903.01.xx/9903.02.xx) 조회 + 미-인니 협정 이행 포고문 유무 확인 — <strong>생산 70%가 걸린 값, 어떤 숫자도 확정 전 계획 반영 금지</strong></td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세사</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">7/24 이전</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑤ CAPE 트랙 분리 관리</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">CAPE는 IEEPA만 제거하고 301·232·201·MFN을 청산 시 재계산 → <strong>추징 고지 가능성</strong> · 기존 USD 1,000만 청구(846K 수령)와 합산 금지 · 참고: IEEPA 환급 전체 규모 약 <strong>$166B / 약 33만 수입자</strong>, 5월 말 기준 $85B 승인, Phase 3(청산확정분) 7월 말 개시 예정</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">미국 재무</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">상시</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑥ Annex A에서 HTS 9503 포함 여부</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">신규 S301 면제 리스트 원문(스캔 이미지 약 68p) 확인 — 5개 면제 기준·범주형 면제 모두 완구 미해당 추정이나 원문 확정 필요</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세사 / Jeremy</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">확정 고시 전</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑦ 인니 가공 substantial transformation</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">중국 벤더 부품의 인니 가공이 중국 원산지를 벗어나는지 — 사실관계별 CBP ruling 사안, 인니 기지의 중국 301 차단 효과가 여기 달림</td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세 변호사</td>
+            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">4Q</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:var(--text);">⑧ 301 exclusion 178건 만료 점검</td>
+            <td style="padding:10px;border-bottom:none;color:var(--text-2);line-height:1.7;">살아남은 exclusion(품목별 164 + 태양광 14)이 <strong>2026-11-09 만료</strong> — 영향 점검 (완구용 exclusion은 없음 확인)</td>
+            <td style="padding:10px;border-bottom:none;color:var(--text-2);text-align:center;white-space:nowrap;">관세사</td>
+            <td style="padding:10px 14px;border-bottom:none;color:var(--text-2);text-align:center;white-space:nowrap;">4Q</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -543,13 +596,13 @@
       <div class="def-head"><span class="def-badge" style="background:var(--s301-bg);color:var(--s301-text);">Section 301</span><span class="def-status"><i class="ti ti-lock" style="font-size:12px;"></i> 장기 제재</span></div>
       <div class="def-fullname">Section 301 of the Trade Act of 1974</div>
       <div class="def-body">외국 정부의 불공정 무역행위(지식재산 침해·시장 접근 제한 등)에 대응하기 위해 보복 관세 또는 무역 제재를 부과할 수 있도록 하는 권한.</div>
-      <div class="def-foot">기간 제한 없음 · 금액 상한 없음<br><strong>HTS 9503 (완구) → List 4B → 유예 중 → 오로라월드 미적용</strong><br>인도네시아: 2026/03/11 조사 개시</div>
+      <div class="def-foot">기간 제한 없음 · 금액 상한 없음<br><strong>완구(9503.00.00) → List 4B → 유예 중 0% (원문 확인)</strong><br>인도네시아: 2026/03/11 조사 개시</div>
     </div>
     <div class="def-card">
       <div class="def-head"><span class="def-badge" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA</span><span class="def-status" style="color:var(--danger-text);"><i class="ti ti-circle-x" style="font-size:12px;"></i> 위헌 종료</span></div>
       <div class="def-fullname">International Emergency Economic Powers Act</div>
       <div class="def-body">트럼프 2기가 2025년 대중국 관세(Fentanyl+상호관세, 최고 20%)에 사용한 권한. 2026-02-20 대법원 위헌 판결로 종료. Section 122로 대체.</div>
-      <div class="def-foot">2025-02-04 발동 → 최고 20% → 2026-02-24 위헌 소멸<br>중국에만 적용 (인도네시아 해당 없음)</div>
+      <div class="def-foot">2025-02-04 발동 → 최고 20% → 2026-02-24 위헌 소멸<br>중국에만 적용 (인도네시아 해당 없음)<br>CAPE 환급: 총 ~$166B/33만 수입자 · $85B 승인(5월 말) · Phase 3 7월 말 예정</div>
     </div>
     <div class="def-card">
       <div class="def-head"><span class="def-badge" style="background:var(--ok-bg);color:var(--ok-text);">USTR</span><span class="def-status"><i class="ti ti-building" style="font-size:12px;"></i> 집행 기관</span></div>
@@ -565,7 +618,7 @@
     <div class="card-body" style="padding:8px 18px;">
       <div class="tl-row">
         <div class="tl-date">2025-02-04</div>
-        <div class="tl-dot" style="background:#5C1A00;"></div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
         <div class="tl-content">
           <div class="tl-title">IEEPA 발동 — 중국 Fentanyl 관세 10% 최초 부과</div>
           <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. MFN 0% · Section 301 List 4B 유예. 중국 합산 10% 도달.</div>
@@ -574,7 +627,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2025-03-04</div>
-        <div class="tl-dot" style="background:#5C1A00;"></div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
         <div class="tl-content">
           <div class="tl-title">IEEPA 추가 인상 — 중국 합산 최고 27.5%</div>
           <div class="tl-desc">IEEPA 10%→20% 추가 인상. 합산 최고 27.5% 도달. 오로라월드, 중국 아웃소싱 Baby 단가 5% D/C 대응 시작(4월 출고분부터).</div>
@@ -583,7 +636,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2025-10-30</div>
-        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
         <div class="tl-content">
           <div class="tl-title">미중 부산 정상회담 (APEC) — IEEPA 20%→10% 인하</div>
           <div class="tl-desc">IEEPA 인하 합의(11/10 발효). 합산 27.5%→17.5% 복귀. 오로라월드 Baby D/C 5%→3%로 조정(11/13 출고분부터).</div>
@@ -592,7 +645,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-02-20</div>
-        <div class="tl-dot" style="background:#E24B4A;"></div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
         <div class="tl-content">
           <div class="tl-title">SCOTUS, IEEPA 관세 전면 위헌 판결</div>
           <div class="tl-desc">대법원 6-3 판결로 IEEPA 기반 관세 전면 위헌 선고. 당일 Section 122 긴급 발동. 2026년 4월 CAPE 포털 통해 IEEPA 관세 환급 절차 개시.</div>
@@ -601,7 +654,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-02-24</div>
-        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
         <div class="tl-content">
           <div class="tl-title">Section 122 발동 — 전 세계 10% 관세 시행</div>
           <div class="tl-desc">대부분의 수입국에 10% 일괄 관세 적용. 150일 한시 조치로 의회 연장 없이는 2026/07/24 자동 만료.</div>
@@ -610,7 +663,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-03-11</div>
-        <div class="tl-dot" style="background:#BA7517;"></div>
+        <div class="tl-dot" style="background:#B07314;"></div>
         <div class="tl-content">
           <div class="tl-title">USTR, 인도네시아 포함 16개국 Section 301 조사 개시</div>
           <div class="tl-desc">과잉 생산 설비·불공정 무역 관행 이유로 조사 개시. 인도네시아·베트남·캄보디아·태국 등 아시아 주요 대체 생산국 포함.</div>
@@ -619,7 +672,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-05-07</div>
-        <div class="tl-dot" style="background:#E24B4A;"></div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
         <div class="tl-content">
           <div class="tl-title">CIT, Section 122 법적 근거에 부정적 판결</div>
           <div class="tl-desc">CIT 2:1 판결로 Section 122 발동의 법적 요건 미충족 판단. 행정부 항소 및 집행정지 여부에 따라 만료·환급 시점 변동 가능.</div>
@@ -628,7 +681,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-05-13~15</div>
-        <div class="tl-dot" style="background:#1D9E75;"></div>
+        <div class="tl-dot" style="background:#1E9E6A;"></div>
         <div class="tl-content">
           <div class="tl-title">트럼프 방중 — 미중 정상회담</div>
           <div class="tl-desc">Boeing 200대 구매, 농산물 $170억/년 구매 합의. 무역이사회 설치 합의. 관세율 직접 합의는 없음. "관계 재설정" 성격으로 평가.</div>
@@ -637,7 +690,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-06-02</div>
-        <div class="tl-dot" style="background:#BA7517;"></div>
+        <div class="tl-dot" style="background:#B07314;"></div>
         <div class="tl-content">
           <div class="tl-title">USTR, 강제노동 기반 신규 Section 301 관세 제안</div>
           <div class="tl-desc">60개국 조사 결과 발표. 중국 12.5%, 인도네시아 10% 제안. 기존 List 4B와 별개의 신규 조치로, 국가 전체 수입품 대상 (Annex A 면제 품목 제외). S122 만료 직후 발효가 목표.</div>
@@ -646,7 +699,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-06-11</div>
-        <div class="tl-dot" style="background:#E24B4A;"></div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
         <div class="tl-content">
           <div class="tl-title">CAFC, CIT 금지명령에 스테이 발부</div>
           <div class="tl-desc">연방순회항소법원이 CIT의 S122 위헌 판결 집행을 정지. CBP는 만료일(7/24)까지 전체 수입자 대상 징수 계속. 정부 항소 브리프는 7월 제출 예정 — 만료 전 소송 종결 사실상 불가.</div>
@@ -655,7 +708,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-06-12</div>
-        <div class="tl-dot" style="background:#1D9E75;"></div>
+        <div class="tl-dot" style="background:#1E9E6A;"></div>
         <div class="tl-content">
           <div class="tl-title">CBP, 강제노동 수입금지 집행 운영 가이드 발표</div>
           <div class="tl-desc">수입자에게 공급망 전반의 강제노동 실사(due diligence) 문서를 선제적으로 준비할 것을 요구. 관세와 별개로 통관 지연·화물 압류 리스크 관리 필요 — 오로라월드도 인니 자사공장·중국 아웃소싱 공급망 실사 문서화 검토 필요.</div>
@@ -664,7 +717,7 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-07-07~09</div>
-        <div class="tl-dot" style="background:#BA7517;"></div>
+        <div class="tl-dot" style="background:#B07314;"></div>
         <div class="tl-content">
           <div class="tl-title">신규 Section 301 공청회 완료 (USITC, 3일간)</div>
           <div class="tl-desc">서면 의견 접수 마감(7/6) 후 3일간 공청회 진행 완료. 리버틀(반박) 의견 마감: 7/16. 이후 USTR 최종 확정만 남음.</div>
@@ -673,25 +726,34 @@
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-07-15</div>
-        <div class="tl-dot" style="background:#378ADD;"></div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
         <div class="tl-content">
-          <div class="tl-title">USTR, 브라질 Section 301 최종 조치 발표 (참고)</div>
-          <div class="tl-desc">오로라월드와 직접 무관한 별개 조사이나, USTR이 S301 최종 조치 사이클을 개시했다는 신호 — 강제노동 건 최종 확정도 임박 시사.</div>
+          <div class="tl-title">USTR, 브라질 Section 301 최종 조치 발표 (25% · 참고)</div>
+          <div class="tl-desc">오로라월드와 직접 무관한 별개 조사이나, USTR이 S301 최종 조치 사이클을 개시했다는 신호 — 강제노동 건 최종 확정도 임박 시사. 발효일 7/22.</div>
           <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
         </div>
       </div>
       <div class="tl-row">
         <div class="tl-date">2026-07-16</div>
-        <div class="tl-dot" style="background:#BA7517;outline:2px solid #EF9F27;outline-offset:1px;"></div>
+        <div class="tl-dot" style="background:#B07314;outline:2px solid #D8952B;outline-offset:1px;"></div>
         <div class="tl-content">
           <div class="tl-title">리버틀 의견 마감 — 신규 S301 의견수렴 절차 전체 종료</div>
           <div class="tl-desc">공청회 종료(7/9) 후 5영업일 마감 규정에 따라 절차상 마지막 단계 완료. USTR 최종 확정 고시만 남음 — S122 만료(7/24) 전후 발효 유력.</div>
           <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
         </div>
       </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-07-22</div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
+        <div class="tl-content">
+          <div class="tl-title">브라질 S301 25% 발효 (오늘) — 최종 조치 실행 템플릿 확인</div>
+          <div class="tl-desc">HTSUS 9903.05.01로 부과 개시. in-transit 예외: 7/22 00:01 ET 이전 선적 + 7/29 이전 통관 건 제외. 강제노동 건 발효 시에도 유사한 in-transit 구조 적용 가능성 — 운송 중 물량 대응 참고. 같은 날 Greer "강제노동 최종 세율 발표 임박" 발언(CNBC), Bloomberg 이번 주 발표 전망 보도.</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">오늘</div>
+        </div>
+      </div>
       <div class="tl-row future">
         <div class="tl-date">2026-07-24</div>
-        <div class="tl-dot" style="background:#BA7517;outline:2px solid #EF9F27;outline-offset:1px;"></div>
+        <div class="tl-dot" style="background:#B07314;outline:2px solid #D8952B;outline-offset:1px;"></div>
         <div class="tl-content">
           <div class="tl-title">⚑ Section 122 만료 예정 — 핵심 분기점</div>
           <div class="tl-desc">전 세계 10% 관세 자동 소멸 예정. 이후 S301 국가별 차등 관세로 대체 가능성. 인도네시아는 조사 결과에 따라 변동.</div>
@@ -755,17 +817,16 @@ function buildChart(country){
   const ctx=document.getElementById('tariffChart');
   if(myChart)myChart.destroy();
   const d=chartData[country];
-  const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  const tc=isDark?'#6a6965':'#8a8985';
-  const gc=isDark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)';
+  const tc='#6B717B';
+  const gc='rgba(22,24,29,.05)';
   myChart=new Chart(ctx,{
     type:'bar',
     data:{
       labels,
       datasets:[
-{label:'Section 122',data:d.s122,backgroundColor:'rgba(55,138,221,.85)',stack:'t',borderWidth:0},
-        {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(92,26,0,.85)',stack:'t',borderWidth:0},
-        {label:'신규 S301 (제안)',data:d.news301,backgroundColor:'rgba(239,159,39,.45)',borderColor:'rgba(186,117,23,.9)',borderWidth:1.5,stack:'t'}
+{label:'Section 122',data:d.s122,backgroundColor:'rgba(43,108,255,.8)',stack:'t',borderWidth:0},
+        {label:'IEEPA',data:d.ieepa,backgroundColor:'rgba(58,63,71,.85)',stack:'t',borderWidth:0},
+        {label:'신규 S301 (제안)',data:d.news301,backgroundColor:'rgba(216,149,43,.38)',borderColor:'rgba(176,115,20,.9)',borderWidth:1.5,stack:'t'}
       ]
     },
     options:{
@@ -780,21 +841,20 @@ function buildChart(country){
       id:'vlines',
       afterDraw(chart){
         const{ctx:c,scales:{x,y}}=chart;
-        const isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
-        const tc=isDark?'rgba(240,239,232,.5)':'rgba(26,26,24,.5)';
+        const tc='rgba(22,24,29,.55)';
         // 7/24 만료선
         const x1=x.getPixelForValue(18.5);
-        c.save();c.strokeStyle='#BA7517';c.lineWidth=1.5;c.setLineDash([4,3]);
+        c.save();c.strokeStyle='#B07314';c.lineWidth=1.5;c.setLineDash([4,3]);
         c.beginPath();c.moveTo(x1,y.top);c.lineTo(x1,y.bottom);c.stroke();
         // 만료 후 "0%" 레이블
         c.setLineDash([]);
-        c.fillStyle=tc;c.font='500 10px Helvetica Neue,sans-serif';c.textAlign='center';
+        c.fillStyle=tc;c.font='500 10px Arial,Pretendard,sans-serif';c.textAlign='center';
         const xMid=(x1+x.right)/2;
         c.fillText('S122 만료 후',xMid,y.top+14);
         c.fillText('→ 신규 S301 (제안)',xMid,y.top+26);
         // IEEPA 종료선
         const x2=x.getPixelForValue(13.5);
-        c.strokeStyle='rgba(226,75,74,.5)';c.lineWidth=1;c.setLineDash([3,3]);
+        c.strokeStyle='rgba(210,75,69,.5)';c.lineWidth=1;c.setLineDash([3,3]);
         c.beginPath();c.moveTo(x2,y.top);c.lineTo(x2,y.bottom);c.stroke();
         c.restore();
       }
