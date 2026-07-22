@@ -102,6 +102,9 @@
   .tag-naphtha { background: var(--orange-bg); color: var(--orange-dark); }
   .tag-gas { background: var(--green-bg); color: var(--green-dark); }
   .event-desc { color: var(--text-muted); }
+  .src { color: var(--text-hint); font-size: 11px; }
+  .scenario-caveat { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--amber-bg); font-size: 12px; line-height: 1.6; color: #633806; }
+  .scenario-caveat b { font-weight: 600; }
 
   /* Scenario */
   .scenario-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
@@ -147,26 +150,23 @@
     align-items: center;
     gap: 7px;
     padding: 8px 14px 8px 12px;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: #16181D;
+    border: 1px solid #16181D;
     border-radius: 100px;
     font-family: Arial, "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.01em;
-    color: #3a3f47;
+    color: #FFFFFF;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: none;
     transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
   }
   .aurora-home-btn:hover {
-    background: #16181d;
-    color: #ffffff;
-    border-color: transparent;
+    background: #3A3F47;
+    color: #FFFFFF;
+    border-color: #3A3F47;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
   }
   .aurora-home-btn .arrow {
     font-size: 15px;
@@ -318,65 +318,86 @@
 
   <!-- Events -->
   <div class="events-card">
-    <div class="section-title">🚩 주요 이벤트 메모 <span class="section-badge">원부자재 · 운임 영향 시점</span></div>
+    <div class="section-title">🚩 주요 이벤트 로그 <span class="section-badge">원부자재 · 운임 영향 시점</span></div>
 
     <div class="event-row">
-      <span class="event-date">2026-01-14</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
-      <span class="event-desc">OPEC+ 감산 연장 발표 → 가격 급등 · 원부자재 비용 상승 검토 필요</span>
-    </div>
-    <div class="event-row">
-      <span class="event-date">2026-02-20</span>
+      <span class="event-date">2026-02-28</span>
       <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
-      <span class="event-desc">미-이란 협상 재개 소식 → 공급 증가 기대로 하락세 · 석유화학 원료가 동반 하락</span>
+      <span class="event-desc">호르무즈 해협 사실상 폐쇄 — 통항 급감, 이라크 불가항력 선언 <span class="src">(EIA STEO / TradingEconomics)</span></span>
     </div>
     <div class="event-row">
-      <span class="event-date">2026-04-07</span>
-      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
-      <span class="event-desc">글로벌 경기침체 우려 → 3개 지표 동반 최저가 기록 · 해상운임 병행 하락</span>
-    </div>
-    <div class="event-row">
-      <span class="event-date">2026-05-12</span>
+      <span class="event-date">2026-03-13</span>
       <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
-      <span class="event-desc">중동 지역 긴장 재고조 → 단기 반등 · 항공운임 모니터링 필요</span>
+      <span class="event-desc">봉쇄 지속으로 브렌트 $102 상회 · 전쟁위험보험료 상승에 따른 해상운임 급등 <span class="src">(TradingEconomics)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-04</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
+      <span class="event-desc">브렌트 연중 고점 형성 (6월 대비 약 $32 높은 수준) — 원부자재 원가 최고 압력 구간 <span class="src">(EIA 7월 STEO)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-06-18</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">미·이란 양해각서 체결 — 호르무즈 재개, 유조선 통항 회복 <span class="src">(EIA)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-01</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">브렌트 현물 $70 하회 — 봉쇄 이전 수준 회복, 원가 부담 일시 완화 <span class="src">(EIA)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-07</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">EIA 7월 STEO 발표 — 2026년 연평균 $82, 2027년 $65로 하향 조정 <span class="src">(EIA STEO, 7/1 기준 작성)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-14</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">미·이란 교전 재개, 이란 항만 해상 봉쇄 재개 — 브렌트 $84.73 마감 <span class="src">(CNBC)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-20</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">장중 브렌트 $90 상회 후 반락 — 호르무즈 통항 선박 피격 보도 <span class="src">(Bloomberg)</span></span>
     </div>
   </div>
 
   <!-- Scenario -->
   <div class="scenario-card">
     <div class="scenario-head">
-      <div class="scenario-head-title">📊 종합 시나리오 전망</div>
-      <div class="scenario-head-sub">원부자재 · 항공/해상 운임 영향 예측 포함 · 참고용 전망이며 실제와 다를 수 있음</div>
+      <div class="scenario-head-title">📊 가격 전망 (외부 기관 인용)</div>
+      <div class="scenario-head-sub">미국 에너지정보청(EIA) 2026년 7월 Short-Term Energy Outlook 기준 · 자체 전망 아님</div>
     </div>
     <table class="scenario-table">
       <thead>
         <tr>
           <th style="width:130px;">시기</th>
-          <th>✅ 베이스 시나리오 <span style="font-weight:400;">(호르무즈 점진 재개)</span></th>
-          <th>⚠️ 리스크 시나리오 <span style="font-weight:400;">(분쟁 장기화)</span></th>
+          <th>EIA 브렌트 전망 <span style="font-weight:400;">(7월 STEO)</span></th>
+          <th>SCM 영향 · 유의사항</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="td-period">2026년<br>2~3분기</td>
-          <td><div class="pill-base">📈 브렌트 100~110달러</div><div class="sc-desc">공급 부분 재개에도 수요 강세 유지. PP·PE 원가 상승 지속 예상.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 고압</span><span class="tag tag-f">해상운임 ↑ 상승</span></div></td>
-          <td><div class="pill-risk">⚠️ 130달러 이상 재상승</div><div class="sc-desc">호르무즈 봉쇄 장기화 시 공급 충격. 항공운임 급등 우려.</div><div class="tags"><span class="tag tag-m">원부자재 ↑↑ 심각</span><span class="tag tag-f">항공운임 ↑↑ 급등</span></div></td>
+          <td class="td-period">2026년<br>3분기</td>
+          <td><div class="pill-base">평균 $74 / bbl</div><div class="sc-desc">6월 STEO 대비 $27 하향. 호르무즈 재개에 따른 공급 회복 반영.</div></td>
+          <td><div class="sc-desc">체류 유조선 유입으로 3분기까지 재고 감소는 지속. 원부자재 하락 반영에는 시차 발생.</div><div class="tags"><span class="tag tag-m">원부자재 ↓ 시차</span><span class="tag tag-f">해상운임 → 정상화</span></div></td>
         </tr>
         <tr>
           <td class="td-period">2026년<br>4분기</td>
-          <td><div class="pill-base">📉 85~90달러로 점진 하락</div><div class="sc-desc">OPEC+ 증산 전환 및 수요 둔화. 원가 부담 완화 시작 예상.</div><div class="tags"><span class="tag tag-m">원부자재 ↓ 완화</span><span class="tag tag-f">해상운임 → 안정</span></div></td>
-          <td><div class="pill-risk">⚠️ 100달러 이상 유지</div><div class="sc-desc">지정학 리스크 지속으로 하락 제한. 연말 원가 관리 중점 필요.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 지속</span><span class="tag tag-f">운임 → 고위 유지</span></div></td>
+          <td><div class="pill-base">평균 $70 / bbl</div><div class="sc-desc">6월 STEO 대비 $19 하향. 4분기 재고 증가 일 270만 배럴 전망.</div></td>
+          <td><div class="sc-desc">EIA는 4분기에도 일 140만 배럴 생산 중단 지속 전망. 대부분 물량은 2027년 1분기 복구 예상.</div><div class="tags"><span class="tag tag-m">원부자재 ↓ 완화</span><span class="tag tag-f">운임 → 안정</span></div></td>
         </tr>
         <tr>
           <td class="td-period">2027년</td>
-          <td><div class="pill-base">🟢 75~80달러 수준 안정화</div><div class="sc-desc">공급 정상화 및 글로벌 수요 조정. 원가 안정 국면 진입 예상.</div><div class="tags"><span class="tag tag-m">원부자재 → 안정</span><span class="tag tag-f">운임 ↓ 정상화</span></div></td>
-          <td><div class="pill-risk">⚠️ 90달러 이상 고착</div><div class="sc-desc">구조적 공급 부족 고착화. 장기 소싱 전략 재검토 권고.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 구조적</span><span class="tag tag-f">운임 ↑ 고착</span></div></td>
+          <td><div class="pill-base">평균 $65 / bbl</div><div class="sc-desc">6월 STEO 대비 $15 하향. 공급 증가가 소비 증가를 상회.</div></td>
+          <td><div class="sc-desc">전략·상업 비축 재고 보충이 하락폭을 일부 상쇄. 장기 소싱 단가 협상 시점으로 검토 가능.</div><div class="tags"><span class="tag tag-m">원부자재 → 안정</span><span class="tag tag-f">운임 ↓ 하향</span></div></td>
         </tr>
       </tbody>
     </table>
+    <div class="scenario-caveat">⚠️ EIA 7월 STEO는 <b>7월 1일 기준</b>으로 작성되어, 7월 14일 이후 미·이란 교전 재개 및 해상 봉쇄 재개는 반영되어 있지 않습니다. 7월 20일 장중 브렌트가 $90을 상회한 점을 감안해 해석이 필요합니다.</div>
   </div>
 
-  <div class="footer">Aurora World 생산운영팀 · 데이터: Yahoo Finance (BZ=F, RB=F, NG=F) · 15분 지연 · 시나리오는 참고용 전망이며 실제와 다를 수 있습니다.</div>
+  <div class="footer">Aurora World 생산운영팀 · 시세: Yahoo Finance (BZ=F, RB=F, NG=F) 15분 지연 · 전망: U.S. EIA Short-Term Energy Outlook (2026년 7월) · 이벤트 로그 출처: EIA · Bloomberg · CNBC · TradingEconomics</div>
 </div>
 
 <script>
