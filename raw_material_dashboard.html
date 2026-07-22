@@ -7,21 +7,21 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #f4f3ef; --surface: #ffffff; --surface2: #f0ede6;
-    --border: rgba(0,0,0,0.08); --border-mid: rgba(0,0,0,0.14);
-    --text: #1c1b18; --text-muted: #6a6960; --text-hint: #a3a298;
+    --bg: #F7F8FA; --surface: #FFFFFF; --surface2: #F7F8FA;
+    --border: #E6E8EC; --border-mid: #E6E8EC;
+    --text: #16181D; --text-muted: #3A3F47; --text-hint: #6B717B;
     --blue: #185FA5; --blue-light: #e6f1fb; --blue-dark: #0C447C;
     --green: #3B6D11; --green-bg: #eaf3de; --green-dark: #27500A;
     --red: #A32D2D; --red-bg: #fcebeb;
     --amber: #854F0B; --amber-bg: #fef3e2;
     --orange: #C05A1F; --orange-bg: #FEF0E6; --orange-dark: #7A3A10;
     --c1: #185FA5; --c2: #E07B39; --c3: #3B6D11;
-    --radius: 12px; --radius-sm: 7px;
+    --radius: 10px; --radius-sm: 8px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body { font-family: Arial, "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  .header { background: var(--surface); border-bottom: 1px solid var(--border-mid); padding: 13px 30px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header { background: var(--surface); border-bottom: 1px solid var(--border-mid); padding: 13px 30px 13px 120px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
   .header-left { display: flex; align-items: center; gap: 11px; }
   .logo { width: 32px; height: 32px; border-radius: 7px; background: var(--blue); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; }
   .header-title { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; }
@@ -32,17 +32,7 @@
   .btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; transition: background .15s, transform .1s; }
   .btn:hover { background: var(--surface2); }
   .btn:active { transform: scale(0.97); }
-  .home-btn {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 12px; font-weight: 500;
-    padding: 6px 14px; border-radius: var(--radius-sm);
-    border: 1px solid var(--border-mid);
-    background: var(--surface); color: var(--text-muted);
-    text-decoration: none; transition: background .15s, color .15s;
-  }
-  .home-btn:hover { background: var(--surface2); color: var(--text); }
-
-  .main { max-width: 1100px; margin: 0 auto; padding: 24px 28px 56px; }
+.main { max-width: 1100px; margin: 0 auto; padding: 24px 28px 56px; }
 
   .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .status-left { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-muted); }
@@ -135,7 +125,7 @@
 
   .footer { text-align: center; font-size: 11px; color: var(--text-hint); padding-top: 8px; }
 
-  #overlay { position: fixed; inset: 0; background: rgba(244,243,239,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
+  #overlay { position: fixed; inset: 0; background: rgba(247,248,250,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
   .loader { width: 30px; height: 30px; border: 2px solid var(--border-mid); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loader-text { font-size: 13px; color: var(--text-muted); }
@@ -162,7 +152,7 @@
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(0, 0, 0, 0.10);
     border-radius: 100px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Arial, "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.01em;
@@ -216,9 +206,6 @@
     </div>
   </div>
   <div class="header-right">
-    <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="home-btn" title="허브 페이지로">
-      ← Home
-    </a>
     <span class="last-update" id="lastUpdate">—</span>
     <span class="source-tag">출처: Yahoo Finance</span>
     <button class="btn" onclick="loadAll()">↻ 새로고침</button>
