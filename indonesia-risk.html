@@ -4,15 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indonesia Risk Watch | Aurora World 생산운영팀</title>
+<!-- Pretendard: 저장소에 /fonts 업로드 후 ./fonts/pretendard.css 로 교체 가능 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root{
-    /* ── Aurora Cianjur Design System v1 ── */
+    /* ── Aurora Cianjur Design System v2 ── */
     --ink:#16181D; --graphite:#3A3F47; --slate:#6B717B; --mist:#A8AEB8;
     --cloud:#E6E8EC; --paper:#F7F8FA; --white:#FFFFFF;
     --accent:#2B6CFF; --accent-ink:#0B3FB0;
     --ok:#1E9E6A; --warn:#D8952B; --stop:#D24B45;
 
-    /* ── legacy 변수명 → v1 토큰 매핑 (하위 CSS 호환) ── */
+    /* ── legacy 변수명 → v2 토큰 매핑 (하위 CSS 호환) ── */
     --bg:var(--paper); --panel:var(--white); --panel2:var(--paper);
     --line:var(--cloud); --line-md:var(--mist);
     --text:var(--ink); --muted:var(--graphite); --faint:var(--slate);
@@ -24,16 +26,15 @@
     --sans:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased}
   a{color:var(--accent);text-decoration:none}
   a:hover{color:var(--accent-ink);text-decoration:underline}
   .wrap{max-width:1100px;margin:0 auto;padding:0 22px 80px}
 
   /* ── top bar ── */
   .topbar{display:flex;align-items:center;gap:14px;padding:22px 0 20px;border-bottom:1px solid var(--line)}
-  .logo{width:40px;height:40px;border-radius:10px;background:var(--text);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;letter-spacing:.03em;flex-shrink:0}
-  .title-block h1{font-size:21px;font-weight:700;letter-spacing:-.01em}
-  .title-block .sub{font-size:12.5px;color:var(--muted);margin-top:1px}
+  .title-block h1{font-size:18px;font-weight:700;letter-spacing:-.01em}
+  .title-block .sub{font-size:12px;color:var(--muted);margin-top:1px}
   .topbar .right{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:13px}
   .topbar .right .home{color:var(--muted)}
   .topbar .right .refresh{font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line-md);padding:5px 11px;border-radius:8px;cursor:pointer;font-family:var(--sans)}
@@ -43,21 +44,21 @@
   .status-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 18px;margin:18px 0;box-shadow:var(--shadow)}
   .status-banner .pill{font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:.02em}
   .pill.g{background:var(--green-dim);color:var(--green)} .pill.a{background:var(--amber-dim);color:var(--amber)} .pill.r{background:var(--red-dim);color:var(--red)}
-  .status-banner .txt{font-size:13.5px;color:var(--muted)}
-  .status-banner .stamp{margin-left:auto;font-size:11.5px;color:var(--faint)}
+  .status-banner .txt{font-size:13px;color:var(--muted)}
+  .status-banner .stamp{margin-left:auto;font-size:11px;color:var(--faint)}
 
   /* ── live cards ── */
   .live-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px;margin:13px 0 26px}
   .live-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px 19px;box-shadow:var(--shadow)}
-  .live-card .lbl{font-size:11.5px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600}
-  .live-card .val{font-size:27px;font-weight:700;margin-top:5px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-  .live-card .sub{font-size:11.5px;color:var(--faint);margin-top:4px}
+  .live-card .lbl{font-size:11px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;font-weight:600}
+  .live-card .val{font-size:30px;font-weight:700;margin-top:5px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .live-card .sub{font-size:11px;color:var(--faint);margin-top:4px}
   .val.red{color:var(--red)} .val.amber{color:var(--amber)} .val.green{color:var(--green)}
 
   /* ── trigger rail ── */
   .rail-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px 26px 18px;margin-bottom:30px;box-shadow:var(--shadow)}
   .rail-title{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
-  .rail-title h2{font-size:15px;font-weight:700}
+  .rail-title h2{font-size:14px;font-weight:700}
   .rail-title .status{font-size:13px;color:var(--muted)}
   .rail{position:relative;height:13px;border-radius:8px;margin:36px 6px 8px;background:linear-gradient(90deg,
     var(--green-rail) 0%, var(--green-rail) 50%,
@@ -69,25 +70,25 @@
   .rail-flag{position:absolute;top:18px;transform:translateX(-50%);font-size:11px;color:var(--muted);text-align:center;padding-top:8px;font-variant-numeric:tabular-nums}
   .rail-flag::before{content:'';display:block;width:1px;height:10px;background:var(--faint);margin:-8px auto 2px}
   .rail-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin:58px 6px 0;font-variant-numeric:tabular-nums}
-  .rail-note{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.6}
+  .rail-note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6}
 
   /* ── sections ── */
   section{margin-top:42px}
   .sec-head{display:flex;align-items:baseline;gap:11px;margin-bottom:5px}
-  .sec-head h2{font-size:22px;font-weight:650;letter-spacing:-.01em}
+  .sec-head h2{font-size:18px;font-weight:650;letter-spacing:-.01em}
   .sec-head .sec-no{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.04em}
-  .sec-desc{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+  .sec-desc{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6}
 
-  .src-note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:10px;padding:15px 19px;margin-bottom:20px;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)}
+  .src-note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:10px;padding:15px 19px;margin-bottom:20px;font-size:13px;color:var(--muted);box-shadow:var(--shadow)}
   .src-note b{color:var(--text);font-weight:700}
-  .stage-scale{font-size:12.5px;color:var(--muted);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 17px;margin-bottom:20px;overflow-x:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .stage-scale{font-size:12px;color:var(--muted);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 17px;margin-bottom:20px;overflow-x:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
   .stage-scale .here{color:var(--red);font-weight:700}
 
   /* ── tables ── */
   .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow)}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
   th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:11.5px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;background:var(--panel2);font-weight:700;white-space:nowrap}
+  th{font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;background:var(--panel2);font-weight:700;white-space:nowrap}
   tr:last-child td{border-bottom:none}
   td:first-child{color:var(--muted);font-weight:500;white-space:nowrap}
   .ind-group td{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);background:var(--panel2)}
@@ -97,7 +98,7 @@
   .dot.g{background:var(--green)} .dot.a{background:var(--warn)} .dot.r{background:var(--red)}
   .v{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
   .spark{width:80px;padding-top:13px}
-  .d{color:var(--muted);font-size:12.5px}
+  .d{color:var(--muted);font-size:12px}
   .s{font-size:11px;color:var(--faint);white-space:nowrap}
   .mono{font-variant-numeric:tabular-nums}
   .col-g{border-top:3px solid var(--green)} .col-a{border-top:3px solid var(--warn)} .col-r{border-top:3px solid var(--red)}
@@ -113,8 +114,8 @@
   .tally span{display:inline-flex;align-items:center;gap:6px}
 
   /* ── forecast quote box ── */
-  .fc-box{display:flex;gap:16px;align-items:flex-start;background:var(--blue-dim);border:1px solid var(--line);border-radius:10px;padding:15px 19px;margin-top:14px;font-size:13.5px}
-  .fc-box .fc-range{font-size:21px;font-weight:700;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.2}
+  .fc-box{display:flex;gap:16px;align-items:flex-start;background:var(--blue-dim);border:1px solid var(--line);border-radius:10px;padding:15px 19px;margin-top:14px;font-size:13px}
+  .fc-box .fc-range{font-size:18px;font-weight:700;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.2}
   .fc-box .fc-range small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
   .fc-box .fc-txt{color:var(--muted);line-height:1.6}
   .fc-box .fc-txt b{color:var(--text)}
@@ -124,9 +125,9 @@
   .evt li{display:flex;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line)}
   .evt li:last-child{border-bottom:none}
   .evt .date{font-weight:700;color:var(--text);white-space:nowrap;width:88px;flex-shrink:0;font-variant-numeric:tabular-nums;font-size:13px;padding-top:1px}
-  .evt .body{font-size:13.5px;color:var(--muted)}
+  .evt .body{font-size:13px;color:var(--muted)}
   .evt .body b{color:var(--text);font-weight:600}
-  .evt .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:1px;letter-spacing:.03em}
+  .evt .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:1px;letter-spacing:.03em}
   .tag.fx{background:var(--red-dim);color:var(--red)}
   .tag.rate{background:var(--amber-dim);color:var(--amber)}
   .tag.credit{background:var(--blue-dim);color:var(--blue)}
@@ -147,69 +148,23 @@
   .foot-row .review{color:var(--gold);font-weight:700}
   @media (max-width:640px){
     .title-block h1{font-size:18px}
-    .live-card .val{font-size:22px}
+    .live-card .val{font-size:30px}
     .topbar .right .home span{display:none}
     .evt .date{width:74px}
   }
   @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
-.aurora-home-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px 8px 12px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.10);
-  border-radius: 100px;
-  font-family: Arial, 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: #3a3f47;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
-}
-.aurora-home-btn:hover {
-  background: #16181d;
-  color: #ffffff;
-  border-color: transparent;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
-}
-.aurora-home-btn .arrow {
-  font-size: 15px;
-  line-height: 1;
-  transition: transform 0.18s;
-}
-.aurora-home-btn:hover .arrow {
-  transform: translateX(-2px);
-}
-@media (max-width: 640px) {
-  .aurora-home-btn {
-    top: 14px;
-    left: 14px;
-    padding: 7px 12px 7px 10px;
-    font-size: 12px;
-  }
-}
+.nav-home{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+  color:#fff;text-decoration:none;background:var(--ink);border-radius:8px;
+  padding:9px 18px;transition:all .18s ease;flex-shrink:0}
+.nav-home:hover{background:#000;color:#fff;text-decoration:none;transform:translateY(-1px)}
 </style>
 </head>
 <body>
-<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
-  <span class="arrow">←</span>
-  <span>Hub</span>
-</a>
 <div class="wrap">
 
 <!-- ── TOP BAR ── -->
 <div class="topbar">
-  <div class="logo">AW</div>
+  <a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="nav-home">← Hub</a>
   <div class="title-block">
     <h1>🇮🇩 Indonesia Risk Watch</h1>
     <div class="sub">Aurora World 생산운영팀 · 인도네시아 Cianjur 법인 · USD/IDR</div>
@@ -231,7 +186,7 @@
   <div class="live-card">
     <div class="lbl">USD/IDR <span id="liveTag">(연결 중…)</span></div>
     <div class="val red" id="liveRate">—</div>
-    <div class="sub" id="liveBase">참고 · BI 공식 고시 17,753 (06.17) · 최고점 18,171 (06.08)</div>
+    <div class="sub" id="liveBase">참고 · 07.21 종가 17,873 — 주의선(18,000) 하회 유지 · BI 정례회의(07.21~22) 결과 주시 · 최고점 18,171 (06.08)</div>
   </div>
   <div class="live-card">
     <div class="lbl">주의 기준선까지</div>
@@ -284,8 +239,8 @@
     <b>외부 기관 시각 인용</b>
     <ul style="list-style:none;margin-top:8px">
       <li style="padding:3px 0">• <b>외환 펀더멘털</b> : 보유고 $145.6B (6개월 만에 반등) · 수입커버 5.5개월 · 변동환율제 — 1998년과 비교 불가 수준으로 양호</li>
-      <li style="padding:3px 0">• <b>단기 완화 요인</b> : 환율 07.20 주의선 하회 복귀(17,960) · S&P 투자등급 확인·Stable 유지(유일) · Q2 FDI +27.4% · 보유고 6개월 만에 반등($145.6B)</li>
-      <li style="padding:3px 0">• <b>구조 리스크 심화</b> : 환율 경계 인접 등락 지속 · 07.24 미 관세 전환(인니 10% 제안) · 중동 긴장 재부각·유가 반등 조짐 · Fitch 07.01 재경고(보유고·Danantara) · 시위 재점화 가능성</li>
+      <li style="padding:3px 0">• <b>단기 완화 요인</b> : 환율 주의선 하회 유지(07.21 17,873) · S&P 투자등급 확인·Stable 유지(유일) · Q2 FDI +27.4% · JCI 8거래일 연속 상승(6,374) · 보유고 6개월 만에 반등($145.6B)</li>
+      <li style="padding:3px 0">• <b>구조 리스크 심화</b> : 유가 $91 재급등(미-이란 휴전 붕괴·호르무즈 통항 제한) · 미 관세 최종 발표 임박(금주 내, 인니 10% 제안)·Section 122 07.24 만료 · BI 추가 인상 컨센서스(→6.00%) · Fitch 07.01 재경고(보유고·Danantara) · 시위 재점화 가능성(연료가격 추가 인상 압력)</li>
       <li style="padding:3px 0;color:var(--faint)">※ 본 페이지는 공개 지표 모니터링용 — 환율·위기 시점을 자체 전망하지 않음</li>
     </ul>
   </div>
@@ -380,7 +335,7 @@
       <li><span class="date">재점화<br>2026.06.12</span><span class="body"><b>연료 32% 인상이 직접 트리거.</b> 루피아 약세·무상급식(MBG) 지출 실정에 항의해 학생 시위 재개. "파산을 향하는 인도네시아(Menuju Indonesia Bangkrut)" 구호, 노란 대학 점퍼<span class="tag social">재점화</span></span></li>
       <li><span class="date">확산<br>2026.06.15~</span><span class="body"><b>자카르타·반둥·북남수마트라 등 다도시 확산.</b> 당국 3,000명+ 구금, Prabowo '테러·반역' 강경 규정. 6/15 부통령 Gibran이 시위대 면담, 6/19 정부 답변 시한 제시<span class="tag social">확산</span></span></li>
       <li><span class="date">현재<br>2026.07</span><span class="body"><b>대규모 충돌 소강, 긴장 잠복.</b> 7월 신규 대규모 시위 보도 없음. 8월 시위 관련 기소 활동가 중 <b>4명은 02.06 무죄 판결</b>(자카르타 중앙지법), 일부 절차·구금은 지속(Amnesty 캠페인 ~7/15) · 정부는 MBG 추가 삭감으로 요구 일부 수용 신호<span class="tag social">현재</span></span></li>
-      <li><span class="date">전망<br>우려</span><span class="body"><b>재점화 가능성 상존.</b> 6월 CPI 3.34%로 물가 압력 지속 — 시위의 근본 원인(생활비) 미해소. 활동가 재판 결과·추가 연료 정책·<b>11월 MSCI 리뷰가 변곡점</b><span class="tag geo">전망</span></span></li>
+      <li><span class="date">전망<br>우려</span><span class="body"><b>재점화 가능성 상존.</b> 6월 CPI 3.34%로 물가 압력 지속 — 시위의 근본 원인(생활비) 미해소. 유가 재급등($91)이 연료가격 추가 인상으로 이어질 경우 재점화 위험 확대. 활동가 재판 결과·<b>11월 MSCI 리뷰가 변곡점</b><span class="tag geo">전망</span></span></li>
     </ul>
   </div>
   <div class="src-note" style="border-left-color:var(--amber);margin-top:14px">
@@ -419,11 +374,11 @@
             <tr><td>단기 외채 / 은행</td><td>과다 / NPL 폭증</td><td>GDP 30% 장기물 / NPL 2.3%</td><td>🟢 양호</td></tr>
             <tr><td>GDP</td><td class="mono">-13.6%</td><td class="mono">+5.61%</td><td>🟢 전혀 다름</td></tr>
             <tr><td>신용등급 전망</td><td>N/A</td><td>Negative ×2</td><td>🔴 주의</td></tr>
-            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$73 (평화협정 후 안정) / JCI -28%</td><td>🟡 혼조</td></tr>
+            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$91 (휴전 붕괴 재급등) / JCI 6,374 (YoY -15%, 1개월 반등)</td><td>🟡 혼조</td></tr>
           </tbody>
         </table>
       </div>
-      <p style="font-size:12.5px;color:var(--muted);margin-top:12px">외환 구조는 1998년보다 안전. 유가 하락으로 재정 압박은 일부 완화됐으나, 신용등급 전망 하향·MSCI 강등 리스크·시위 격화·거버넌스 우려(Danantara·재무장관 경질)가 동시에 관찰됨. <span style="color:var(--faint)">(출처: Bank Indonesia, Moody's, Fitch, IDX, Reuters 공개 자료)</span></p>
+      <p style="font-size:12px;color:var(--muted);margin-top:12px">외환 구조는 1998년보다 안전. 6월 유가 급락으로 완화됐던 재정 압박은 7월 미-이란 휴전 붕괴·유가 재급등($91)으로 되살아났고, 신용등급 전망 하향·MSCI 강등 리스크·거버넌스 우려(Danantara·재무장관 경질)가 동시에 관찰됨. <span style="color:var(--faint)">(출처: Bank Indonesia, Moody's, Fitch, IDX, Reuters 공개 자료)</span></p>
     </div>
   </details>
 
@@ -449,7 +404,7 @@
 <footer>
   <div class="foot-row">
     <span>Aurora World 생산운영팀 · Indonesia Risk Watch · Internal Use Only</span>
-    <span><span id="footDate">Data as of 2026.06.10</span> · <span class="review" id="footReview">다음 검토: 2026.09</span></span>
+    <span><span id="footDate">Data as of 2026.07.22</span> · <span class="review" id="footReview">다음 검토: 2026.09</span></span>
   </div>
   <div style="margin-top:8px">출처: Bank Indonesia(JISDOR) · Bloomberg · BPS · Moody's · Fitch · Trading Economics · IDX · ExchangeRate-API. 본 페이지는 공개 지표 모니터링용 내부 참고 자료이며, 환율·위기 시점에 대한 자체 전망이나 공식 투자·법률 자문이 아닙니다.</div>
 </footer>
@@ -465,32 +420,36 @@
    환율은 페이지 열 때마다 라이브 API 자동 갱신
    ════════════════════════════════════════════════════════════ */
 const DATA = {
-  asOf: "2026.07.21",
+  asOf: "2026.07.22",
   nextReview: "2026.09",
-  manualRate: 17960,
-  biLabel: "참고 · 07.20 17,960 — 주의선(18,000) 하회 복귀, 경계 인접 등락 · 최고점 18,171 (06.08)",
+  manualRate: 17873,
+  biLabel: "참고 · 07.21 종가 17,873 — 주의선(18,000) 하회 유지 · BI 정례회의(07.21~22) 결과 주시 · 최고점 18,171 (06.08)",
   trigger: { p1: 18000, p2: 19500 },
   railMin: 16500, railMax: 20000,
   reserve: { val: "$145.6B", sub: "2026.06 · 6개월 만에 반등 (+$0.7B)" },
   /* t = 분기별 추세 (25.1Q→현재) · up: good=오르면 좋음 / bad=오르면 나쁨 / neutral */
   indicators: [
-    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"07.10~17 주의선(18,000) 상회 후 07.20 17,960으로 하회 복귀 — 경계 인접 등락 지속", s:"a", src:"시장환율(라이브)", t:[16200,16400,16100,16800,18171,17960], up:"bad"},
+    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"07.10~17 주의선(18,000) 상회 후 하회 복귀 — 07.21 종가 17,873, BI 회의 앞두고 소폭 강세. 유가 재급등이 상단 압력", s:"a", src:"시장환율(라이브)", t:[16200,16400,16100,16800,18171,17873], up:"bad"},
     {g:"외환·통화", n:"외환보유고", v:"$145.6B", d:"06월 6개월 만에 반등 (+$0.7B, 세수·서비스 수입) · Fitch는 3~5월 -4.6% 축소 경고", s:"a", src:"Bank Indonesia", t:[156.1,152.9,149.0,156.5,144.9,145.6], up:"good"},
     {g:"외환·통화", n:"수입커버", v:"5.5개월", d:"국제 기준(3개월) 상회 · Fitch 2026 평균 4.9개월 전망(BBB 중간값 5.0 하회)", s:"g", src:"Bank Indonesia"},
-    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"05월 이후 누적 +100bp · 07월 정례회의 이번 주 예정 — 시장은 추가 인상 여부 주시", s:"a", src:"Bank Indonesia", t:[5.75,5.50,5.25,5.25,5.25,5.75], up:"neutral"},
+    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"5~6월 누적 +100bp · 07.21~22 정례회의 진행 — 시장 컨센서스 +25bp → 6.00% (Trading Economics). 결과 확인 후 갱신", s:"a", src:"Bank Indonesia", t:[5.75,5.50,5.25,5.25,5.25,5.75], up:"neutral"},
     {g:"실물 경제", n:"GDP 성장률", v:"+5.61%", d:"2026 Q1 YoY · BI 2026 전망 4.9~5.7%", s:"g", src:"BPS"},
     {g:"실물 경제", n:"인플레이션", v:"3.34%", d:"2026.06 · Pertamax 32.1% 인상 여파 · 목표 상단(3.5%) 근접 · Core 2.76% (38개월 최고)", s:"a", src:"BPS", t:[1.6,1.9,2.3,2.42,3.08,3.34], up:"bad"},
-    {g:"실물 경제", n:"브렌트유", v:"$73", d:"$95→$73 급락 후 07월 중동 긴장 재부각으로 반등 조짐 · 수마트라 연료 부족 보도", s:"a", src:"Trading Economics", t:[78,80,82,88,95,73], up:"bad"},
-    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP · 법정한도 3% 근접 · 연료 32% 인상으로 보조금 축소", s:"a", src:"BI"},
-    {g:"실물 경제", n:"미 관세(대미 수출)", v:"전환 임박", d:"07.24 Section 122(10%) 만료 · USTR 신규 S301(강제노동 트랙) 인니 10% 제안, 07.20 결정 마감 — 봉제(HTS 9503.00.2100) 대미 관세 재편 (→ US Tariff Watch)", s:"a", src:"USTR·tariffstool"},
+    {g:"실물 경제", n:"브렌트유", v:"$91", d:"미-이란 잠정 휴전 붕괴로 $72(07.06)→$91 재급등, 6/10 이후 최고 · 호르무즈 통항 제한·홍해 위협 확대 — 연료보조금·재정 부담 재확대", s:"r", src:"Trading Economics·Investing", t:[78,80,82,88,95,91], up:"bad"},
+    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP · 법정한도 3% 근접 · 연료 32% 인상으로 보조금 축소 — 유가 재급등($91) 시 부담 재확대", s:"a", src:"BI"},
+    {g:"실물 경제", n:"미 관세(대미 수출)", v:"발표 임박", d:"07.20 완료시한 경과 — USTR 대표 \"금주 내 최종 발표\"(Greer, Bloomberg 보도) · Section 122(10%) 07.24 자동 만료 · 인니 10% 제안 — 봉제(HTS 9503.00.2100) 대미 관세 재편 (→ US Tariff Watch)", s:"a", src:"USTR·Bloomberg"},
     {g:"신용·자본시장", n:"Moody's", v:"Baa2 Neg.", d:"2026.02.05 전망 하향 (최신)", s:"r", src:"Moody's"},
     {g:"신용·자본시장", n:"S&P", v:"안정적", d:"07월 투자등급 확인·Stable 전망 유지 — 3대 평가사 중 유일한 Stable", s:"g", src:"S&P"},
     {g:"신용·자본시장", n:"Fitch", v:"BBB Neg.", d:"07.01 등급 확인·Negative 유지 — 보유고 감소·Danantara 정책 경고", s:"r", src:"Fitch"},
     {g:"신용·자본시장", n:"MSCI 분류", v:"EM 유지", d:"MSCI(미국 글로벌 지수 산출사)의 신흥시장(EM) 분류 · 06.23 강등 리뷰 11월로 연기 · 강등 시 $130억 유출 추정(Goldman)", s:"r", src:"MSCI"},
-    {g:"신용·자본시장", n:"주식시장 JCI", v:"~6,000", d:"연초 -28% (세계 최악권) · MSCI 11월 리뷰가 최대 변수", s:"r", src:"IDX", t:[7100,7050,7400,6200,5400,6007], up:"good"},
+    {g:"신용·자본시장", n:"주식시장 JCI", v:"~6,374", d:"8거래일 연속 상승 후 07.22 +0.5% (1개월 +4.5%) — 다만 전년 대비 -14.7% · 국제금융센터(PFII) 구상 호재 · MSCI 11월 리뷰가 최대 변수", s:"a", src:"IDX·Trading Economics", t:[7100,7050,7400,6200,5400,6374], up:"good"},
   ],
   /* 이벤트 로그 (최신순) · t: fx 환율 / rate 통화정책 / credit 신용등급 / trade 무역 / geo 지정학 / social 정치사회 / market 자본시장 */
   events: [
+    {d:"2026.07.22", t:"trade",  tx:"<b>USTR \"최종 관세 금주 내 발표\"</b> — Greer 대표 CNBC 발언(Bloomberg 보도). 07.20 완료시한은 경과, Section 122(10%)는 07.24 자동 만료 — 발표·시행 시점이 봉제 대미 원가에 직결 (→ <a href='https://jaehyunlee-cmyk.github.io/aurora-hub/us-tariff-watch.html'>US Tariff Watch</a>)"},
+    {d:"2026.07.22", t:"rate",   tx:"<b>BI 7월 정례회의(07.21~22) 진행 중</b> — 시장 컨센서스 +25bp → 6.00% (5~6월 누적 +100bp에 이어). 결과 발표 확인 후 본 로그·지표 갱신 필요 (Trading Economics)"},
+    {d:"2026.07.22", t:"market", tx:"<b>JCI 6,374 — 8거래일 연속 상승 랠리</b> (+0.5%, 1개월 +4.5%). 국제금융센터(PFII) 구상이 투자심리 지지. 단 전년 대비 -14.7%, 11월 MSCI 리뷰 변수는 유지 (Trading Economics)"},
+    {d:"2026.07.21", t:"geo",    tx:"<b>유가 $91 — 미-이란 잠정 평화합의 붕괴로 재급등</b> (7월 저점 $72 대비 약 +30%, 6/10 이후 최고). 미국의 이란 항만 봉쇄 재개·연쇄 공습, 호르무즈 통항 제한, 홍해 위협 확대. 연료보조금·재정 부담 재확대, 루피아 상단 압력 (Investing·Trading Economics)"},
     {d:"2026.07.20", t:"fx",     tx:"<b>환율 17,960 — 주의선(18,000) 하회 복귀</b>. 나흘 상승 후 반락, 경계 인접 등락. 중동 긴장 재부각·수마트라 연료 부족 보도가 상단 압력. BI 7월 정례회의 이번 주 예정"},
     {d:"2026.07.20", t:"trade", tx:"<b>미 관세 전환 임박</b> — USTR 신규 Section 301(강제노동 트랙) 결정 07.20 마감, Section 122(10%) 07.24 만료. 인니 10% 제안(확정 전). 봉제(HTS 9503.00.2100) 대미 관세 재편 (→ <a href='https://jaehyunlee-cmyk.github.io/aurora-hub/us-tariff-watch.html'>US Tariff Watch</a>)"},
     {d:"2026.07 중순", t:"credit", tx:"<b>S&P, 인도네시아 투자등급 확인·Stable 전망 유지</b> — 3대 평가사 중 유일한 Stable. Q2 FDI +27.4% YoY(2024년 말 이후 최대 증가)도 장기 자본 유치 회복 신호"},
@@ -505,9 +464,9 @@ const DATA = {
     {d:"2026.06.18", t:"rate",   tx:"<b>BI Rate +25bp → 5.75%</b> (06.09 off-cycle 포함 누적 +100bp). 외환규제 강화 발표(07.01 시행: 송금 서류기준 $50k→$25k)"},
     {d:"2026.06.12", t:"social", tx:"<b>대규모 학생 시위 ('Menuju Indonesia Bangkrut')</b> — 비보조 연료 32% 인상이 직접 트리거. 경찰·군 6,000명 배치"},
     {d:"2026.06.08", t:"fx",     tx:"<b>환율 18,171 사상 최고점</b> 후 BI 집중 개입으로 17,800대 회복"},
-    {d:"2026.06",    t:"social", tx:"<b>Sri Mulyani 재무장관 경질</b> — 국제 투자자 신뢰받던 테크노크라트 해임, 주가·루피아 즉각 하락"},
     {d:"2026.03.04", t:"credit", tx:"<b>Fitch 전망 Negative 하향</b> (BBB 유지). 02.05 Moody's도 Negative 하향 (Baa2 유지)"},
-    {d:"2026.02",    t:"geo",    tx:"<b>미-이란(호르무즈) 전쟁</b> — 유가 한때 $120 돌파 → 06월 평화협정으로 $73까지 하락"},
+    {d:"2026.02",    t:"geo",    tx:"<b>미-이란(호르무즈) 전쟁</b> — 유가 한때 $120 돌파 → 06월 평화협정으로 $73까지 하락 (07월 합의 붕괴로 재급등, 상단 참조)"},
+    {d:"2025.09.08", t:"social", tx:"<b>Sri Mulyani 재무장관 경질 (배경)</b> — 시위 격화 직후 단행, 후임 Purbaya Yudhi Sadewa(예금보험공사 이사장). 국제 투자자 신뢰받던 테크노크라트 해임으로 발표 전후 주가·루피아 하락 (Reuters·SCMP) ※ 기존 표기 2026.06은 오기여서 정정"},
   ]
 };
 /* ════════════════════════════════════════════════════════════ */
