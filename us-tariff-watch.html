@@ -59,7 +59,16 @@
   .badge-warn{background:var(--warn-bg);color:var(--warn-text);}
   .badge-ok{background:var(--ok-bg);color:var(--ok-text);}
   .badge-neutral{background:var(--neutral-bg);color:var(--neutral-text);}
-  .warn-bar{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);padding:12px 16px;font-size:13px;color:var(--warn-text);margin-bottom:24px;display:flex;gap:10px;line-height:1.6;}
+  .badge-danger{background:var(--danger-bg);color:var(--danger-text);}
+  .warn-strip{margin-bottom:24px;display:flex;flex-direction:column;gap:6px;}
+  .warn-strip details{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);overflow:hidden;}
+  .warn-strip summary{cursor:pointer;padding:10px 16px;font-size:13px;font-weight:600;color:var(--warn-text);display:flex;align-items:center;gap:8px;list-style:none;line-height:1.5;}
+  .warn-strip summary::-webkit-details-marker{display:none;}
+  .warn-strip summary .chev{margin-left:auto;flex-shrink:0;font-size:11px;color:var(--warn-border);transition:transform .15s;}
+  .warn-strip details[open] summary .chev{transform:rotate(90deg);}
+  .warn-strip summary:hover{filter:brightness(.98);}
+  .warn-strip .warn-detail{background:var(--surface);border-top:1px solid var(--warn-border);padding:12px 16px 12px 38px;font-size:13px;color:var(--text-2);line-height:1.9;}
+  .warn-strip .warn-detail strong{color:var(--text);}
   .section-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
   .card-header{padding:12px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
@@ -221,41 +230,46 @@
       <div style="font-size:11px;color:var(--text-3);margin-top:4px;">9503.00.0090 · MFN Free (브로커 확인 7/25) · 티어는 <strong>집행 평가 연동 — 변동 가능</strong></div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">Section 122 (10%)</div>
-      <div class="metric-value" id="countdown">만료</div>
-      <div class="metric-sub">2026-07-24 00:01 EDT 자동 소멸 (150일 상한)<br>납부분 2/24~7/23 → <strong>환급 권리 보전 대상</strong></div>
-      <div class="metric-badge badge-neutral">종료</div>
+      <div class="metric-label">환급 2트랙 (진행 중)</div>
+      <div class="metric-value">~$10M+α</div>
+      <div class="metric-sub">IEEPA $10M: Phase 3 자격 리스크 — <strong>8/6 class 심리</strong><br>S122 5개월치(2/24~7/23): 권리 보전 진행 중</div>
+      <div class="metric-badge badge-danger">조치 필요</div>
     </div>
     <div class="metric-card">
       <div class="metric-label">다음 미확정 변수 (2건)</div>
       <div class="metric-value" style="font-size:15px;padding-top:6px;">Excess Capacity · 위법 소송</div>
-      <div class="metric-sub">16개국 판정: 7/28 기준 <strong>미정</strong> (중국·인니 대상)<br>신규 S301 <strong>CIT 소송 2건</strong> 제기 (7/24, class action 포함)</div>
+      <div class="metric-sub">16개국 판정: 8/4 기준 <strong>미정</strong> (중국·인니 대상)<br>신규 S301 <strong>CIT 소송 2건</strong> 계류 (class action 포함)</div>
       <div class="metric-badge badge-warn">모니터링</div>
     </div>
   </div>
 
-  <div class="warn-bar">
-    <i class="ti ti-alert-triangle" style="flex-shrink:0;margin-top:2px;font-size:16px;"></i>
-    <div style="line-height:1.9;">
-      <div style="margin-bottom:8px;">
-        <div><strong>신규 S301(강제노동) 확정·발효 — 7/23 발표, 7/24 00:01 EDT 발효 (S122 만료와 동시, 무관세 공백 없음)</strong></div>
-        <div>· 확정 세율: 중국 <strong>12.5%</strong>(flat) · 인도네시아 <strong>10%</strong>(17개국 티어 — 금지법 보유 + ART 약속) · 대상 60개 경제권, 미 수입의 99.4% · <strong>만료일 없는 무기한 조치</strong>, 대통령 단독 조정 가능</div>
+  <div class="warn-strip">
+    <details>
+      <summary><i class="ti ti-alert-triangle"></i>신규 S301 발효 중 — 중국 <strong>&nbsp;12.5%</strong>&nbsp;/ 인니 <strong>&nbsp;10%</strong>&nbsp;(7/24~) · 위법 소송 2건 계류<span class="chev">▶</span></summary>
+      <div class="warn-detail">
+        <div>· 7/23 발표 → 7/24 00:01 EDT 발효 (S122 만료와 동시, 무관세 공백 없음) · 대상 60개 경제권, 미 수입의 99.4% · <strong>만료일 없는 무기한 조치</strong>, 대통령 단독 조정 가능 · 인니는 17개국 10% 티어(금지법 보유 + ART 약속 — 집행 평가 연동, 변동 가능)</div>
         <div>· <strong>스태킹 규칙</strong>: 기존 중국 301과 중첩 — List 1~3 품목 25%+12.5%, List 4A 품목 7.5%+12.5%=20%. <strong>완구(9503.00.0090)는 List 4B 유예 = 기존 301 0% → 총 12.5%만</strong> (브로커 계산과 정합)</div>
-        <div>· In-transit 예외 <strong>마감 종료 (KST 7/28 13:01 경과)</strong>: 7/24 이전 선적 + 7/28 이전 통관 물량은 면제(추가관세 0%) — 당사 적용 물량 유무는 <strong>결과 확인 단계</strong> (미국 법인 문의 예정)</div>
+        <div>· In-transit 예외 <strong>마감 종료 (KST 7/28 13:01)</strong>: 7/24 이전 선적 + 7/28 이전 통관 물량은 면제(0%) — 당사 적용 물량 유무는 <strong>결과 확인 단계</strong> (미국 법인 문의 예정)</div>
         <div>· CBP 실행: CSMS #69326983 — 국가별 헤딩 9903.05.20~.84(인니 <strong>9903.05.45</strong>) · 신고 순서상 최우선 트레이드 레머디 · 면제는 FRN(431p) Annex I(제99류 신설 101개 헤딩 + U.S. Note 52) / Annex II(Part A~O 15개 목록)에 규정 — 완구 미포함(브로커 계산 정합)</div>
+        <div>· <strong>위법 소송 2건 (7/24, CIT)</strong>: ① Burlap &amp; Barrel v. Greer (<strong>#26-03345</strong>) — IEEPA·S122를 이긴 법무팀(Liberty Justice Center), <strong>전체 수입자 대상 class action</strong> + 즉시 징수금지 신청 ② Learning Resources v. United States (<strong>#26-03347</strong>) — <strong>완구업체 포함</strong>, 자의적·국가별 개별 판정 결여·위임금지 위반 주장 · 법원 판단 없음 — 세율은 정상 징수 중, <strong>납부 기록 보관 원칙 유지</strong> (IEEPA·S122 패턴 3회차)</div>
       </div>
-      <div style="margin-bottom:8px;">
-        <div><strong>⚠ 기존 IEEPA 환급($10M 청구 건) — CAPE Phase 3 자격 리스크 (CBP 경과보고 8/4 오늘(ET) · class 심리 8/6)</strong></div>
+    </details>
+    <details>
+      <summary><i class="ti ti-alert-triangle"></i>IEEPA 환급 <strong>&nbsp;$10M</strong>&nbsp;— Phase 3 자격 리스크 · 분기점: <strong>&nbsp;8/6 class 심리</strong>&nbsp;(CBP 경과보고 8/4)<span class="chev">▶</span></summary>
+      <div class="warn-detail">
         <div>· <strong>CIT 명령(7/15 공지 · 7/17자 명령문, Princess Awesome #25-00078 등)</strong>: 법원이 CBP에 <strong>제소 원고의 청산확정(finally liquidated) entry 전량 재청산·환급</strong>을 명령 → 동일 취지 명령이 계류 중인 <strong>약 3,700건 소송에 순차 발부 중</strong></div>
-        <div>· 정부·CBP 입장 일치: 청산확정 entry는 <strong>CIT에 제소한 수입자에게만</strong> 지급 가능(개별 법원명령 필요) — CBP 스스로 "미제소 수입자는 법원명령 전까지 부적격, 항소 해결 전 해당 CAPE 확장 없음" 공지 — CAPE Phase 3(청산확정분 — CBP 설명 기준 전체의 약 6.9%, <strong>~$11.4B / 약 2,700만 entry</strong>)이 이 기준으로 운영될 전망, 실제 가동 여부는 <strong>8/4 CBP 경과보고</strong>에서 확인. <strong>미제소 수입자는 현재 확인된 환급 경로 없음</strong> · protest가 걸린 entry는 현재 CAPE 환급 절차 자체가 없음(CBP 확장 검토 중) · 제소 시효(2년)가 소송 종결 전 만료될 수 있다는 실무 경고도 존재 · 확정 일정: CBP CAPE 경과보고 <strong>8/4</strong> → 비공개 조정회의 8/5 → <strong>class action 인용 심리 8/6</strong> — 미제소 수입자 처리 방향의 분기점</div>
+        <div>· 정부·CBP 입장 일치: 청산확정 entry는 <strong>CIT에 제소한 수입자에게만</strong> 지급 가능(개별 법원명령 필요) — CBP 스스로 "미제소 수입자는 법원명령 전까지 부적격, 항소 해결 전 해당 CAPE 확장 없음" 공지 · CAPE Phase 3(청산확정분 — CBP 기준 전체의 약 6.9%, <strong>~$11.4B / 약 2,700만 entry</strong>)이 이 기준으로 운영될 전망, 가동 여부는 <strong>8/4 CBP 경과보고</strong>에서 확인</div>
+        <div>· <strong>미제소 수입자는 현재 확인된 환급 경로 없음</strong> · protest가 걸린 entry는 현재 CAPE 환급 절차 자체가 없음(CBP 확장 검토 중) · 제소 시효(2년)가 소송 종결 전 만료될 수 있다는 실무 경고도 존재 · 일정: CBP 경과보고 <strong>8/4</strong> → 비공개 조정회의 8/5 → <strong>class action 인용 심리 8/6</strong></div>
         <div>· <strong>당사 시사점</strong>: 기존 청구 약 $10M 중 일부만 수령한 상태로 파악됨 — 잔액이 <strong>청산확정 entry에 걸려 있다면 제소 없이는 회수 불가</strong>할 수 있음. 미국 법인에 ⓐ 잔액의 청산 상태 ⓑ CIT 제소 여부 확인 요청 필요 (환급금 이자는 법인 연 6% 일복리 가산)</div>
       </div>
-      <div>
-        <div><strong>다음 변수 2건: 16개국 판정 + 신규 S301 위법 소송</strong></div>
-        <div>· Excess Capacity: 중국·인니 포함 16개 경제권 — 7/28 기준 미판정 · 긍정 판정 시 <strong>30일 내 조치 시행</strong> 의무 · 강제노동 건과 <strong>중첩 부과 전제</strong>로 대비</div>
-        <div>· <strong>신규 S301 소송 2건 (7/24, CIT)</strong>: ① Burlap &amp; Barrel v. Greer (<strong>#26-03345</strong>) — IEEPA·S122를 이긴 법무팀(Liberty Justice Center), <strong>전체 수입자 대상 class action</strong> + <strong>즉시 징수금지(injunction) 신청</strong> 포함 ② Learning Resources v. United States (<strong>#26-03347</strong>) — <strong>완구업체 포함</strong>, 자의적·국가별 개별 판정 결여·위임금지 원칙 위반 주장. 8/3 기준 <strong>법원 판단 없음</strong> — 세율은 정상 징수 중, 납부 기록 보관 원칙 유지 (IEEPA·S122 패턴 3회차)</div>
+    </details>
+    <details>
+      <summary><i class="ti ti-alert-triangle"></i>Excess Capacity <strong>&nbsp;16개국</strong>&nbsp;— 미판정 · 확정 시 <strong>&nbsp;중첩 부과</strong>&nbsp;전제<span class="chev">▶</span></summary>
+      <div class="warn-detail">
+        <div>· 중국·인니 포함 16개 경제권 — 8/4 기준 판정·제안 미발표 (CRS 재확인) · 긍정 판정 시 <strong>30일 내 조치 시행</strong> 의무(연장 옵션) · 멕시코 경제장관 "이르면 8월 결과·추가 관세" 발언 — 조치 임박 인식 확산</div>
+        <div>· 확정 시 강제노동 관세(12.5%/10%) 위에 <strong>중첩 부과될 가능성이 높다</strong>는 것이 로펌 공통 견해 — 현행 세율 위 추가 전제로 대비 · 상세는 하단 "16개국 Excess Capacity" 섹션</div>
       </div>
-    </div>
+    </details>
   </div>
 
 
