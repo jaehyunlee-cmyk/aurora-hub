@@ -48,14 +48,14 @@
   .status-banner .stamp{margin-left:auto;font-size:11px;color:var(--faint)}
 
   /* [C] 델타 박스 */
-  .delta-box{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:0 0 18px;box-shadow:var(--shadow)}
+  .delta-box{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:0 0 18px;box-shadow:var(--shadow)}
   @media (max-width:640px){.delta-box{grid-template-columns:1fr}}
   .delta-h{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
   .delta-h-flat{color:var(--faint)}
   .delta-box ul{list-style:none;margin:0;padding:0}
-  .delta-box li{font-size:13px;color:var(--muted);padding:3px 0;line-height:1.5}
+  .delta-box li{font-size:14px;color:var(--muted);padding:3px 0;line-height:1.5}
   .delta-box li b{color:var(--text)}
-  .delta-flat{font-size:12px;color:var(--faint);line-height:1.5}
+  .delta-flat{font-size:13px;color:var(--faint);line-height:1.5}
 
   /* [A] 구조 지표 스트립 */
   .struct-strip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;border-top:1px dashed var(--line);margin-top:2px;padding:11px 20px;font-size:12px;color:var(--muted)}
@@ -205,13 +205,13 @@
 <!-- ── [C] 지난 검토 대비 델타 ── -->
 <div class="delta-box">
   <div class="delta-col">
-    <div class="delta-h">바뀐 것</div>
+    <div class="delta-h">금주 변동</div>
     <ul id="deltaChanged"><li>· MSCI 강등 회피 — EM 유지 확정 (종목 축소는 계속)</li><li>· RAPBN 2027 재정 규율 신호 — 시장 랠리</li><li>· 유가 $91 — 미-이란 MOU 만료·연장 거부</li></ul>
   </div>
   <div class="delta-col">
-    <div class="delta-h delta-h-flat">안 바뀐 것</div>
+    <div class="delta-h delta-h-flat">현상 유지</div>
     <div class="delta-flat" id="deltaUnchanged">미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B</div>
-    <div class="delta-h" style="margin-top:10px">이번 주 일정</div>
+    <div class="delta-h" style="margin-top:10px">금주 일정</div>
     <ul id="deltaSchedule"><li>· 08.19~20 BI 정례회의</li><li>· 08.21 Q2 경상수지</li><li>· 다음 주 총재 적격심사</li></ul>
   </div>
 </div>
@@ -455,7 +455,7 @@
 <script>
 /* ════════════════════════════════════════════════════════════
    ★ 분기 업데이트 — 이 DATA 블록만 수정 ★
-   1) asOf · nextReview 날짜 갱신 + delta 블록(바뀐 것/일정) 교체
+   1) asOf · nextReview 날짜 갱신 + delta 블록(금주 변동/일정) 교체
    2) indicators 값 갱신 (tier:"s"는 구조 지표 → 분기·이벤트 시에만,
       cw는 Cianjur 영향 한 줄 — 지표 성격 바뀔 때만 수정)
    3) events 배열 상단에 새 이벤트 추가 (최신 10건만 본문 노출, 나머지 자동 아카이브)
