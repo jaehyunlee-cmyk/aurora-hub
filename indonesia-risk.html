@@ -47,6 +47,27 @@
   .status-banner .txt{font-size:13px;color:var(--muted)}
   .status-banner .stamp{margin-left:auto;font-size:11px;color:var(--faint)}
 
+  /* [C] 델타 박스 */
+  .delta-box{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:0 0 18px;box-shadow:var(--shadow)}
+  @media (max-width:640px){.delta-box{grid-template-columns:1fr}}
+  .delta-h{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .delta-h-flat{color:var(--faint)}
+  .delta-box ul{list-style:none;margin:0;padding:0}
+  .delta-box li{font-size:13px;color:var(--muted);padding:3px 0;line-height:1.5}
+  .delta-box li b{color:var(--text)}
+  .delta-flat{font-size:12px;color:var(--faint);line-height:1.5}
+
+  /* [A] 구조 지표 스트립 */
+  .struct-strip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;border-top:1px dashed var(--line);margin-top:2px;padding:11px 20px;font-size:12px;color:var(--muted)}
+  .struct-strip .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+  .struct-strip .it{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .struct-strip .it b{color:var(--text);font-weight:600}
+
+  /* [B] 이벤트 아카이브 */
+  details.evt-archive{margin-top:6px}
+  details.evt-archive summary{cursor:pointer;font-size:12px;color:var(--accent);padding:8px 0;user-select:none}
+  details.evt-archive summary:hover{text-decoration:underline}
+
   /* ── live cards ── */
   .live-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px;margin:13px 0 26px}
   .live-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px 19px;box-shadow:var(--shadow)}
@@ -181,12 +202,26 @@
   <span class="stamp" id="bannerStamp"></span>
 </div>
 
+<!-- ── [C] 지난 검토 대비 델타 ── -->
+<div class="delta-box">
+  <div class="delta-col">
+    <div class="delta-h">바뀐 것</div>
+    <ul id="deltaChanged"><li>· MSCI 강등 회피 — EM 유지 확정 (종목 축소는 계속)</li><li>· RAPBN 2027 재정 규율 신호 — 시장 랠리</li><li>· 유가 $91 — 미-이란 MOU 만료·연장 거부</li></ul>
+  </div>
+  <div class="delta-col">
+    <div class="delta-h delta-h-flat">안 바뀐 것</div>
+    <div class="delta-flat" id="deltaUnchanged">미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B</div>
+    <div class="delta-h" style="margin-top:10px">이번 주 일정</div>
+    <ul id="deltaSchedule"><li>· 08.19~20 BI 정례회의</li><li>· 08.21 Q2 경상수지</li><li>· 다음 주 총재 적격심사</li></ul>
+  </div>
+</div>
+
 <!-- ── LIVE CARDS ── -->
 <div class="live-strip">
   <div class="live-card">
     <div class="lbl">USD/IDR <span id="liveTag">(연결 중…)</span></div>
     <div class="val red" id="liveRate">—</div>
-    <div class="sub" id="liveBase">참고 · 08.11 종가 17,861 (-0.60%) · 08.12 개장 17,868 — 총재 지명(08.10 17,755) 후 유가 재상승·내수 부진에 되밀림 · 주의선(18,000)은 8거래일째 하회 · 역대 고점 ~18,200+ (06·07월, 집계 기관별 상이)</div>
+    <div class="sub" id="liveBase">참고 · 08.18 종가 17,862 (-0.15%) — RDG BI(08.19~20 진행 중)·경상수지 발표(08.21) 대기 관망 · RAPBN 호재로 08.14 17,827까지 절상 후 소폭 반납 · 주의선(18,000) 하회 지속 · 역대 고점 ~18,200+ (06·07월, 기관별 상이)</div>
   </div>
   <div class="live-card">
     <div class="lbl">주의 기준선까지</div>
@@ -231,6 +266,7 @@
 <!-- ── 01 현황 ── -->
 <section>
   <div class="sec-head"><span class="sec-no">01</span><h2>현황 — 공개 지표 신호판</h2></div>
+  <div class="sec-desc" style="margin-top:-2px">변동 지표는 매 검토 갱신 · Cianjur 영향 열은 각 지표가 법인 운영에 닿는 경로 · 하단 구조 지표는 분기·이벤트 시에만 갱신</div>
   <div class="sec-desc">공개 지표를 모아 신호등으로 표시 · 생산운영팀 자체 전망 아님 · 환율·자본유출 등 [주의]~[위기] 단계가 공장에 직접 영향</div>
 
   <div class="stage-scale">[정상] ──── [주의] ──── [경계] ──── [위기] ──── [IMF 구제금융]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="here">▲ 현재 위치 (공개 지표 종합)</span></div>
@@ -239,17 +275,18 @@
     <b>외부 기관 시각 인용</b>
     <ul style="list-style:none;margin-top:8px">
       <li style="padding:3px 0">• <b>외환 펀더멘털</b> : 보유고 $145.6B (6개월 만에 반등) · 수입커버 5.5개월 · 변동환율제 — 1998년과 비교 불가 수준으로 양호</li>
-      <li style="padding:3px 0">• <b>단기 완화 요인</b> : <b>BI 총재 공백 해소 국면</b> — 현직 대행 Destry의 단독 지명(08.10)으로 정책 연속성 확보, 환율·주가 하방 방어 · Q2 GDP 5.29%로 컨센서스(5.1%) 상회 · 7월 물가 2.88%로 목표 중심권 복귀 · 제조업 PMI 50.2 확장 전환 · 7월 외환보유고 보합($145.3B, 수입 5.5개월분) · 7월 채권·주식 외국인 순유입 · 미 관세 확정(인니 10% vs 경쟁국 12.5%)·팜유 면제 협상 · S&P Stable 유지(유일)</li>
-      <li style="padding:3px 0">• <b>구조 리스크 잔존</b> : <b>유가 $80 → $88 재반등</b> — 호르무즈 협상 교착(이란 배상 요구 ↔ 트럼프 맞배상), 8월 이란 선적 사실상 0으로 $100 재돌파 경계론 · <b>무역수지 2개월 연속 적자 — 72개월 흑자 기록 붕괴</b>(유가발 migas 수입 급증) · <b>내수 둔화</b>: 소매판매 3개월 연속 감소, 소비자신뢰 15개월 최저(116.8) · <b>MSCI 동결(freeze) 지속</b> — 신규 편입·비중 상향 차단, 5월 6개 종목 제외로 $16억 유출 추정 · 총재 인준은 의회 심사 대기(수 주) · Fitch 07.01 재경고(보유고·Danantara) · 11월 MSCI 강등 리뷰</li>
+      <li style="padding:3px 0">• <b>단기 완화 요인</b> : <b>RAPBN 2027 재정 규율 신호</b> — 적자 목표 2.40%로 축소, 시장 랠리로 화답(JCI 6,450·루피아 17,8백대 안착) · <b>MSCI EM 분류 유지 확정</b>(08.13, 강등 회피) · 총재 공백 해소 수순 — Destry 적격심사 다음 주, 부총재단 후보 일괄 지명 · Q2 GDP 5.29% 컨센서스 상회 · 7월 물가 2.88% 목표 중심권 · 미 관세 확정(인니 10% vs 경쟁국 12.5%) · S&P Stable 유지(유일)</li>
+      <li style="padding:3px 0">• <b>구조 리스크 잔존</b> : <b>유가 $91 — 미-이란 MOU 만료(08.17)·연장 거부</b>, 호르무즈 통항 일 3척(전쟁 전 130척)으로 마비 지속, 재점화 시 $100 재돌파 경계 · <b>MSCI 종목 축소 계속</b> — GOTO 제외·CPIN 강등·Small Cap 9종 제외(08.31 발효), 동결 미해제로 분기마다 단계적 축소 구조 · <b>무역수지 2개월 연속 적자</b>(유가발) — 08.21 Q2 경상수지가 확인 포인트 · 내수 둔화(소매판매 3개월 연속 감소·소비자신뢰 15개월 최저) · RAPBN 성장 6% 전제의 현실성·DSI 역할 확대(Fitch 지목 사안) · 총재 인준 미완료</li>
       <li style="padding:3px 0;color:var(--faint)">※ 본 페이지는 공개 지표 모니터링용 — 환율·위기 시점을 자체 전망하지 않음</li>
     </ul>
   </div>
 
   <div class="tbl-wrap">
-    <table class="ind-tbl" style="min-width:660px">
-      <thead><tr><th class="sig">신호</th><th>지표</th><th>현재값</th><th>추세 <span style="font-weight:400;text-transform:none;letter-spacing:0">'25.1Q~</span></th><th>비고</th><th>출처</th></tr></thead>
+    <table class="ind-tbl" style="min-width:780px">
+      <thead><tr><th class="sig">신호</th><th>지표</th><th>현재값</th><th>추세 <span style="font-weight:400;text-transform:none;letter-spacing:0">'25.1Q~</span></th><th>비고</th><th>Cianjur 영향</th><th>출처</th></tr></thead>
       <tbody id="indBody"></tbody>
     </table>
+    <div class="struct-strip" id="structStrip"></div>
   </div>
   <div class="tally" id="tally"></div>
 </section>
@@ -335,7 +372,7 @@
       <li><span class="date">재점화<br>2026.06.12</span><span class="body"><b>연료 32% 인상이 직접 트리거.</b> 루피아 약세·무상급식(MBG) 지출 실정에 항의해 학생 시위 재개. "파산을 향하는 인도네시아(Menuju Indonesia Bangkrut)" 구호, 노란 대학 점퍼<span class="tag social">재점화</span></span></li>
       <li><span class="date">확산<br>2026.06.15~</span><span class="body"><b>자카르타·반둥·북남수마트라 등 다도시 확산.</b> 당국 3,000명+ 구금, Prabowo '테러·반역' 강경 규정. 6/15 부통령 Gibran이 시위대 면담, 6/19 정부 답변 시한 제시<span class="tag social">확산</span></span></li>
       <li><span class="date">현재<br>2026.07</span><span class="body"><b>대규모 충돌 소강, 긴장 잠복.</b> 7월 신규 대규모 시위 보도 없음. 8월 시위 관련 기소 활동가 중 <b>4명은 02.06 무죄 판결</b>(자카르타 중앙지법), 일부 절차·구금은 지속(Amnesty 캠페인 ~7/15) · 정부는 MBG 추가 삭감으로 요구 일부 수용 신호<span class="tag social">현재</span></span></li>
-      <li><span class="date">전망<br>우려</span><span class="body"><b>재점화 가능성 상존.</b> 6월 CPI 3.34%로 물가 압력 지속 — 시위의 근본 원인(생활비) 미해소. 7월 물가는 둔화(2.88%)했으나 유가가 $88대로 되돌아왔고, 소매판매 3개월 연속 감소·소비자신뢰 15개월 최저로 생활체감은 악화. 연료가격 추가 인상 시 재점화 경로는 유효. 활동가 재판 결과·<b>11월 MSCI 리뷰가 변곡점</b><span class="tag geo">전망</span></span></li>
+      <li><span class="date">전망<br>우려</span><span class="body"><b>재점화 가능성 상존.</b> 6월 CPI 3.34%로 물가 압력 지속 — 시위의 근본 원인(생활비) 미해소. 7월 물가는 둔화(2.88%)했으나 유가 $91·소매판매 3개월 연속 감소·소비자신뢰 15개월 최저로 생활체감은 악화. 2027년 연료보조금 표적화 개편(Pertalite 선별)이 시행 방식에 따라 새 불씨가 될 수 있음 — 연료가격 이슈가 시위의 원점이었다는 점에서 주시. 활동가 재판 결과·연료보조금 개편 시행 방식이 변곡점 <span style="color:var(--faint)">(기존 '11월 MSCI 리뷰' 표기는 08.13 EM 유지 확정으로 성격 변화)</span><span class="tag geo">전망</span></span></li>
     </ul>
   </div>
   <div class="src-note" style="border-left-color:var(--amber);margin-top:14px">
@@ -354,6 +391,10 @@
   <div class="sec-desc">지난 검토 이후 무엇이 바뀌었는지 추적 · 분기 검토 시 상단에 항목 추가 (최신순)</div>
   <div class="tbl-wrap" style="min-width:0;padding:6px 20px">
     <ul class="evt" id="evtList"></ul>
+    <details class="evt-archive">
+      <summary>이전 이벤트 아카이브 (<span id="evtArchiveCount">—</span>건) 펼치기</summary>
+      <ul class="evt" id="evtArchiveList"></ul>
+    </details>
   </div>
 </section>
 
@@ -372,9 +413,9 @@
             <tr><td>외환보유고</td><td>거의 고갈</td><td class="mono">$145.6B (5.5개월)</td><td>🟢 양호</td></tr>
             <tr><td>환율 제도</td><td>고정환율 붕괴</td><td>변동환율</td><td>🟢 구조적 안전</td></tr>
             <tr><td>단기 외채 / 은행</td><td>과다 / NPL 폭증</td><td>GDP 30% 장기물 / NPL 2.3%</td><td>🟢 양호</td></tr>
-            <tr><td>GDP</td><td class="mono">-13.6%</td><td class="mono">+5.61%</td><td>🟢 전혀 다름</td></tr>
+            <tr><td>GDP</td><td class="mono">-13.6%</td><td class="mono">+5.29%</td><td>🟢 전혀 다름</td></tr>
             <tr><td>신용등급 전망</td><td>N/A</td><td>Negative ×2</td><td>🔴 주의</td></tr>
-            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$88 (전쟁 전 대비 +16%) / JCI 6,268 (연초 -27.9%)</td><td>🟡 혼조</td></tr>
+            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$91 (전쟁 전 대비 +24%) / JCI 6,450 (RAPBN 랠리, 1월 고점 대비 -29%)</td><td>🟡 혼조</td></tr>
           </tbody>
         </table>
       </div>
@@ -404,7 +445,7 @@
 <footer>
   <div class="foot-row">
     <span>Aurora World 생산운영팀 · Indonesia Risk Watch · Internal Use Only</span>
-    <span><span id="footDate">Data as of 2026.08.12</span> · <span class="review" id="footReview">다음 검토: 2026.09</span></span>
+    <span><span id="footDate">Data as of 2026.08.19</span> · <span class="review" id="footReview">다음 검토: 2026.09</span></span>
   </div>
   <div style="margin-top:8px">출처: Bank Indonesia(JISDOR) · Bloomberg · BPS · Moody's · Fitch · Trading Economics · IDX · ExchangeRate-API. 본 페이지는 공개 지표 모니터링용 내부 참고 자료이며, 환율·위기 시점에 대한 자체 전망이나 공식 투자·법률 자문이 아닙니다.</div>
 </footer>
@@ -414,39 +455,58 @@
 <script>
 /* ════════════════════════════════════════════════════════════
    ★ 분기 업데이트 — 이 DATA 블록만 수정 ★
-   1) asOf · nextReview 날짜 갱신
-   2) indicators 값 갱신 + t 배열 끝에 분기 포인트 추가
-   3) events 배열 상단에 새 이벤트 추가
+   1) asOf · nextReview 날짜 갱신 + delta 블록(바뀐 것/일정) 교체
+   2) indicators 값 갱신 (tier:"s"는 구조 지표 → 분기·이벤트 시에만,
+      cw는 Cianjur 영향 한 줄 — 지표 성격 바뀔 때만 수정)
+   3) events 배열 상단에 새 이벤트 추가 (최신 10건만 본문 노출, 나머지 자동 아카이브)
    환율은 페이지 열 때마다 라이브 API 자동 갱신
    ════════════════════════════════════════════════════════════ */
 const DATA = {
-  asOf: "2026.08.12",
+  asOf: "2026.08.19",
+  /* [C] 지난 검토 대비 델타 — 매 갱신 시 3줄 내외로 교체 */
+  delta: {
+    changed: [
+      "<b>MSCI 강등 회피</b> — 연례 국가리뷰 EM 유지 확정 (단, GOTO 제외 등 종목 축소는 계속, 08.31 발효)",
+      "<b>RAPBN 2027 재정 규율 신호</b> — 적자 목표 2.40%, 시장 랠리 (JCI 6,450 · 루피아 17,8백대 안착)",
+      "<b>유가 $91 재상승</b> — 미-이란 MOU 60일 시한 만료(08.17)·연장 거부, 호르무즈 통항 일 3척",
+    ],
+    unchanged: "미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B",
+    schedule: [
+      "08.19~20 BI 정례회의(RDG) — 결과 발표 대기",
+      "08.21 Q2 경상수지 — 무역적자 2개월 연속의 파급 확인",
+      "다음 주 Destry 총재 적격심사 (일정 미확정)",
+    ],
+  },
   nextReview: "2026.09",
-  manualRate: 17861,
-  biLabel: "참고 · 08.11 종가 17,861 (-0.60%) · 08.12 개장 17,868 — 총재 지명(08.10 17,755 강세) 후 유가 재상승·내수 부진에 되밀림 · 주의선(18,000)은 8거래일째 하회 · 역대 고점 ~18,200+ (06·07월, 집계 기관별 상이)",
+  manualRate: 17862,
+  biLabel: "참고 · 08.18 종가 17,862 (-0.15%) — RDG BI(08.19~20 진행 중)·경상수지 발표(08.21) 대기 관망 · RAPBN 호재로 08.14 17,827까지 절상 후 소폭 반납 · 주의선(18,000) 하회 지속 · 역대 고점 ~18,200+ (06·07월, 기관별 상이)",
   trigger: { p1: 18000, p2: 19500 },
   railMin: 16500, railMax: 20000,
   reserve: { val: "$145.3B", sub: "2026.07 · 소폭 감소 (-$0.3B) · 수입 5.5개월분" },
   /* t = 분기별 추세 (25.1Q→현재) · up: good=오르면 좋음 / bad=오르면 나쁨 / neutral */
   indicators: [
-    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"총재 지명 호재로 08.10 17,755까지 절상 후 되밀림 — 08.11 17,861(-0.60%), 08.12 개장 17,868. 주의선은 8거래일째 하회 유지 · 하방 지지: 정책 연속성 기대·7월 채권/주식 외국인 순유입 / 상방 압력: 유가 $88 재상승(원유 수입 의존)·소매판매 3개월 연속 감소·소비자신뢰 15개월 최저 · 필리핀 페소와 함께 원유수입 노출이 커 아시아 통화 중 낙폭 최대", s:"a", src:"시장환율(라이브)·Bisnis·Trading Economics", t:[16100,16800,18171,18027,17930,17861], up:"bad"},
-    {g:"외환·통화", n:"외환보유고", v:"$145.3B", d:"07월 -$0.3B로 <b>사실상 보합</b>(BI \"상대적으로 안정적\") — 세수·서비스 수입과 정부 글로벌본드 발행이 대외채무 상환·환율 안정화 개입을 상쇄 · 수입 5.5개월분(채무상환 포함 5.3개월)으로 국제기준 3개월 크게 상회 · 다만 2025.12 $156.5B → 2026.05 $144.9B로 5개월간 -$11.6B 감소한 추세는 미회복", s:"a", src:"Bank Indonesia", t:[152.9,149.0,156.5,144.9,145.6,145.3], up:"good"},
-    {g:"외환·통화", n:"수입커버", v:"5.5개월", d:"국제 기준(3개월) 상회 · Fitch 2026 평균 4.9개월 전망(BBB 중간값 5.0 하회)", s:"g", src:"Bank Indonesia"},
-    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"07.22 동결(시장 과반은 인상 예상) — 금리 대신 FX 헤지비용 인하·현지통화 결제 확대로 선회 · <b>총재 공백 해소 국면</b>: 08.10 대통령이 <b>Destry Damayanti 대행을 단독 후보로 지명</b>(surpres 제출, 08.11 의회 공식 발표) — 현직 대행의 승격이라 정책 연속성 확보, 시장은 호재로 해석 · 다만 의회 적격심사가 남아 있어 확정은 아님(휴회 종료 08.14 이후 일정 조율, 수 주 소요 전망) · 부총재 2석 후임도 함께 제출", s:"a", src:"Bank Indonesia·Bloomberg·Jakarta Globe", t:[5.75,5.50,5.25,5.25,5.25,5.75], up:"neutral"},
-    {g:"실물 경제", n:"GDP 성장률", v:"+5.29%", d:"2026 Q2 YoY 확정(08.05) — Q1 5.61%에서 둔화했으나 <b>Bloomberg 컨센서스 5.1% 상회</b> · 전분기 대비 +3.73%, 상반기 누적 +5.45% · 제조업이 최대 기여(0.90%p), 전기·가스 +10.81% · 광업만 역성장 · BI 2026 전망 4.9~5.7% 범위 내", s:"g", src:"BPS·Bloomberg"},
-    {g:"실물 경제", n:"인플레이션", v:"2.88%", d:"2026.07 BPS 확정 — 6월 3.34%에서 둔화, 목표(2.5±1%) 중심권 복귀 · 월간은 <b>-0.14% 디플레이션</b>(컨센서스 +0.11%을 크게 하회, 양파·고추 등 변동성 식품 -1.68%) · Core 2.76% 보합 · 다만 정부관리가격 3.58%(전월 3.42%) 상승, 연말 3.13% 전망(Bank Permata)", s:"g", src:"BPS·BI", t:[1.9,2.3,2.42,3.08,3.34,2.88], up:"bad"},
-    {g:"실물 경제", n:"브렌트유", v:"$88", d:"<b>$80 → $88 재반등, 협상 낙관론 되돌림</b> — 08.06 이란이 통항 제한 조건을 담은 초안 공개(+3.8%), 08.10 트럼프 \"반쯤만 협상 중\"·해상봉쇄 유지 발언(+5%), 08.11 이란의 전쟁배상 요구와 트럼프의 맞배상 요구로 교착 · 8월 이란 선적분이 사실상 0에 근접해 $100 재돌파 경계론 · 전쟁 이전 대비 +16%, 순수입국 인니의 무역적자·보조금 부담 재확대", s:"r", src:"Trading Economics·CNBC·Al Jazeera·OilPrice", t:[88,95,88,84,80,88], up:"bad"},
-    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP · 법정한도 3% 근접 · 유가 급등이 보조금 부담 재확대(6월 원유·석유제품 수입 +105% yoy) — 대응으로 학교급식 예산 감액(268조→229조 루피아)·국방비 축소 검토 등 효율화 착수", s:"a", src:"BI"},
-    {g:"실물 경제", n:"미 관세(대미 수출)", v:"10% 확정", d:"07.23 확정·07.24 00:01(EDT) 발효 — 인니 10%+MFN (122 대체, 만료 없는 항구 체제) · 경쟁국 중·베·태 12.5% · 미국산 면 사용 시 섬유 TRQ 3년 · 정부는 팜유 품목 면제를 공식 요청(07.27, 심사 진행) · 과잉설비 301 결과 별도 대기 (→ US Tariff Watch)", s:"a", src:"USTR·Federal Register"},
-    {g:"신용·자본시장", n:"Moody's", v:"Baa2 Neg.", d:"2026.02.05 전망 하향 (최신)", s:"r", src:"Moody's"},
-    {g:"신용·자본시장", n:"S&P", v:"안정적", d:"07월 투자등급 확인·Stable 전망 유지 — 3대 평가사 중 유일한 Stable", s:"g", src:"S&P"},
-    {g:"신용·자본시장", n:"Fitch", v:"BBB Neg.", d:"07.01 등급 확인·Negative 유지 — 보유고 감소·Danantara 정책 경고", s:"r", src:"Fitch"},
-    {g:"신용·자본시장", n:"MSCI 분류", v:"EM·동결", d:"EM 분류는 유지되나 <b>인니 종목에 대한 \"동결(freeze)\" 조치가 계속</b> — 신규 편입 중단, 외국인편입비율(FIF)·주식수(NOS) 상향 동결, Small→Standard 승격 중단, 지분집중(HSC) 종목 제외(07.07 발표, 8월에도 유지) · 5월 리뷰에서 이미 6개 종목이 지수에서 제외돼 골드만은 $16억 유출 추정 · <b>08.12 23:00 CEST 8월 정기리뷰 결과 발표</b>(08.31 장 마감 후 발효) · 11월 강등 리뷰 시 $130억 유출 추정(Goldman)", s:"r", src:"MSCI·OJK·Maybank"},
-    {g:"신용·자본시장", n:"주식시장 JCI", v:"6,268", d:"8월 초 6,405까지 회복했으나 <b>08.11 -1.53%(6,268)</b>로 급락 — MSCI 리뷰 경계·유가 재상승·내수 지표 부진(소매판매 3개월 연속 감소, 소비자신뢰 116.8로 15개월 최저)이 겹침. 542개 종목 하락 · 7월 월간으로는 +10.5%로 6개월 연속 하락은 종료 · 연초 대비 -27.9%, 1월 최고 종가(9,134) 대비 -31.8%", s:"a", src:"IDX·Kompas·Pilarmas", t:[7400,6200,5400,6234,6351,6268], up:"good"},
+    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"RAPBN 2027(적자 축소·환율 전제 17,500) 호재에 08.14 17,827까지 절상 → 08.18 17,862로 소폭 반납, RDG BI(08.19~20)·경상수지(08.21) 대기 관망 · 주의선 하회 2주째 유지 · 하방 지지: 재정 규율 신호·총재 지명·연준 인하 기대 / 상방 압력: 유가 $91(원유 수입 노출)·내수 지표 부진", s:"a", src:"시장환율(라이브)·Bisnis·Doo Financial", cw:"달러결제 수입자재 원가·본사 정산환율 — 04 구간별 대응 연동", t:[16800,18171,18027,17930,17861,17862], up:"bad"},
+    {g:"외환·통화", n:"외환보유고", v:"$145.3B", d:"07월 -$0.3B로 <b>사실상 보합</b>(BI \"상대적으로 안정적\") — 세수·서비스 수입과 정부 글로벌본드 발행이 대외채무 상환·환율 안정화 개입을 상쇄 · 수입 5.5개월분(채무상환 포함 5.3개월)으로 국제기준 3개월 크게 상회 · 다만 2025.12 $156.5B → 2026.05 $144.9B로 5개월간 -$11.6B 감소한 추세는 미회복", s:"a", src:"Bank Indonesia", cw:"급감 시 외환규제·본사-법인 송금 제약 리스크", t:[152.9,149.0,156.5,144.9,145.6,145.3], up:"good"},
+    {g:"외환·통화", n:"수입커버", tier:"s", v:"5.5개월", d:"국제 기준(3개월) 상회 · Fitch 2026 평균 4.9개월 전망(BBB 중간값 5.0 하회)", s:"g", src:"Bank Indonesia"},
+    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"<b>8월 정례회의(RDG) 08.19~20 진행 중 — 결과 발표 대기</b> · 총재 인준 절차: Destry 단독 후보 적격심사가 다음 주로 확정(08.18 11위원회장 발표, 내부회의 선행) — 함께 지명: 수석부총재 Aida S Budiman, 부총재 Solikin M Juhro·M Anwar Bashori → 승인 시 지도부 공백 일괄 해소 · 7월 동결 이후 물가 둔화(2.88%)로 정책 여력은 확대", cw:"현지 운전자금 조달금리·리스 비용", s:"a", src:"Bank Indonesia·Bloomberg·Jakarta Globe", t:[5.75,5.50,5.25,5.25,5.25,5.75], up:"neutral"},
+    {g:"실물 경제", n:"GDP 성장률", tier:"s", v:"+5.29%", d:"2026 Q2 YoY 확정(08.05) — Q1 5.61%에서 둔화했으나 <b>Bloomberg 컨센서스 5.1% 상회</b> · 전분기 대비 +3.73%, 상반기 누적 +5.45% · 제조업이 최대 기여(0.90%p), 전기·가스 +10.81% · 광업만 역성장 · BI 2026 전망 4.9~5.7% 범위 내", s:"g", src:"BPS·Bloomberg"},
+    {g:"실물 경제", n:"인플레이션", v:"2.88%", d:"2026.07 BPS 확정 — 6월 3.34%에서 둔화, 목표(2.5±1%) 중심권 복귀 · 월간은 <b>-0.14% 디플레이션</b>(컨센서스 +0.11%을 크게 하회, 양파·고추 등 변동성 식품 -1.68%) · Core 2.76% 보합 · 다만 정부관리가격 3.58%(전월 3.42%) 상승, 연말 3.13% 전망(Bank Permata)", s:"g", src:"BPS·BI", cw:"현지 임금인상 협상의 선행지표 — 둔화는 우호적", t:[1.9,2.3,2.42,3.08,3.34,2.88], up:"bad"},
+    {g:"실물 경제", n:"브렌트유", v:"$91", d:"<b>미-이란 잠정 양해각서(6.18 MOU) 60일 시한 08.17 만료 — 트럼프 연장 거부</b>, 중재국 오만 압박 발언까지. 3거래일 연속 상승 $91 · 호르무즈 통항 일 3척(전쟁 전 ~130척), Q2 물동량 4.9M bpd(직전 분기 21.6M) · 걸프 산유국의 우회·비공식 수출이 하방을 일부 방어, IEA(-1.6M)-OPEC(+0.6M) 수요 전망 괴리도 큼 — 전쟁 전 대비 +24%", s:"r", src:"Trading Economics·Al Jazeera·EIA·Kpler", cw:"화섬 원자재(PET솜·원단)·해상운임 원가 직결", t:[95,88,84,80,88,91], up:"bad"},
+    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"of GDP (2026) · <b>RAPBN 2027: 적자 목표 2.40%로 축소</b>(2026년 2.68%) — 성장 6%·물가 2.5%·환율 17,500 전제, 연료보조금은 표적화(Pertalite 선별 지급) 개편 · 시장은 \"성장 야심 + 재정 규율 병행\"으로 긍정 평가(08.14 주가·루피아 동반 강세) · 다만 성장 6% 전제의 현실성은 검증 대상", s:"a", cw:"보조금 개편 → 연료·전기료 → 공장 유틸리티 비용", src:"BI"},
+    {g:"실물 경제", n:"미 관세(대미 수출)", v:"10% 확정", d:"07.23 확정·07.24 00:01(EDT) 발효 — 인니 10%+MFN (122 대체, 만료 없는 항구 체제) · 경쟁국 중·베·태 12.5% · 미국산 면 사용 시 섬유 TRQ 3년 · 정부는 팜유 품목 면제를 공식 요청(07.27, 심사 진행) · 과잉설비 301 결과 별도 대기 (→ US Tariff Watch)", s:"a", src:"USTR·Federal Register", cw:"대미 수출원가 +10% — 경쟁국 대비 -2.5%p 우위는 단가협상 카드"},
+    {g:"신용·자본시장", n:"Moody's", tier:"s", v:"Baa2 Neg.", d:"2026.02.05 전망 하향 (최신)", s:"r", src:"Moody's"},
+    {g:"신용·자본시장", n:"S&P", tier:"s", v:"안정적", d:"07월 투자등급 확인·Stable 전망 유지 — 3대 평가사 중 유일한 Stable", s:"g", src:"S&P"},
+    {g:"신용·자본시장", n:"Fitch", tier:"s", v:"BBB Neg.", d:"07.01 등급 확인·Negative 유지 — 보유고 감소·Danantara 정책 경고", s:"r", src:"Fitch"},
+    {g:"신용·자본시장", n:"MSCI 분류", v:"EM 유지·축소 지속", d:"<b>08.13 결과: 연례 국가리뷰에서 EM 분류 유지 확정</b>(강등 회피) — 그러나 종목 단위 축소는 계속: <b>GOTO 지수 완전 제외, CPIN Standard→Small Cap 강등, Small Cap 9종 제외</b>(ARTO·BUKA·SMGR 등), 신규 편입 0건. Standard 지수 내 인니 종목은 9개만 잔존, 08.31 발효 · 동결(freeze) 정책 유지 — 리스크의 성격이 \"11월 일괄 강등\"에서 <b>\"분기마다 단계적 축소\"로 이동</b> <span style=\"color:var(--faint)\">※ 기존 표기 \"11월 강등 리뷰($130억 유출 추정)\"는 이번 연례리뷰와의 관계가 MSCI 공지상 불명확해 확인 필요로 재분류</span>", s:"r", src:"MSCI·Kompas·Kontan", cw:"자본유출 → 환율 2차 압력 (직접 영향 제한적)"},
+    {g:"신용·자본시장", n:"주식시장 JCI", v:"6,450", d:"<b>RAPBN 랠리 — 08.14 +1.59%(6,402), 08.18 +0.75%(6,450)</b>로 재정 규율 신호에 반등, 6,450~6,455 저항 시험(돌파 시 6,568~6,716 시야, MNC·기술적) · MSCI 종목 제외(08.31 발효)가 단기 수급 변수, 내수 지표 부진 지속 · 1월 최고 종가(9,134) 대비 약 -29%로 낙폭 미회복", s:"a", src:"IDX·Bisnis·Kompas", cw:"심리 지표 — 급락 시 환율 동반 약세 주시", t:[6200,5400,6234,6351,6268,6450], up:"good"},
   ],
   /* 이벤트 로그 (최신순) · t: fx 환율 / rate 통화정책 / credit 신용등급 / trade 무역 / geo 지정학 / social 정치사회 / market 자본시장 */
   events: [
-    {d:"2026.08.12", t:"market", tx:"<b>[오늘] MSCI 8월 정기리뷰 발표</b> — 23:00 CEST(08.13 04:00 WIB), 변경은 08.31 장 마감 후 발효. 인니 종목은 <b>동결(freeze) 조치 유지</b>로 신규 편입 없음이 7월에 이미 확정 — 신규 편입 중단, FIF·NOS 상향 동결, Small→Standard 승격 중단, 지분집중(HSC) 종목 제외가 그대로. OJK는 \"자본시장 개혁이 반영돼 동결이 해제되길 기대\"라고 표명. Maybank는 큰 부정적 서프라이즈는 없을 것으로 전망 (MSCI·OJK·Maybank·Phintraco)"},
+    {d:"2026.08.19", t:"rate",   tx:"<b>[진행 중] BI 8월 정례회의(08.19~20)</b> — 물가 2.88%로 정책 여력 확대 속 결과 대기. 이번 주 잔여 일정: <b>08.21 Q2 경상수지 발표</b>(무역적자 2개월 연속의 파급 확인 포인트), 다음 주 Destry 적격심사. 결과 확인 후 본 로그·지표 갱신 필요 (Bisnis·Okezone)"},
+    {d:"2026.08.18", t:"market", tx:"<b>JCI 6,450 (+0.75%) — RAPBN 랠리 연장, 6,450 저항 시험</b>. 환율은 17,862(-0.15%)로 RDG·경상수지 대기 관망. 총재 적격심사는 \"다음 주\"로 확정(11위원회장 Misbakhun, 내부회의 선행) (Kompas·Bisnis·Okezone)"},
+    {d:"2026.08.17", t:"geo",    tx:"<b>미-이란 잠정 양해각서(6.18 MOU) 60일 시한 만료 — 트럼프 \"연장 없다\"</b>, 중재국 오만에 대한 압박 발언까지. 유가 3거래일 연속 상승, 08.18 브렌트 $91 상회. 호르무즈 통항은 일 3척 수준(전쟁 전 ~130척)으로 사실상 마비 · 다만 걸프 산유국의 우회·비공식 수출이 확인되며 $90 안팎에서 공방 <span style=\"color:var(--faint)\">※ 이란의 대응 방향은 미확정</span> (Al Jazeera·Trading Economics·Kpler·EIA)"},
+    {d:"2026.08.14", t:"market", tx:"<b>RAPBN 2027 발표 — 시장 랠리</b>. 대통령 국정연설·예산교서에서 <b>재정적자 목표 2.40%</b>(2026년 2.68%에서 축소), 성장 6%·물가 2.5%·환율 17,500 전제 제시. \"모든 루피아 지출에 재정 규율\" 발언에 IHSG +1.59%(6,402)·루피아 17,827 절상·국채금리 하락으로 화답. 연료보조금 표적화 개편(Pertalite 선별), Danantara(DSI)의 상품수출 모니터링·광물거래소(2027.1) 계획도 명시 — <span style=\"color:var(--faint)\">성장 6% 전제의 현실성과 DSI 역할 확대는 검증 대상</span> (Tribun·Bisnis·Bibit·Media Indonesia)"},
+    {d:"2026.08.13", t:"market", tx:"<b>MSCI 결과: EM 분류 유지 확정 — 그러나 종목 축소는 계속</b>. 연례 국가리뷰에서 신흥시장 지위 유지(강등 회피). 반면 정기 리밸런싱에서는 <b>GOTO 완전 제외, CPIN Small Cap 강등, Small Cap 9종 제외</b>(ARTO·BUKA·ESSA·FILM·HEAL·KPIG·RATU·SMGR·TCPI), 신규 편입 0건 — Standard 지수 잔존 인니 종목 9개. 08.31 장 마감 후 발효. 시장 전문가들은 \"유동성·투자적격성의 질 문제\"로 해석 (MSCI·Kompas·Kontan·investortrust)"},
     {d:"2026.08.11", t:"market", tx:"<b>JCI -1.53% (6,268), 환율 17,861(-0.60%) 동반 약세</b> — MSCI 리뷰 경계에 542개 종목 하락. 내수 지표 악화가 겹침: <b>소매판매 3개월 연속 감소</b>, <b>소비자신뢰지수 116.8(6월 117.8)로 15개월 최저</b>. 다만 총재 지명이 낙폭을 제한했다는 평가 (Kompas·Pilarmas·RMOL)"},
     {d:"2026.08.11", t:"geo",    tx:"<b>유가 $88대 재상승 — 호르무즈 협상 교착</b>. 이란이 전쟁 배상을 요구하자 트럼프가 맞배상을 요구하며 협상 복잡화. 08.06 이란의 통항 제한 초안 공개(+3.8% $82.49) → 08.10 트럼프 \"반쯤만 협상 중\"·해상봉쇄 유지(+5% $87.72) → 08.11 $88대 등락. 8월 이란 선적이 사실상 0에 근접해 <b>$100 재돌파 경계론</b> 대두 (CNBC·Al Jazeera·OilPrice)"},
     {d:"2026.08.10", t:"rate",   tx:"<b>대통령, Destry Damayanti를 BI 총재 단독 후보로 지명</b> — 대통령 추천서(surpres)를 의회 지도부에 제출(08.11 공식 발표). 현직 대행의 승격이라 <b>정책 연속성 확보</b>로 해석돼 환율은 17,755까지 절상, 주가도 지지. 부총재 2석 후임도 함께 제출. 의회는 08.14 회기 재개 후 적격심사 일정을 잡을 예정이며 <span style=\"color:var(--faint)\">승인까지 수 주 소요 전망 — 확정 아님</span> (Antara·Tribun·Tempo·Trading Economics)"},
@@ -518,14 +578,23 @@ function sparkline(pts, up){
 
 /* 지표 테이블 + 이벤트 로그 렌더 */
 (function(){
+  /* [A] 변동 지표(core)만 메인 테이블 — 구조 지표(tier:"s")는 하단 스트립 */
   let html='', last='';
-  DATA.indicators.forEach(i=>{
-    if(i.g!==last){ html+=`<tr class="ind-group"><td colspan="6">${i.g}</td></tr>`; last=i.g; }
+  DATA.indicators.filter(i=>i.tier!=='s').forEach(i=>{
+    if(i.g!==last){ html+=`<tr class="ind-group"><td colspan="7">${i.g}</td></tr>`; last=i.g; }
     const v = i.v==='LIVE' ? `<span class="v" data-live-rate>—</span>` : `<span class="v">${i.v}</span>`;
     const spark = i.t ? `<span class="spark-wrap"${i.n.includes('USD/IDR')?' data-fx-spark':''}>${sparkline(i.t, i.up)}</span>` : '<span style="color:var(--faint);font-size:11px">—</span>';
-    html+=`<tr><td class="sig"><span class="dot ${i.s}"></span></td><td>${i.n}</td><td>${v}</td><td class="spark">${spark}</td><td class="d">${i.d}</td><td class="s">${i.src}</td></tr>`;
+    html+=`<tr><td class="sig"><span class="dot ${i.s}"></span></td><td>${i.n}</td><td>${v}</td><td class="spark">${spark}</td><td class="d">${i.d}</td><td class="d" style="color:var(--text)">${i.cw||'—'}</td><td class="s">${i.src}</td></tr>`;
   });
   $('indBody').innerHTML=html;
+  /* [A] 구조 지표 스트립 — 분기·이벤트 시에만 갱신 */
+  $('structStrip').innerHTML = '<span class="lbl">구조 지표 (분기·이벤트 갱신)</span>' +
+    DATA.indicators.filter(i=>i.tier==='s').map(i=>
+      `<span class="it"><span class="dot ${i.s}"></span>${i.n} <b>${i.v}</b></span>`).join('');
+  /* [C] 델타 박스 */
+  $('deltaChanged').innerHTML = DATA.delta.changed.map(x=>`<li>· ${x}</li>`).join('');
+  $('deltaUnchanged').innerHTML = DATA.delta.unchanged;
+  $('deltaSchedule').innerHTML = DATA.delta.schedule.map(x=>`<li>· ${x}</li>`).join('');
   const c={g:0,a:0,r:0}; DATA.indicators.forEach(i=>c[i.s]++);
   $('tally').innerHTML=`<span><span class="dot r"></span>위험 ${c.r}</span><span><span class="dot a"></span>주의 ${c.a}</span><span><span class="dot g"></span>양호 ${c.g}</span><span style="color:var(--faint)">— ${DATA.asOf} · 환율만 라이브, 나머지 수동 갱신</span>`;
   $('fxReserve').textContent=DATA.reserve.val;
@@ -534,8 +603,12 @@ function sparkline(pts, up){
   $('footReview').textContent='다음 검토: '+DATA.nextReview;
   $('liveBase').textContent=DATA.biLabel;
   const tagName={fx:'환율',rate:'통화정책',credit:'신용등급',trade:'무역',geo:'지정학',social:'정치·사회',market:'자본시장'};
-  $('evtList').innerHTML = DATA.events.map(e=>
-    `<li><span class="date">${e.d}</span><span class="body">${e.tx}<span class="tag ${e.t}">${tagName[e.t]}</span></span></li>`).join('');
+  const evRow = e => `<li><span class="date">${e.d}</span><span class="body">${e.tx}<span class="tag ${e.t}">${tagName[e.t]}</span></span></li>`;
+  const RECENT = 10;
+  $('evtList').innerHTML = DATA.events.slice(0, RECENT).map(evRow).join('');
+  const older = DATA.events.slice(RECENT);
+  $('evtArchiveList').innerHTML = older.map(evRow).join('');
+  $('evtArchiveCount').textContent = older.length;
 })();
 
 function zoneOf(r){ return r>=DATA.trigger.p2?'r':r>=DATA.trigger.p1?'a':'g'; }
