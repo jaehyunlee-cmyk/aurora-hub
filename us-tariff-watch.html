@@ -25,7 +25,7 @@
     --neutral-bg:#F0F1F3;--neutral-text:var(--graphite);
     --r-md:8px;--r-lg:10px;--r-xl:10px;
   }
-  body{font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh;}
+  body{font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;min-height:100vh;}
   .topnav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:16px;}
   .nav-brand{display:flex;align-items:center;gap:12px;min-width:0;}
   .nav-logo{width:32px;height:32px;background:var(--text);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -37,24 +37,24 @@
   .nav-home{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 12px;border-radius:var(--r-md);border:1px solid var(--border-md);background:var(--surface);color:var(--text-2);text-decoration:none;transition:background .15s,color .15s;white-space:nowrap;}
   .nav-home:hover{background:var(--surface2);color:var(--text);}
   .nav-home i{font-size:13px;}
-  .nav-date{font-size:11px;color:var(--text-3);padding:4px 10px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);white-space:nowrap;}
-  .nav-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);}
+  .nav-date{font-size:12px;color:var(--text-3);padding:4px 10px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);white-space:nowrap;}
+  .nav-tag{font-size:12px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text-2);border:1px solid var(--border);}
   .btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:6px 14px;border-radius:var(--r-md);border:1px solid var(--border-md);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;transition:background .15s,color .15s;}
   .btn:hover{background:var(--surface2);color:var(--text);}
   .btn-primary{background:var(--text);color:var(--surface);border-color:var(--text);}
   .btn-primary:hover{opacity:.88;}
   .btn.loading i.ti-refresh{animation:spin .8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  .main{max-width:1100px;margin:0 auto;padding:28px 24px 60px;}
-  .page-header{margin-bottom:24px;}
+  .main{max-width:1100px;margin:0 auto;padding:40px 24px 64px;}
+  .page-header{margin-bottom:16px;}
   .page-header h1{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:4px;}
-  .page-header p{font-size:13px;color:var(--text-2);}
-  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px;}
-  .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;}
-  .metric-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-  .metric-value{font-size:28px;font-weight:700;color:var(--text);line-height:1;margin-bottom:8px;letter-spacing:-.02em;}
+  .page-header p{font-size:15px;color:var(--graphite);}
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+  .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;}
+  .metric-label{font-size:12px;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+  .metric-value{font-size:26px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:8px;letter-spacing:-.02em;}
   .metric-sub{font-size:12px;color:var(--text-2);line-height:1.6;}
-  .metric-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-top:8px;font-weight:500;}
+  .metric-badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:8px;font-weight:600;}
   .badge-active{background:var(--s122-bg);color:var(--s122-text);}
   .badge-warn{background:var(--warn-bg);color:var(--warn-text);}
   .badge-ok{background:var(--ok-bg);color:var(--ok-text);}
@@ -62,35 +62,35 @@
   .badge-danger{background:var(--danger-bg);color:var(--danger-text);}
   .warn-strip{margin-bottom:24px;display:flex;flex-direction:column;gap:6px;}
   .warn-strip details{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:3px solid var(--warn-border);border-radius:var(--r-md);overflow:hidden;}
-  .warn-strip summary{cursor:pointer;padding:10px 16px;font-size:13px;font-weight:600;color:var(--warn-text);display:flex;align-items:center;gap:8px;list-style:none;line-height:1.5;}
+  .warn-strip summary{cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;color:var(--warn-text);display:flex;align-items:center;gap:8px;list-style:none;line-height:1.5;}
   .warn-strip summary::-webkit-details-marker{display:none;}
   .warn-strip summary .chev{margin-left:auto;flex-shrink:0;font-size:11px;color:var(--warn-border);transition:transform .15s;}
   .warn-strip details[open] summary .chev{transform:rotate(90deg);}
   .warn-strip summary:hover{filter:brightness(.98);}
-  .warn-strip .warn-detail{background:var(--surface);border-top:1px solid var(--warn-border);padding:6px 18px 10px;font-size:12.5px;color:var(--text-2);}
+  .warn-strip .warn-detail{background:var(--surface);border-top:1px solid var(--warn-border);padding:8px 18px 12px;font-size:13px;color:var(--text-2);}
   .warn-strip .warn-detail strong{color:var(--text);}
-  .wd-row{display:flex;gap:14px;padding:7px 0;border-bottom:1px dashed var(--cloud);line-height:1.6;}
+  .wd-row{display:flex;gap:16px;padding:8px 0;border-bottom:1px dashed var(--cloud);line-height:1.65;}
   .wd-row:last-child{border-bottom:none;}
-  .wd-label{width:92px;flex-shrink:0;font-size:10px;font-weight:600;letter-spacing:.07em;color:var(--text-3);text-transform:uppercase;padding-top:3px;}
+  .wd-label{width:92px;flex-shrink:0;font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--slate);text-transform:uppercase;padding-top:2px;}
   .wd-val{flex:1;min-width:0;}
-  .wd-val .sub{color:var(--text-3);font-size:11.5px;}
+  .wd-val .sub{color:var(--slate);font-size:12px;}
   @media(max-width:640px){.wd-row{flex-direction:column;gap:2px;}.wd-label{width:auto;}}
-  .section-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+  .section-label{font-size:12px;font-weight:600;color:var(--slate);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:20px;overflow:hidden;}
   .card-header{padding:12px 18px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
-  .card-title{font-size:13px;font-weight:600;color:var(--text);}
+  .card-title{font-size:15px;font-weight:600;color:var(--ink);}
   .card-body{padding:18px;}
-  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text-2);align-items:center;}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--text-2);align-items:center;}
   .legend-item{display:flex;align-items:center;gap:5px;}
   .legend-swatch{width:22px;height:11px;border-radius:2px;flex-shrink:0;}
   .legend-dline{width:18px;border-top:2px dashed #B07314;}
 
   /* ── HEATMAP (단일 테이블, 색상 없음) ── */
   .heatmap-scroll{overflow-x:visible;}
-  table.hm{width:100%;border-collapse:collapse;font-size:10px;}
+  table.hm{width:100%;border-collapse:collapse;font-size:12px;}
 
   table.hm th{
-    padding:5px 3px;text-align:center;font-size:9px;font-weight:600;
+    padding:6px 4px;text-align:center;font-size:11px;font-weight:600;
     color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;
     border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;
   }
@@ -107,12 +107,12 @@
   table.hm th.yrb{border-left:1px solid var(--border-md)!important;}
 
   table.hm td{
-    padding:5px 3px;text-align:center;font-size:10px;
+    padding:6px 4px;text-align:center;font-size:12px;
     font-weight:500;border-bottom:1px solid var(--border);
     white-space:nowrap;color:var(--text);
   }
   table.hm td.lc-c{text-align:left;padding-left:8px;font-weight:700;color:var(--text);background:var(--surface);}
-  table.hm td.lc-s{text-align:left;padding-left:6px;font-size:9px;font-weight:400;color:var(--text-2);background:var(--surface);}
+  table.hm td.lc-s{text-align:left;padding-left:6px;font-size:11px;font-weight:400;color:var(--text-2);background:var(--surface);}
   table.hm tr.tr td{background:var(--surface2)!important;border-top:1px solid var(--border-md);font-weight:700;}
   table.hm tr.sp td{height:10px;background:var(--bg)!important;border:none;}
   table.hm tr:last-child td{border-bottom:none;}
@@ -125,11 +125,11 @@
   /* 색상 없이 텍스트로만 구분 */
   .val-active{color:var(--text);font-weight:600;}
   .val-zero{color:var(--text-3);font-weight:400;}
-  .val-exp{color:var(--text-3);font-size:10px;font-weight:400;}
-  .val-tbd{color:var(--text-3);font-size:10px;font-weight:400;}
+  .val-exp{color:var(--text-3);font-size:12px;font-weight:400;}
+  .val-tbd{color:var(--text-3);font-size:12px;font-weight:400;}
   .val-total{color:var(--text);font-weight:700;}
   .val-total-hi{color:var(--text);font-weight:700;}
-  .val-ended{color:var(--text-3);font-size:10px;font-weight:400;text-decoration:line-through;}
+  .val-ended{color:var(--text-3);font-size:12px;font-weight:400;text-decoration:line-through;}
 
   /* ── CHART ── */
   .chart-tabs{display:flex;gap:6px;margin-bottom:14px;}
@@ -141,7 +141,7 @@
   .def-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;display:flex;flex-direction:column;}
   .def-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
   .def-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;}
-  .def-status{font-size:10px;color:var(--text-3);}
+  .def-status{font-size:12px;color:var(--text-3);}
   .def-fullname{font-size:11px;color:var(--text-3);margin-bottom:8px;font-style:italic;}
   .def-body{font-size:12px;color:var(--text-2);line-height:1.65;}
   .def-foot{font-size:11px;color:var(--text-3);margin-top:auto;padding-top:10px;border-top:1px solid var(--border);}
@@ -154,12 +154,12 @@
   .tl-content{flex:1;}
   .tl-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
   .tl-desc{font-size:12px;color:var(--text-2);line-height:1.6;}
-  .tl-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;margin-top:6px;}
+  .tl-tag{display:inline-block;font-size:12px;padding:2px 7px;border-radius:3px;margin-top:6px;}
   .future{opacity:.6;}
 
   /* ── NEWS ── */
   
-  .news-empty i{font-size:24px;display:block;margin-bottom:10px;}
+  .news-empty i{font-size:26px;display:block;margin-bottom:10px;}
   
   
   
@@ -175,17 +175,17 @@
   .share-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;}
   .share-modal-backdrop.open{display:flex;}
   .share-modal{background:var(--surface);border-radius:var(--r-xl);padding:28px;width:100%;max-width:400px;margin:16px;border:1px solid var(--border-md);}
-  .share-modal h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
+  .share-modal h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
   .share-modal p{font-size:13px;color:var(--text-2);margin-bottom:18px;}
   .share-url-box{display:flex;gap:8px;margin-bottom:20px;}
   .share-url-box input{flex:1;font-size:12px;padding:8px 12px;border:1px solid var(--border-md);border-radius:var(--r-md);background:var(--surface2);color:var(--text);font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;}
   .share-methods{display:flex;flex-direction:column;gap:8px;}
   .share-method-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:13px;color:var(--text);font-family:Arial,'Pretendard','Noto Sans KR','Malgun Gothic',system-ui,sans-serif;transition:background .15s;}
   .share-method-btn:hover{background:var(--surface);border-color:var(--border-md);}
-  .share-method-btn i{font-size:18px;color:var(--text-3);}
+  .share-method-btn i{font-size:17px;color:var(--text-3);}
   .sm-label{font-weight:600;font-size:13px;color:var(--text);}
   .sm-sub{font-size:11px;color:var(--text-3);}
-  .modal-close{float:right;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:18px;}
+  .modal-close{float:right;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:17px;}
   footer{text-align:center;padding:24px;font-size:11px;color:var(--text-3);border-top:1px solid var(--border);margin-top:20px;}
   @media(max-width:600px){
     .main{padding:16px 14px 40px;}
@@ -193,11 +193,11 @@
     .nav-sub,.nav-tag{display:none;}
     .metric-grid{grid-template-columns:1fr 1fr;}
     .def-grid{grid-template-columns:1fr;}
-    .tl-date{min-width:62px;font-size:10px;}
+    .tl-date{min-width:62px;font-size:12px;}
   }
 .hub-btn{display:inline-flex;align-items:center;gap:8px;
   background:var(--ink);color:#fff;border-radius:14px;
-  padding:10px 18px;font-size:14px;font-weight:600;letter-spacing:.01em;
+  padding:10px 18px;font-size:13px;font-weight:600;letter-spacing:.01em;
   text-decoration:none;flex-shrink:0;transition:background .15s;}
 .hub-btn:hover{background:var(--graphite);}
 .hub-btn .arrow{font-size:15px;line-height:1;}
@@ -226,14 +226,14 @@
       <div class="metric-value">12.5%</div>
       <div class="metric-sub">신규 301조 관세(강제노동) &nbsp;12.5% 확정<br>기존 301 &nbsp;List 4B 유예 지속 (0%)</div>
       <div class="metric-badge badge-active">발효 중</div>
-      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">HTS 9503.00.00 · MFN Free (공개 확인) · 접미 0090은 브로커 확인값 · S122 대비 <strong>+2.5%p</strong></div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:4px;">HTS 9503.00.00 · MFN Free (공개 확인) · 접미 0090은 브로커 확인값 · S122 대비 <strong>+2.5%p</strong></div>
     </div>
     <div class="metric-card">
       <div class="metric-label">인도네시아 실효관세 (7/24~)</div>
       <div class="metric-value">10%</div>
       <div class="metric-sub">신규 301조 관세(강제노동) &nbsp;10% 확정<br>10% 티어 근거: 금지법 보유 + ART 약속</div>
       <div class="metric-badge badge-active">발효 중</div>
-      <div style="font-size:11px;color:var(--text-3);margin-top:4px;">HTS 9503.00.00 · MFN Free (공개 확인) · 접미 0090은 브로커 확인값 · 티어는 <strong>변동 가능</strong></div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:4px;">HTS 9503.00.00 · MFN Free (공개 확인) · 접미 0090은 브로커 확인값 · 티어는 <strong>변동 가능</strong></div>
     </div>
     <div class="metric-card">
       <div class="metric-label">환급 2트랙 (진행 중)</div>
@@ -249,8 +249,8 @@
     </div>
   </div>
 
-  <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent,#2B6CFF);border-radius:var(--r-md);padding:10px 16px;margin-bottom:14px;font-size:12.5px;color:var(--text-2);line-height:1.8;">
-    <span style="font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--text-3);text-transform:uppercase;">이번 검증(8/19)에서 달라진 것</span><br>
+  <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent,#2B6CFF);border-radius:var(--r-md);padding:10px 16px;margin-bottom:14px;font-size:13px;color:var(--text-2);line-height:1.8;">
+    <span style="font-size:12px;font-weight:700;letter-spacing:.07em;color:var(--text-3);text-transform:uppercase;">이번 검증(8/19)에서 달라진 것</span><br>
     ① 집단소송 결정 <strong>대기 지속</strong> — 신규 확인: 결정 후에도 패소 측 항소 확실시, 최종 확정은 연말 이후 전망 &nbsp;② <strong>유리한 변화</strong>: 7/13부터 신규 제소 사건 자동 정지 철회 — 지금 제소해도 기존 소송인과 동일 구제 즉시 요청 가능 &nbsp;③ 공급과잉 조사 범위 "최소 21개 제조업종" 확인(완구 포함 여부 미공개) · 캐나다 338 발효(참고, 당사 무관)
   </div>
 
@@ -277,7 +277,7 @@
     <div class="wd-row"><span class="wd-label" style="width:26px;">☐ 2</span><span class="wd-val"><strong>$10M 잔액이 걸린 통관 건(entry)들의 청산 상태</strong> — 확정·마감 전이면: CAPE로 회수 가능. 확정·마감 후면: 제소 없이 회수 불가 가능성 (이자 연 6% 복리 가산 중)</span></div>
     <div class="wd-row"><span class="wd-label" style="width:26px;">☐ 3</span><span class="wd-val"><strong>In-transit 예외 적용 결과</strong> — 7/24 이전 선적 + 7/28 이전 통관 물량 중 면제(0%) 적용 건 유무·금액 → 하반기 원가 산정 반영</span></div>
     <div class="wd-row"><span class="wd-label" style="width:26px;">☐ 4</span><span class="wd-val"><strong>완구 외 헤딩(가방·파우치류 4202 등) 신고 물량 유무</strong> — 있다면 해당 라인은 기존 301 List 3 25% + 신규 12.5% = <strong>37.5%</strong> 노출 (미신고 시 추징 리스크)</span></div>
-    <div style="font-size:10.5px;color:var(--text-3);padding:8px 0 2px;">※ 7/22·7/28 미국 법인 앞 문의 발송분 — 회신 수령 시 항목별로 종결 처리 예정. 상세 배경은 하단 "확인 필요 항목 &amp; 액션" 표 참조</div>
+    <div style="font-size:12px;color:var(--text-3);padding:8px 0 2px;">※ 7/22·7/28 미국 법인 앞 문의 발송분 — 회신 수령 시 항목별로 종결 처리 예정. 상세 배경은 하단 "확인 필요 항목 &amp; 액션" 표 참조</div>
   </div></div>
 
   <!-- 워치리스트 -->
@@ -285,10 +285,10 @@
   <div class="card" style="margin-bottom:24px;"><div class="card-body" style="padding:12px 16px;">
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
       <thead><tr style="background:var(--surface2);">
-        <th style="text-align:left;padding:8px 12px;font-size:10px;color:var(--text-3);letter-spacing:.05em;">항목</th>
-        <th style="text-align:center;padding:8px;font-size:10px;color:var(--text-3);white-space:nowrap;">상태 (8/19 확인)</th>
-        <th style="text-align:left;padding:8px 12px;font-size:10px;color:var(--text-3);">발동 시 당사 영향</th>
-        <th style="text-align:center;padding:8px;font-size:10px;color:var(--text-3);white-space:nowrap;">트리거</th>
+        <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--text-3);letter-spacing:.05em;">항목</th>
+        <th style="text-align:center;padding:8px;font-size:12px;color:var(--text-3);white-space:nowrap;">상태 (8/19 확인)</th>
+        <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--text-3);">발동 시 당사 영향</th>
+        <th style="text-align:center;padding:8px;font-size:12px;color:var(--text-3);white-space:nowrap;">트리거</th>
       </tr></thead>
       <tbody>
         <tr style="border-bottom:1px solid var(--border);">
@@ -336,7 +336,7 @@
             <tr>
               <th class="lc" style="width:76px;">국가</th>
               <th class="lc" style="width:88px;">Section</th>
-              <th colspan="12" style="text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2026</th>
+              <th colspan="12" style="text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);font-size:12px;font-weight:600;color:var(--text-3);letter-spacing:.06em;padding:5px;">2026</th>
             </tr>
             <tr>
               <th class="lc"></th><th class="lc"></th>
@@ -447,7 +447,7 @@
               </tbody>
             </table>
           </div>
-          <div style="font-size:10.5px;color:var(--text-3);margin-top:8px;line-height:1.7;">
+          <div style="font-size:12px;color:var(--text-3);margin-top:8px;line-height:1.7;">
             ※ 2025년 IEEPA는 펜타닐 트랙(중국 한정)과 상호관세 트랙(전 세계) 2갈래 — 중국 합산 최고 <strong>145%</strong>(4월) → 제네바 합의 후 30%(5월) → 부산 합의 후 20%(11월). 인니는 상호관세 10% → 무역합의 후 <strong>19%</strong>(8/7~). 기존 301(List 4B)은 전 기간 유예(0%).<br>
             ※ 방향은 확정이며, 월중 세부 발효일 단위는 1차 자료(대통령령·CBP 고시) 라인 대조 기준으로 표기 — 셀 내 화살표는 월내 변동 순서.<br>
             ※ 시사점: 인니산도 2025년 IEEPA를 납부 — <strong>당사 IEEPA 환급 청구($10M·내부 집계)에 인니산 납부분 포함 가능성</strong>, 청구 구성 확인 시 중국·인니 구분 필요.
@@ -455,7 +455,7 @@
         </div>
       </details>
 
-      <div style="font-size:11px;color:var(--text-3);margin-top:10px;line-height:1.7;">
+      <div style="font-size:12px;color:var(--text-3);margin-top:10px;line-height:1.7;">
         ※ IEEPA 종료: 대법원이 2026-02-20(6-3) <strong>IEEPA는 대통령에게 관세 부과 권한을 부여하지 않는다</strong>고 판시 — CBP(관세국경보호청)는 2/24부터 징수 중단 (위헌 선고가 아닌 법률 해석 판결)<br>
         ※ 기존 Section 301(2018-19 대중국): HTS 9503.00.00은 <strong>List 4B(유예·0%) 소속 — 84 FR 43304 U.S. note 20(s) 원문 전수 확인(2026-07-22)</strong>. List 4A(9903.88.15) 열거 목록에 9503 부재 + CBP 판례 8건(2022~2025: N323790·N326979·N337145·N346790·N353569 등) 전 건에서 완구에 301 헤딩(9903.88.xx) 부착 사례 0건 + 실납부 정합. <strong>N353569(2025-10-01)</strong>는 중국산 플러쉬 건에서 IEEPA 계열 헤딩 신고를 지시하되 301 헤딩은 완구에 부과하지 않음 — 2024년 4년 재검토 이후에도 4A 미해당 확인. 딥리서치의 "List 4A 7.5% 잔존" 주장은 반증<br>
         ※ <strong>4A설 오류 원인 규명</strong>: Chapter 95 내 타 헤딩(9504 게임·9505.10.10 파티용품·9506 스포츠·9507·9508)은 실제 List 4A 수록 — "완구류(Ch.95) = 4A 7.5%"로 뭉뚱그린 일부 업계 자료·딥리서치의 혼동. 판례에서 301 헤딩은 전부 동봉된 비완구 품목(파우치 4202→List 3, 베개 9404→4A)에 부착된 것<br>
@@ -484,7 +484,7 @@
       <div style="position:relative;width:100%;height:240px;">
         <canvas id="tariffChart" role="img" aria-label="2025-2026 월별 관세율 누적 바 차트"></canvas>
       </div>
-      <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
+      <div style="font-size:12px;color:var(--text-3);margin-top:10px;text-align:center;">
         막대는 <strong>월말 기준</strong> — 월내 변동(2월 IEEPA 종료, 7월 신규 301 발효)은 히트맵 화살표 참조 · 주황 점선: S122 만료 = 신규 301조 관세 발효 (2026-07-24 동시 전환, 확정 세율: 중국 12.5% / 인니 10%, 최종 고시에 종료일 없음) · 빨간 점선: 대법원 IEEPA 관세 권한 부정 판시(2/20) → 2/24 징수 종료 · 2025년 이력(중국 최고 145% 등)은 히트맵의 "2025년 이력 펼치기" 참조
       </div>
     </div>
@@ -496,13 +496,13 @@
   <div class="card" style="margin-bottom:8px;">
     <div style="display:grid;grid-template-columns:auto 1fr auto;">
       <div style="padding:16px;background:var(--surface2);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:88px;gap:4px;">
-        <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">HTS 코드</div>
+        <div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">HTS 코드</div>
         <div style="font-size:12px;font-weight:600;color:var(--text);">9503.00.0090</div>
-        <div style="font-size:10px;color:var(--ok-text);margin-top:2px;">미국 통관 코드 확정 (브로커, 7/25)</div>
-        <div style="font-size:10px;color:var(--text-3);">수출 서류상 9503.00.2100과 별개</div>
+        <div style="font-size:12px;color:var(--ok-text);margin-top:2px;">미국 통관 코드 확정 (브로커, 7/25)</div>
+        <div style="font-size:12px;color:var(--text-3);">수출 서류상 9503.00.2100과 별개</div>
       </div>
       <div style="padding:16px;display:flex;flex-direction:column;justify-content:center;gap:8px;">
-        <div style="font-size:14px;font-weight:600;color:var(--text);">사람 형상 인형 (Dolls representing human beings)</div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);">사람 형상 인형 (Dolls representing human beings)</div>
         <div style="font-size:12px;color:var(--text-2);line-height:1.5;">미국 통관 적용 코드 <strong>9503.00.0090</strong> (브로커 공식 서한, 2026-07-25) · MFN 기본관세 <strong>Free 확정</strong> — 기존 "4.7%" 표기 논쟁 종결. 총부담 = 신규 강제노동 S301만: 중국 <strong>12.5%</strong> / 인니 <strong>10%</strong> (7/24~)</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <span style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-md);background:var(--s122-bg);color:var(--s122-text);border:1px solid var(--border);">HTS 9503 (완구)</span>
@@ -516,8 +516,8 @@
       </div>
       <div style="padding:16px;border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px;min-width:100px;">
         <div class="metric-badge badge-active">발효 중</div>
-        <div style="font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.02em;">12.5 / 10%</div>
-        <div style="font-size:11px;color:var(--text-3);">중국 / 인니 총부담<br>(기존 301은 4B 유예 0%)</div>
+        <div style="font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;">12.5 / 10%</div>
+        <div style="font-size:12px;color:var(--text-3);">중국 / 인니 총부담<br>(기존 301은 4B 유예 0%)</div>
       </div>
     </div>
   </div>
@@ -528,11 +528,11 @@
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
         <thead>
           <tr>
-            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">구분</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">발효일</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">세율</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황</th>
-            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">오로라월드</th>
+            <th style="padding:8px 14px;text-align:left;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">구분</th>
+            <th style="padding:8px 10px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">발효일</th>
+            <th style="padding:8px 10px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">세율</th>
+            <th style="padding:8px 10px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황</th>
+            <th style="padding:8px 14px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">오로라월드</th>
           </tr>
         </thead>
         <tbody>
@@ -577,7 +577,7 @@
   </div>
 
   <div style="border-left:3px solid #1E9E6A;padding:14px 18px;background:var(--ok-bg);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:8px;">
-    <div style="font-size:10px;color:var(--ok-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600;">결론</div>
+    <div style="font-size:12px;color:var(--ok-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;font-weight:600;">결론</div>
     <div style="font-size:12px;color:var(--ok-text);line-height:2.1;">
       <div>· 현행 관세 (7/24~): 중국 <strong>12.5%</strong> / 인니 <strong>10%</strong> — 신규 강제노동 301조만 부과 (9503.00.0090 · MFN Free · 브로커 확인 7/25). 최종 고시에 종료일 없음(법정 검토·수정 절차 적용) · 인니 10% 티어는 집행 평가 연동 — 변동 가능</div>
       <div>· 세관 실행: CBP(관세국경보호청) 지침 CSMS #69326983 — 인니산 적용 코드 <strong>9903.05.45</strong>(수입신고서 최우선 기재), 면제 목록(Annex I·II)에 완구 없음 — 7/24 이후 Entry Summary 대조 포인트</div>
@@ -609,7 +609,7 @@
     <div class="card-body" style="padding:16px 18px;">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
         <div>
-          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">조사 개요</div>
+          <div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">조사 개요</div>
           <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
             · 개시: <strong>2026-03-11</strong> (FR doc 2026-05214 · 도켓 USTR(무역대표부)-2026-0067/0068)<br>
             · 대상 16개 경제권: 중국·EU·싱가포르·스위스·노르웨이·<strong>인도네시아</strong>·말레이시아·캄보디아·태국·한국·베트남·대만·방글라데시·멕시코·일본·인도<br>
@@ -617,7 +617,7 @@
           </div>
         </div>
         <div>
-          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">진행 상황 (8/19 기준)</div>
+          <div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">진행 상황 (8/19 기준)</div>
           <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
             · 공청회: 5/5~5/8 완료 · <strong style="color:var(--warn-text);">8/19 기준 판정·제안 미발표</strong> (USTR 사건 페이지 재확인) · 조사 범위 최소 21개 제조업종<br>
             · 긍정 판정 시 원칙 <strong>30일 내 조치 시행</strong> — 요건 충족 시 최대 180일 지연 가능<br>
@@ -625,7 +625,7 @@
           </div>
         </div>
         <div>
-          <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">완구의 위치</div>
+          <div style="font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">완구의 위치</div>
           <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
             · 중국 조사: "toys and sporting goods" 서술 문단 1회 등장, 예시 업종 목록엔 없음<br>
             · 인니 조사: 금속·농산물·연료·섬유·건자재·시멘트 근거 — 완구 언급 없음<br>
@@ -635,7 +635,7 @@
       </div>
     </div>
   </div>
-  <div style="font-size:11px;color:var(--text-3);margin-bottom:20px;line-height:1.7;">※ 강제노동 60개국 조치(중국 12.5% / 인니 10% — 7/24 발효)와 <strong>별개의 트랙</strong>. 본 건 확정 시 강제노동 관세 위에 <strong>중첩 부과될 가능성이 높다</strong>는 것이 로펌 공통 견해 — 현행 12.5%/10% 위 추가 전제로 대비. 참고: USTR은 국가별 S301도 확산 중 — 베트남 IP 조사(5/29 개시)·브라질 디지털무역 조사 진행, 소싱 대안국 평가 시 고려 요인. 판정 발표 시 즉시 반영 예정</div>
+  <div style="font-size:12px;color:var(--text-3);margin-bottom:20px;line-height:1.7;">※ 강제노동 60개국 조치(중국 12.5% / 인니 10% — 7/24 발효)와 <strong>별개의 트랙</strong>. 본 건 확정 시 강제노동 관세 위에 <strong>중첩 부과될 가능성이 높다</strong>는 것이 로펌 공통 견해 — 현행 12.5%/10% 위 추가 전제로 대비. 참고: USTR은 국가별 S301도 확산 중 — 베트남 IP 조사(5/29 개시)·브라질 디지털무역 조사 진행, 소싱 대안국 평가 시 고려 요인. 판정 발표 시 즉시 반영 예정</div>
 
 </div>
   </details>
@@ -646,10 +646,10 @@
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
         <thead>
           <tr>
-            <th style="padding:8px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">항목</th>
-            <th style="padding:8px 10px;text-align:left;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황 · 비고</th>
-            <th style="padding:8px 10px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">담당</th>
-            <th style="padding:8px 14px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">시점</th>
+            <th style="padding:8px 14px;text-align:left;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">항목</th>
+            <th style="padding:8px 10px;text-align:left;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황 · 비고</th>
+            <th style="padding:8px 10px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">담당</th>
+            <th style="padding:8px 14px;font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">시점</th>
           </tr>
         </thead>
         <tbody>
@@ -679,7 +679,7 @@
           </tr>
           <tr>
             <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑤ 환급 청구 건($10M) 세부내용</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;"><strong style="color:var(--danger-text);">성격이 바뀜 — 단순 현황 파악에서 회수 가능 여부 확인으로</strong>. 법원·세관 모두 "세액이 확정·마감된 건은 <strong>소송한 회사에만</strong> 환급"이라는 입장 — 당사가 소송을 안 했고 잔액이 확정·마감 건에 있다면 회수 경로가 막힐 수 있음. <strong>확인 필요 3가지: ⓐ 미수령 잔액이 걸린 통관 건들의 확정 여부 ⓑ 당사(미국 법인)의 CIT(국제무역법원) 소송 제기 여부 ⓒ 미제소라면 집단소송 결정(8/6 심리 완료, 결정 대기) vs 개별 제소 판단</strong> — 로펌 권고는 "집단소송 결과에 의존하지 말 것" · 7/22 문의 발송분(청구 근거·기간·청구 vs 수령 구분·내역 파일) 회신 대기 <span style="font-size:11px;color:var(--text-3);">(CAPE 누적 접수 $121.75B · 재무부 송금 $86.3B · 이자 연 6% 복리)</span></td>
+            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;"><strong style="color:var(--danger-text);">성격이 바뀜 — 단순 현황 파악에서 회수 가능 여부 확인으로</strong>. 법원·세관 모두 "세액이 확정·마감된 건은 <strong>소송한 회사에만</strong> 환급"이라는 입장 — 당사가 소송을 안 했고 잔액이 확정·마감 건에 있다면 회수 경로가 막힐 수 있음. <strong>확인 필요 3가지: ⓐ 미수령 잔액이 걸린 통관 건들의 확정 여부 ⓑ 당사(미국 법인)의 CIT(국제무역법원) 소송 제기 여부 ⓒ 미제소라면 집단소송 결정(8/6 심리 완료, 결정 대기) vs 개별 제소 판단</strong> — 로펌 권고는 "집단소송 결과에 의존하지 말 것" · 7/22 문의 발송분(청구 근거·기간·청구 vs 수령 구분·내역 파일) 회신 대기 <span style="font-size:12px;color:var(--text-3);">(CAPE 누적 접수 $121.75B · 재무부 송금 $86.3B · 이자 연 6% 복리)</span></td>
             <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy / 미국 재무</td>
             <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">회신 대기</td>
           </tr>
@@ -992,7 +992,7 @@
 <div class="share-modal-backdrop" id="share-backdrop" onclick="closeShare(event)">
   <div class="share-modal">
     <button class="modal-close" onclick="closeShareBtn()"><i class="ti ti-x"></i></button>
-    <h3><i class="ti ti-share" style="font-size:18px;vertical-align:-2px;margin-right:6px;"></i>US Tariff Watch 공유</h3>
+    <h3><i class="ti ti-share" style="font-size:17px;vertical-align:-2px;margin-right:6px;"></i>US Tariff Watch 공유</h3>
     <p>동료에게 이 페이지를 공유하세요.</p>
     <div class="share-url-box">
       <input type="text" id="share-url-input" readonly>
