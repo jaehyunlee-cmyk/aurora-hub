@@ -48,14 +48,13 @@
   .status-banner .stamp{margin-left:auto;font-size:11px;color:var(--faint)}
 
   /* [C] 델타 박스 */
-  .delta-box{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:0 0 18px;box-shadow:var(--shadow)}
-  @media (max-width:640px){.delta-box{grid-template-columns:1fr}}
-  .delta-h{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-  .delta-h-flat{color:var(--faint)}
+  .delta-box{display:grid;grid-template-columns:3fr 2fr;gap:32px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:0 0 18px;box-shadow:var(--shadow)}
+  @media(max-width:640px){.delta-box{grid-template-columns:1fr;gap:16px}}
+  .delta-h{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
   .delta-box ul{list-style:none;margin:0;padding:0}
-  .delta-box li{font-size:14px;color:var(--muted);padding:3px 0;line-height:1.5}
-  .delta-box li b{color:var(--text)}
-  .delta-flat{font-size:13px;color:var(--faint);line-height:1.5}
+  .delta-box li{font-size:13px;color:var(--muted);padding:0;line-height:1.7}
+  .delta-box li b{color:inherit;font-weight:inherit}
+  .delta-foot{grid-column:1/-1;font-size:12px;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding:8px 0 0;margin-top:2px}
 
   /* [A] 구조 지표 스트립 */
   .struct-strip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;border-top:1px dashed var(--line);margin-top:2px;padding:11px 20px;font-size:12px;color:var(--muted)}
@@ -206,14 +205,13 @@
 <div class="delta-box">
   <div class="delta-col">
     <div class="delta-h">금주 변동</div>
-    <ul id="deltaChanged"><li>· MSCI 강등 회피 — EM 유지 확정 (종목 축소는 계속)</li><li>· RAPBN 2027 재정 규율 신호 — 시장 랠리</li><li>· 유가 $91 — 미-이란 MOU 만료·연장 거부</li></ul>
+    <ul id="deltaChanged"><li>MSCI 강등 회피 — EM 유지 확정 (종목 축소는 계속)</li><li>RAPBN 2027 재정 규율 — 적자 목표 2.40%, 시장 랠리</li><li>유가 $91 재상승 — MOU 만료·연장 거부, 호르무즈 일 3척</li></ul>
   </div>
   <div class="delta-col">
-    <div class="delta-h delta-h-flat">현상 유지</div>
-    <div class="delta-flat" id="deltaUnchanged">미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B</div>
-    <div class="delta-h" style="margin-top:10px">금주 일정</div>
-    <ul id="deltaSchedule"><li>· 08.19~20 BI 정례회의</li><li>· 08.21 Q2 경상수지</li><li>· 다음 주 총재 적격심사</li></ul>
+    <div class="delta-h">금주 일정</div>
+    <ul id="deltaSchedule"><li>08.19~20 BI 정례회의 — 결과 발표 대기</li><li>08.21 Q2 경상수지 발표</li><li>다음 주 Destry 총재 적격심사</li></ul>
   </div>
+  <div class="delta-foot" id="deltaUnchanged">현상 유지 — 미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B</div>
 </div>
 
 <!-- ── LIVE CARDS ── -->
@@ -466,9 +464,9 @@ const DATA = {
   /* [C] 지난 검토 대비 델타 — 매 갱신 시 3줄 내외로 교체 */
   delta: {
     changed: [
-      "<b>MSCI 강등 회피</b> — 연례 국가리뷰 EM 유지 확정 (단, GOTO 제외 등 종목 축소는 계속, 08.31 발효)",
-      "<b>RAPBN 2027 재정 규율 신호</b> — 적자 목표 2.40%, 시장 랠리 (JCI 6,450 · 루피아 17,8백대 안착)",
-      "<b>유가 $91 재상승</b> — 미-이란 MOU 60일 시한 만료(08.17)·연장 거부, 호르무즈 통항 일 3척",
+      "<b>MSCI 강등 회피</b> — EM 유지 확정 (종목 축소는 계속, 08.31 발효)",
+      "<b>RAPBN 2027 재정 규율</b> — 적자 목표 2.40%, 시장 랠리 (JCI 6,450 · 루피아 17,8백대)",
+      "<b>유가 $91 재상승</b> — MOU 만료·연장 거부, 호르무즈 일 3척",
     ],
     unchanged: "미 관세 10% 체제 · 신용등급 3사 · 총재 인준 대기 · 보유고 $145.3B",
     schedule: [
@@ -592,9 +590,9 @@ function sparkline(pts, up){
     DATA.indicators.filter(i=>i.tier==='s').map(i=>
       `<span class="it"><span class="dot ${i.s}"></span>${i.n} <b>${i.v}</b></span>`).join('');
   /* [C] 델타 박스 */
-  $('deltaChanged').innerHTML = DATA.delta.changed.map(x=>`<li>· ${x}</li>`).join('');
-  $('deltaUnchanged').innerHTML = DATA.delta.unchanged;
-  $('deltaSchedule').innerHTML = DATA.delta.schedule.map(x=>`<li>· ${x}</li>`).join('');
+  $('deltaChanged').innerHTML = DATA.delta.changed.map(x=>`<li>${x}</li>`).join('');
+  $('deltaUnchanged').innerHTML = '현상 유지 — ' + DATA.delta.unchanged;
+  $('deltaSchedule').innerHTML = DATA.delta.schedule.map(x=>`<li>${x}</li>`).join('');
   const c={g:0,a:0,r:0}; DATA.indicators.forEach(i=>c[i.s]++);
   $('tally').innerHTML=`<span><span class="dot r"></span>위험 ${c.r}</span><span><span class="dot a"></span>주의 ${c.a}</span><span><span class="dot g"></span>양호 ${c.g}</span><span style="color:var(--faint)">— ${DATA.asOf} · 환율만 라이브, 나머지 수동 갱신</span>`;
   $('fxReserve').textContent=DATA.reserve.val;
