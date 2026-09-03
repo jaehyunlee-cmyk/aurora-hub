@@ -57,6 +57,9 @@
   .kpi-stat-label { font-size: 11px; color: var(--text-hint); margin-bottom: 2px; }
   .kpi-stat-val { font-size: 13px; font-weight: 600; color: var(--text); }
   .kpi-stat-date { font-size: 11px; color: var(--text-hint); }
+  .kpi-status { font-size: 11px; color: var(--text-hint); margin-top: 8px; }
+  .kpi-status.err { color: var(--stop); }
+  .kpi-status a { color: var(--accent-ink); }
   .rbob-note { margin-top: 12px; padding: 9px 12px; background: var(--orange-bg); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); font-size: 11px; line-height: 1.6; color: var(--orange-dark); }
   .te-link-btn { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--orange-dark); text-decoration: none; border-bottom: 1px solid var(--orange); padding-bottom: 1px; }
   .te-link-btn:hover { color: var(--orange); }
@@ -126,11 +129,7 @@
   .tag-f { background: var(--blue-light); color: var(--blue); }
 
   .footer { text-align: center; font-size: 11px; color: var(--text-hint); padding-top: 8px; }
-
-  #overlay { position: fixed; inset: 0; background: rgba(247,248,250,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
-  .loader { width: 30px; height: 30px; border: 2px solid var(--border-mid); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-text { font-size: 14px; color: var(--text-muted); }
 
   @media (max-width: 768px) {
     .kpi-section { grid-template-columns: 1fr; }
@@ -191,11 +190,6 @@
   <span>Hub</span>
 </a>
 
-<div id="overlay">
-  <div class="loader"></div>
-  <div class="loader-text">시장 데이터 불러오는 중...</div>
-</div>
-
 <div class="header">
   <div class="header-left">
     <div>
@@ -233,6 +227,7 @@
         <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l1">—</div><div class="kpi-stat-date" id="ld1">—</div></div>
         <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a1">—</div><div class="kpi-stat-date">기간 기준</div></div>
       </div>
+      <div class="kpi-status" id="s1">데이터 불러오는 중…</div>
     </div>
 
     <div class="kpi-card c2">
@@ -247,6 +242,7 @@
         <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l2">—</div><div class="kpi-stat-date" id="ld2">—</div></div>
         <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a2">—</div><div class="kpi-stat-date">기간 기준</div></div>
       </div>
+      <div class="kpi-status" id="s2">데이터 불러오는 중…</div>
       <div class="rbob-note">장외거래(OTC) 특성상 실시간 데이터는 유료로만 제공되어, 유사한 흐름의 RBOB 가솔린 선물을 대리지표로 활용. 정밀 모니터링 필요시 유료 데이터 도입 필요하며, 잠정적으로 아래 링크를 병행 참고.<br><br>
         <a href="https://ko.tradingeconomics.com/commodity/naphtha" target="_blank" class="te-link-btn">🔗 나프타 실제 가격 확인 (TradingEconomics) ↗</a>
       </div>
@@ -263,6 +259,7 @@
         <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l3">—</div><div class="kpi-stat-date" id="ld3">—</div></div>
         <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a3">—</div><div class="kpi-stat-date">기간 기준</div></div>
       </div>
+      <div class="kpi-status" id="s3">데이터 불러오는 중…</div>
     </div>
   </div>
 
@@ -429,220 +426,160 @@
 </div>
 
 <script>
+const EIA_KEY = 'c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY';
 const TICKERS = [
-  { yahoo: 'BZ=F', name: '브렌트유', unit: 'USD/bbl', prefix: '$', decimals: 2, idx: 1, color: '#185FA5',
-    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCBRENT' },
-  { yahoo: 'RB=F', name: 'RBOB 가솔린', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39',
-    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCRBOB' },
-  { yahoo: 'NG=F', name: '천연가스', unit: 'USD/MMBtu', prefix: '$', decimals: 3, idx: 3, color: '#3B6D11',
-    eiaPath: 'natural-gas/pri/fut/data/', eiaFacetKey: 'process', eiaId: 'PNK' },
+  { idx: 1, name: '브렌트유',    unit: 'USD/bbl',   prefix: '$', decimals: 2, color: '#185FA5', yahoo: 'BZ=F',
+    eia: 'petroleum/pri/spt/data/?frequency=daily&data[0]=value&facets[product][]=EPCBRENT' },
+  { idx: 2, name: 'RBOB 가솔린', unit: 'USD/gal',   prefix: '$', decimals: 4, color: '#E07B39', yahoo: 'RB=F',
+    eia: 'petroleum/pri/spt/data/?frequency=daily&data[0]=value&facets[product][]=EPMRR' },
+  { idx: 3, name: '천연가스',    unit: 'USD/MMBtu', prefix: '$', decimals: 3, color: '#3B6D11', yahoo: 'NG=F',
+    eia: 'natural-gas/pri/fut/data/?frequency=daily&data[0]=value&facets[series][]=RNGC1' },
 ];
+const allDataMap = {};
+let chart = null, currentMonths = 3;
 
-let allDataMap = {};
-let chart = null;
-let currentMonths = 3;
+const $ = id => document.getElementById(id);
+const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+const fmtDate = d => d.toISOString().slice(0,10);
 
-async function fetchData(ticker) {
-  // 1순위: EIA 직접 호출 (프록시 불필요)
-  if (ticker.eiaId) {
+async function fetchEIA(t) {
+  const end = new Date(), start = new Date(); start.setFullYear(start.getFullYear() - 1);
+  const url = 'https://api.eia.gov/v2/' + t.eia + '&api_key=' + EIA_KEY + '&sort[0][column]=period&sort[0][direction]=asc&start=' + fmtDate(start) + '&end=' + fmtDate(end) + '&length=400';
+  const res = await withTimeout(fetch(url), 8000);
+  if (!res.ok) throw new Error('EIA HTTP ' + res.status);
+  const rows = (await res.json())?.response?.data;
+  if (!rows || !rows.length) throw new Error('EIA empty');
+  return rows.filter(r => r.value != null).map(r => ({ date: r.period, price: parseFloat(r.value) })).sort((a,b) => a.date.localeCompare(b.date));
+}
+
+async function fetchYahoo(t) {
+  const y = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(t.yahoo) + '?interval=1d&range=1y';
+  const proxies = [
+    'https://corsproxy.io/?' + y,
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(y),
+    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(y),
+  ];
+  const json = await Promise.any(proxies.map(u => withTimeout(fetch(u), 7000).then(r => { if (!r.ok) throw new Error(); return r.json(); })));
+  const r = json?.chart?.result?.[0];
+  if (!r?.timestamp) throw new Error('Yahoo empty');
+  const closes = r.indicators?.quote?.[0]?.close || [];
+  return r.timestamp.map((ts, i) => ({ date: fmtDate(new Date(ts*1000)), price: closes[i] })).filter(d => d.price != null).sort((a,b) => a.date.localeCompare(b.date));
+}
+
+async function loadOne(t) {
+  const st = $('s' + t.idx);
+  st.className = 'kpi-status'; st.textContent = '데이터 불러오는 중…';
+  try {
+    allDataMap[t.idx] = await fetchEIA(t);
+    st.textContent = '출처: EIA · 최신 ' + allDataMap[t.idx].at(-1).date;
+    return true;
+  } catch (e1) {
     try {
-      const end = new Date(), start = new Date();
-      start.setFullYear(start.getFullYear() - 1);
-      const fmt = d => d.toISOString().slice(0,10);
-      const url = 'https://api.eia.gov/v2/' + ticker.eiaPath + '?api_key=c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY&frequency=daily&data[0]=value&facets[' + ticker.eiaFacetKey + '][]=' + ticker.eiaId + '&sort[0][column]=period&sort[0][direction]=asc&start=' + fmt(start) + '&end=' + fmt(end) + '&length=400';
-      const res = await fetch(url);
-      if (res.ok) {
-        const json = await res.json();
-        const rows = json?.response?.data;
-        if (rows && rows.length > 0) {
-          return rows.filter(r => r.value != null).map(r => ({ date: r.period, price: parseFloat(r.value) })).sort((a,b) => a.date.localeCompare(b.date));
-        }
-      }
-    } catch(e) {}
+      allDataMap[t.idx] = await fetchYahoo(t);
+      st.textContent = '출처: Yahoo Finance · 최신 ' + allDataMap[t.idx].at(-1).date;
+      return true;
+    } catch (e2) {
+      allDataMap[t.idx] = [];
+      st.className = 'kpi-status err';
+      st.innerHTML = '데이터 로드 실패 — <a href="#" onclick="loadAll();return false;">다시 시도</a>';
+      return false;
+    }
   }
-
-  // 2순위: Yahoo Finance via proxy
-  const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker.yahoo) + '?interval=1d&range=1y';
-  const makeReq = (proxyUrl) => {
-    const ctrl = new AbortController();
-    const tm = setTimeout(() => ctrl.abort(), 6000);
-    return fetch(proxyUrl, { headers: { 'x-requested-with': 'XMLHttpRequest' }, signal: ctrl.signal })
-      .then(r => { clearTimeout(tm); if (!r.ok) throw new Error(); return r.json(); })
-      .catch(e => { clearTimeout(tm); throw e; });
-  };
-  const json = await Promise.any([
-    makeReq('https://corsproxy.io/?' + yahooUrl),
-    makeReq('https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl)),
-  ]).catch(() => { throw new Error('fail'); });
-  const result = json?.chart?.result?.[0];
-  if (!result?.timestamp) throw new Error('No data');
-  return result.timestamp.map((ts, i) => ({
-    date: new Date(ts * 1000).toISOString().slice(0,10),
-    price: result.indicators.quote[0].close[i] || null
-  })).filter(d => d.price !== null).sort((a,b) => a.date.localeCompare(b.date));
 }
 
 async function loadAll() {
-  setStatus('loading', '시장 데이터 불러오는 중...');
-  document.getElementById('overlay').style.display = 'flex';
-
-  // 10초 안전장치
-  const safety = setTimeout(() => {
-    document.getElementById('overlay').style.display = 'none';
-    setStatus('error', '일부 데이터 로드 지연 — 로드된 데이터만 표시');
-    initDateInputs(); renderAll(getFilteredAll(currentMonths)); fetchFx();
-  }, 10000);
-
-  const results = await Promise.allSettled(TICKERS.map(t => fetchData(t)));
-  clearTimeout(safety);
-
-  let successCount = 0;
-  results.forEach((result, i) => {
-    if (result.status === 'fulfilled' && result.value.length > 0) {
-      allDataMap[TICKERS[i].idx] = result.value;
-      successCount++;
-    } else {
-      allDataMap[TICKERS[i].idx] = [];
-    }
-  });
-
-  const latestDate = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').filter(Boolean).sort().reverse()[0];
-  setStatus('ok', '데이터 수신 완료 · ' + successCount + '/3개 지표');
-  document.getElementById('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR', {month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-  document.getElementById('dataRange').textContent = '최신 데이터: ' + (latestDate || '—');
+  setStatus('loading', '데이터 불러오는 중…');
+  const results = await Promise.all(TICKERS.map(loadOne));
+  const ok = results.filter(Boolean).length;
+  const latest = Object.values(allDataMap).map(d => d.at(-1)?.date || '').filter(Boolean).sort().at(-1);
+  setStatus(ok === 3 ? 'ok' : (ok ? 'loading' : 'error'), '데이터 수신 · ' + ok + '/3개 지표');
+  $('lastUpdate').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+  $('dataRange').textContent = '최신 데이터: ' + (latest || '—');
   initDateInputs();
   renderAll(getFilteredAll(currentMonths));
-  fetchFx();
-  document.getElementById('overlay').style.display = 'none';
 }
 
 async function fetchFx() {
-  try {
-    const res = await fetch('https://open.er-api.com/v6/latest/USD');
-    if (!res.ok) throw new Error();
-    const j = await res.json();
-    const krw = j?.rates?.KRW, idr = j?.rates?.IDR;
-    if (krw && krw > 900) { document.getElementById('mFx').textContent = '\u20a9' + Math.round(krw).toLocaleString(); document.getElementById('mFxNote').textContent = '당일 기준 (참고용)'; }
-    if (idr && idr > 10000) { document.getElementById('mIdr').textContent = 'Rp ' + Math.round(idr).toLocaleString(); document.getElementById('mIdrNote').textContent = '당일 기준 · 인도네시아 법인 참고용'; }
-  } catch {
-    try {
-      const res2 = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-      const j2 = await res2.json();
-      const krw2 = j2?.rates?.KRW, idr2 = j2?.rates?.IDR;
-      if (krw2) { document.getElementById('mFx').textContent = '\u20a9' + Math.round(krw2).toLocaleString(); document.getElementById('mFxNote').textContent = '당일 기준 (참고용)'; }
-      if (idr2) { document.getElementById('mIdr').textContent = 'Rp ' + Math.round(idr2).toLocaleString(); document.getElementById('mIdrNote').textContent = '당일 기준 · 인도네시아 법인 참고용'; }
-    } catch {
-      document.getElementById('mFx').textContent = '조회 불가';
-      document.getElementById('mIdr').textContent = '조회 불가';
-    }
+  const set = (k, i) => { if (k > 900) { $('mFx').textContent = '₩' + Math.round(k).toLocaleString(); $('mFxNote').textContent = '당일 기준 (참고용)'; } if (i > 10000) { $('mIdr').textContent = 'Rp ' + Math.round(i).toLocaleString(); $('mIdrNote').textContent = '당일 기준 · 인도네시아 법인 참고용'; } };
+  for (const u of ['https://open.er-api.com/v6/latest/USD', 'https://api.exchangerate-api.com/v4/latest/USD']) {
+    try { const j = await (await withTimeout(fetch(u), 6000)).json(); set(j?.rates?.KRW, j?.rates?.IDR); return; } catch {}
   }
+  $('mFx').textContent = '조회 불가'; $('mIdr').textContent = '조회 불가';
 }
 
 function initDateInputs() {
-  const dates = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').filter(Boolean).sort();
-  const last = dates[dates.length-1] || new Date().toISOString().slice(0,10);
-  const from = new Date(last); from.setMonth(from.getMonth()-currentMonths);
-  document.getElementById('dateTo').value = last;
-  document.getElementById('dateFrom').value = from.toISOString().slice(0,10);
+  const dates = Object.values(allDataMap).map(d => d.at(-1)?.date || '').filter(Boolean).sort();
+  const last = dates.at(-1) || fmtDate(new Date());
+  const from = new Date(last); from.setMonth(from.getMonth() - currentMonths);
+  $('dateTo').value = last; $('dateFrom').value = fmtDate(from);
 }
-
 function getFilteredAll(months) {
-  const result = {};
+  const out = {};
   for (const t of TICKERS) {
-    const data = allDataMap[t.idx] || [];
-    if (!data.length) { result[t.idx] = []; continue; }
-    const last = new Date(data[data.length-1].date);
-    const from = new Date(last); from.setMonth(from.getMonth()-months);
-    result[t.idx] = data.filter(d => new Date(d.date) >= from);
+    const d = allDataMap[t.idx] || [];
+    if (!d.length) { out[t.idx] = []; continue; }
+    const from = new Date(d.at(-1).date); from.setMonth(from.getMonth() - months);
+    out[t.idx] = d.filter(x => new Date(x.date) >= from);
   }
-  return result;
+  return out;
 }
-
 function getCustomAll(from, to) {
-  const result = {};
-  for (const t of TICKERS) { result[t.idx] = (allDataMap[t.idx] || []).filter(d => d.date >= from && d.date <= to); }
-  return result;
+  const out = {};
+  for (const t of TICKERS) out[t.idx] = (allDataMap[t.idx] || []).filter(d => d.date >= from && d.date <= to);
+  return out;
 }
-
-function renderAll(dataMap) {
-  for (const t of TICKERS) updateKPI(t, dataMap[t.idx] || []);
-  renderChart(dataMap);
-}
+function renderAll(m) { for (const t of TICKERS) updateKPI(t, m[t.idx] || []); renderChart(m); }
 
 function updateKPI(t, data) {
   if (!data.length) return;
-  const prices = data.map(d => d.price);
-  const last = prices[prices.length-1], prev = prices[prices.length-2] ?? last;
-  const delta = last - prev, pct = ((delta/prev)*100).toFixed(1);
-  const high = Math.max(...prices), low = Math.min(...prices);
-  const avg = prices.reduce((a,b) => a+b, 0) / prices.length;
-  const i = t.idx, fmt = v => t.prefix + v.toFixed(t.decimals);
-  document.getElementById('p'+i).textContent = fmt(last);
-  const dEl = document.getElementById('d'+i);
-  const sign = delta >= 0 ? '+' : '';
-  dEl.className = 'kpi-delta ' + (delta >= 0 ? 'up' : 'dn');
-  dEl.textContent = sign + delta.toFixed(t.decimals) + ' (' + sign + pct + '%) 전일比  |  ' + t.unit;
-  document.getElementById('h'+i).textContent = fmt(high);
-  document.getElementById('hd'+i).textContent = data[prices.indexOf(high)]?.date ?? '';
-  document.getElementById('l'+i).textContent = fmt(low);
-  document.getElementById('ld'+i).textContent = data[prices.indexOf(low)]?.date ?? '';
-  document.getElementById('a'+i).textContent = fmt(avg);
+  const p = data.map(d => d.price), last = p.at(-1), prev = p.at(-2) ?? last;
+  const delta = last - prev, pct = ((delta / prev) * 100).toFixed(1);
+  const high = Math.max(...p), low = Math.min(...p), avg = p.reduce((a,b) => a+b, 0) / p.length;
+  const i = t.idx, f = v => t.prefix + v.toFixed(t.decimals), sign = delta >= 0 ? '+' : '';
+  $('p'+i).textContent = f(last);
+  const d = $('d'+i); d.className = 'kpi-delta ' + (delta >= 0 ? 'up' : 'dn');
+  d.textContent = sign + delta.toFixed(t.decimals) + ' (' + sign + pct + '%) 전일比  |  ' + t.unit;
+  $('h'+i).textContent = f(high); $('hd'+i).textContent = data[p.indexOf(high)].date;
+  $('l'+i).textContent = f(low);  $('ld'+i).textContent = data[p.indexOf(low)].date;
+  $('a'+i).textContent = f(avg);
 }
 
-function renderChart(dataMap) {
+function renderChart(m) {
   const datasets = TICKERS.map(t => {
-    const data = dataMap[t.idx] || [];
-    if (!data.length) return null;
-    const base = data[0].price;
-    return {
-      label: t.name,
-      data: data.map(d => ({ x: d.date, y: parseFloat(((d.price/base)*100).toFixed(2)) })),
-      borderColor: t.color, backgroundColor: t.color + '10',
-      borderWidth: 1.8, pointRadius: 0, pointHoverRadius: 5,
-      pointHoverBackgroundColor: t.color, pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2,
-      fill: false, tension: 0.3,
-    };
+    const d = m[t.idx] || []; if (!d.length) return null;
+    const base = d[0].price;
+    return { label: t.name, data: d.map(x => ({ x: x.date, y: +((x.price / base) * 100).toFixed(2) })),
+      borderColor: t.color, borderWidth: 1.8, pointRadius: 0, pointHoverRadius: 5,
+      pointHoverBackgroundColor: t.color, pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2, fill: false, tension: 0.3 };
   }).filter(Boolean);
   if (chart) chart.destroy();
-  chart = new Chart(document.getElementById('mainChart'), {
-    type: 'line', data: { datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: { backgroundColor: '#fff', borderColor: 'rgba(0,0,0,0.12)', borderWidth: 1, titleColor: '#6B717B', bodyColor: '#16181D', titleFont: { size: 11 }, bodyFont: { size: 12 }, padding: 10,
-          callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + ' (기준=100)' } }
-      },
-      scales: {
-        x: { type: 'category', ticks: { maxTicksLimit: 10, color: '#6B717B', font: { size: 11 }, autoSkip: true, maxRotation: 0 }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } },
-        y: { ticks: { callback: v => v.toFixed(0), color: '#6B717B', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } }
-      }
-    }
-  });
+  if (!datasets.length) return;
+  chart = new Chart($('mainChart'), { type: 'line', data: { datasets }, options: {
+    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { display: false }, tooltip: { backgroundColor: '#fff', borderColor: 'rgba(0,0,0,0.12)', borderWidth: 1, titleColor: '#6B717B', bodyColor: '#16181D', titleFont: { size: 11 }, bodyFont: { size: 12 }, padding: 10,
+      callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toFixed(1) + ' (기준=100)' } } },
+    scales: { x: { type: 'category', ticks: { maxTicksLimit: 10, color: '#6B717B', font: { size: 11 }, autoSkip: true, maxRotation: 0 }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } },
+              y: { ticks: { callback: v => v.toFixed(0), color: '#6B717B', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } } }
+  } });
 }
 
 function setPeriod(months, btn) {
   currentMonths = months;
-  document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const filtered = getFilteredAll(months);
-  const allDates = Object.values(filtered).flatMap(d => [d[0]?.date, d[d.length-1]?.date]).filter(Boolean).sort();
-  if (allDates.length) { document.getElementById('dateFrom').value = allDates[0]; document.getElementById('dateTo').value = allDates[allDates.length-1]; }
-  renderAll(filtered);
+  document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+  const f = getFilteredAll(months);
+  const dates = Object.values(f).flatMap(d => [d[0]?.date, d.at(-1)?.date]).filter(Boolean).sort();
+  if (dates.length) { $('dateFrom').value = dates[0]; $('dateTo').value = dates.at(-1); }
+  renderAll(f);
 }
-
 function setCustom() {
-  const from = document.getElementById('dateFrom').value, to = document.getElementById('dateTo').value;
+  const from = $('dateFrom').value, to = $('dateTo').value;
   if (from && to && from <= to) { document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active')); renderAll(getCustomAll(from, to)); }
 }
+function setStatus(type, msg) { $('statusDot').className = 'dot ' + (type === 'ok' ? '' : type); $('statusText').textContent = msg; }
 
-function setStatus(type, msg) {
-  document.getElementById('statusDot').className = 'dot ' + (type === 'ok' ? '' : type);
-  document.getElementById('statusText').textContent = msg;
-}
-
+// 페이지는 즉시 표시. 데이터/환율은 각각 독립적으로 백그라운드 로드.
 loadAll();
+fetchFx();
 </script>
 <style>
   :root {
@@ -695,6 +632,9 @@ loadAll();
   .kpi-stat-label { font-size: 11px; color: var(--text-hint); margin-bottom: 2px; }
   .kpi-stat-val { font-size: 13px; font-weight: 600; color: var(--text); }
   .kpi-stat-date { font-size: 11px; color: var(--text-hint); }
+  .kpi-status { font-size: 11px; color: var(--text-hint); margin-top: 8px; }
+  .kpi-status.err { color: var(--stop); }
+  .kpi-status a { color: var(--accent-ink); }
   .rbob-note { margin-top: 12px; padding: 9px 12px; background: var(--orange-bg); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); font-size: 11px; line-height: 1.6; color: var(--orange-dark); }
   .te-link-btn { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--orange-dark); text-decoration: none; border-bottom: 1px solid var(--orange); padding-bottom: 1px; }
   .te-link-btn:hover { color: var(--orange); }
@@ -764,11 +704,7 @@ loadAll();
   .tag-f { background: var(--blue-light); color: var(--blue); }
 
   .footer { text-align: center; font-size: 11px; color: var(--text-hint); padding-top: 8px; }
-
-  #overlay { position: fixed; inset: 0; background: rgba(247,248,250,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
-  .loader { width: 30px; height: 30px; border: 2px solid var(--border-mid); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-text { font-size: 14px; color: var(--text-muted); }
 
   @media (max-width: 768px) {
     .kpi-section { grid-template-columns: 1fr; }
@@ -828,11 +764,6 @@ loadAll();
   <span class="arrow">←</span>
   <span>Hub</span>
 </a>
-
-<div id="overlay">
-  <div class="loader"></div>
-  <div class="loader-text">시장 데이터 불러오는 중...</div>
-</div>
 
 <div class="header">
   <div class="header-left">
