@@ -430,66 +430,79 @@
 
 <script>
 const TICKERS = [
-  { id: 'BZ=F', name: '브렌트유', unit: 'USD/bbl', prefix: '$', decimals: 2, idx: 1, color: '#185FA5' },
-  { id: 'RB=F', name: 'RBOB 가솔린', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39' },
-  { id: 'NG=F', name: '천연가스', unit: 'USD/MMBtu', prefix: '$', decimals: 3, idx: 3, color: '#3B6D11' },
+  { yahoo: 'BZ=F', name: '브렌트유', unit: 'USD/bbl', prefix: '$', decimals: 2, idx: 1, color: '#185FA5',
+    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCBRENT' },
+  { yahoo: 'RB=F', name: 'RBOB 가솔린', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39',
+    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCRBOB' },
+  { yahoo: 'NG=F', name: '천연가스', unit: 'USD/MMBtu', prefix: '$', decimals: 3, idx: 3, color: '#3B6D11',
+    eiaPath: 'natural-gas/pri/fut/data/', eiaFacetKey: 'process', eiaId: 'PNK' },
 ];
 
 let allDataMap = {};
 let chart = null;
 let currentMonths = 3;
 
-async function fetchYahoo(ticker) {
-  const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?interval=1d&range=1y';
+async function fetchData(ticker) {
+  // 1순위: EIA 직접 호출 (프록시 불필요)
+  if (ticker.eiaId) {
+    try {
+      const end = new Date(), start = new Date();
+      start.setFullYear(start.getFullYear() - 1);
+      const fmt = d => d.toISOString().slice(0,10);
+      const url = 'https://api.eia.gov/v2/' + ticker.eiaPath + '?api_key=c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY&frequency=daily&data[0]=value&facets[' + ticker.eiaFacetKey + '][]=' + ticker.eiaId + '&sort[0][column]=period&sort[0][direction]=asc&start=' + fmt(start) + '&end=' + fmt(end) + '&length=400';
+      const res = await fetch(url);
+      if (res.ok) {
+        const json = await res.json();
+        const rows = json?.response?.data;
+        if (rows && rows.length > 0) {
+          return rows.filter(r => r.value != null).map(r => ({ date: r.period, price: parseFloat(r.value) })).sort((a,b) => a.date.localeCompare(b.date));
+        }
+      }
+    } catch(e) {}
+  }
 
-  // 3개 프록시 동시 호출 — 가장 먼저 응답하는 것 사용
+  // 2순위: Yahoo Finance via proxy
+  const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker.yahoo) + '?interval=1d&range=1y';
   const makeReq = (proxyUrl) => {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
-    return fetch(proxyUrl, {
-      headers: { 'x-requested-with': 'XMLHttpRequest' },
-      signal: controller.signal
-    }).then(res => {
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    }).catch(e => {
-      clearTimeout(timeout);
-      throw e;
-    });
+    const ctrl = new AbortController();
+    const tm = setTimeout(() => ctrl.abort(), 6000);
+    return fetch(proxyUrl, { headers: { 'x-requested-with': 'XMLHttpRequest' }, signal: ctrl.signal })
+      .then(r => { clearTimeout(tm); if (!r.ok) throw new Error(); return r.json(); })
+      .catch(e => { clearTimeout(tm); throw e; });
   };
-
-  // 동시 호출: 가장 먼저 성공한 것 반환
   const json = await Promise.any([
     makeReq('https://corsproxy.io/?' + yahooUrl),
     makeReq('https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl)),
-    makeReq('https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(yahooUrl)),
-  ]).catch(() => { throw new Error('모든 프록시 실패'); });
-
+  ]).catch(() => { throw new Error('fail'); });
   const result = json?.chart?.result?.[0];
-  if (!result) throw new Error('No data');
-  const timestamps = result.timestamp;
-  const closes = result.indicators?.quote?.[0]?.close;
-  return timestamps.map((ts, i) => ({
-    date: new Date(ts * 1000).toISOString().slice(0, 10),
-    price: closes[i] ? closes[i] : null
-  })).filter(d => d.price !== null).sort((a, b) => a.date.localeCompare(b.date));
+  if (!result?.timestamp) throw new Error('No data');
+  return result.timestamp.map((ts, i) => ({
+    date: new Date(ts * 1000).toISOString().slice(0,10),
+    price: result.indicators.quote[0].close[i] || null
+  })).filter(d => d.price !== null).sort((a,b) => a.date.localeCompare(b.date));
 }
 
 async function loadAll() {
   setStatus('loading', '시장 데이터 불러오는 중...');
   document.getElementById('overlay').style.display = 'flex';
 
-  // 3개 티커 동시 호출 (순차 아닌 병렬)
-  const results = await Promise.allSettled(TICKERS.map(t => fetchYahoo(t.id)));
+  // 10초 안전장치
+  const safety = setTimeout(() => {
+    document.getElementById('overlay').style.display = 'none';
+    setStatus('error', '일부 데이터 로드 지연 — 로드된 데이터만 표시');
+    initDateInputs(); renderAll(getFilteredAll(currentMonths)); fetchFx();
+  }, 10000);
+
+  const results = await Promise.allSettled(TICKERS.map(t => fetchData(t)));
+  clearTimeout(safety);
+
   let successCount = 0;
   results.forEach((result, i) => {
-    const t = TICKERS[i];
-    if (result.status === 'fulfilled') {
-      allDataMap[t.idx] = result.value;
+    if (result.status === 'fulfilled' && result.value.length > 0) {
+      allDataMap[TICKERS[i].idx] = result.value;
       successCount++;
     } else {
-      allDataMap[t.idx] = [];
+      allDataMap[TICKERS[i].idx] = [];
     }
   });
 
@@ -503,22 +516,31 @@ async function loadAll() {
   document.getElementById('overlay').style.display = 'none';
 }
 
-function generateDemo(idx) {
-  const data = [];
-  let price = [80, 2.5, 3.0][idx-1];
-  const start = new Date(); start.setFullYear(start.getFullYear()-1);
-  for (let d = new Date(start); d <= new Date(); d.setDate(d.getDate()+1)) {
-    if (d.getDay() !== 0 && d.getDay() !== 6) {
-      price += (Math.random()-0.47) * price * 0.012;
-      data.push({ date: d.toISOString().slice(0,10), price: parseFloat(price.toFixed(4)) });
+async function fetchFx() {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
+    if (!res.ok) throw new Error();
+    const j = await res.json();
+    const krw = j?.rates?.KRW, idr = j?.rates?.IDR;
+    if (krw && krw > 900) { document.getElementById('mFx').textContent = '\u20a9' + Math.round(krw).toLocaleString(); document.getElementById('mFxNote').textContent = '당일 기준 (참고용)'; }
+    if (idr && idr > 10000) { document.getElementById('mIdr').textContent = 'Rp ' + Math.round(idr).toLocaleString(); document.getElementById('mIdrNote').textContent = '당일 기준 · 인도네시아 법인 참고용'; }
+  } catch {
+    try {
+      const res2 = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+      const j2 = await res2.json();
+      const krw2 = j2?.rates?.KRW, idr2 = j2?.rates?.IDR;
+      if (krw2) { document.getElementById('mFx').textContent = '\u20a9' + Math.round(krw2).toLocaleString(); document.getElementById('mFxNote').textContent = '당일 기준 (참고용)'; }
+      if (idr2) { document.getElementById('mIdr').textContent = 'Rp ' + Math.round(idr2).toLocaleString(); document.getElementById('mIdrNote').textContent = '당일 기준 · 인도네시아 법인 참고용'; }
+    } catch {
+      document.getElementById('mFx').textContent = '조회 불가';
+      document.getElementById('mIdr').textContent = '조회 불가';
     }
   }
-  return data;
 }
 
 function initDateInputs() {
   const dates = Object.values(allDataMap).map(d => d[d.length-1]?.date || '').filter(Boolean).sort();
-  const last = dates[dates.length-1];
+  const last = dates[dates.length-1] || new Date().toISOString().slice(0,10);
   const from = new Date(last); from.setMonth(from.getMonth()-currentMonths);
   document.getElementById('dateTo').value = last;
   document.getElementById('dateFrom').value = from.toISOString().slice(0,10);
@@ -538,9 +560,7 @@ function getFilteredAll(months) {
 
 function getCustomAll(from, to) {
   const result = {};
-  for (const t of TICKERS) {
-    result[t.idx] = (allDataMap[t.idx] || []).filter(d => d.date >= from && d.date <= to);
-  }
+  for (const t of TICKERS) { result[t.idx] = (allDataMap[t.idx] || []).filter(d => d.date >= from && d.date <= to); }
   return result;
 }
 
@@ -552,26 +572,20 @@ function renderAll(dataMap) {
 function updateKPI(t, data) {
   if (!data.length) return;
   const prices = data.map(d => d.price);
-  const last = prices[prices.length-1];
-  const prev = prices[prices.length-2] ?? last;
-  const delta = last - prev;
-  const pct = ((delta/prev)*100).toFixed(1);
+  const last = prices[prices.length-1], prev = prices[prices.length-2] ?? last;
+  const delta = last - prev, pct = ((delta/prev)*100).toFixed(1);
   const high = Math.max(...prices), low = Math.min(...prices);
-  const avg = prices.reduce((a,b)=>a+b,0)/prices.length;
-  const highDate = data[prices.indexOf(high)]?.date ?? '';
-  const lowDate = data[prices.indexOf(low)]?.date ?? '';
-  const i = t.idx;
-  const fmt = v => t.prefix + v.toFixed(t.decimals);
-
+  const avg = prices.reduce((a,b) => a+b, 0) / prices.length;
+  const i = t.idx, fmt = v => t.prefix + v.toFixed(t.decimals);
   document.getElementById('p'+i).textContent = fmt(last);
   const dEl = document.getElementById('d'+i);
   const sign = delta >= 0 ? '+' : '';
   dEl.className = 'kpi-delta ' + (delta >= 0 ? 'up' : 'dn');
   dEl.textContent = sign + delta.toFixed(t.decimals) + ' (' + sign + pct + '%) 전일比  |  ' + t.unit;
   document.getElementById('h'+i).textContent = fmt(high);
-  document.getElementById('hd'+i).textContent = highDate;
+  document.getElementById('hd'+i).textContent = data[prices.indexOf(high)]?.date ?? '';
   document.getElementById('l'+i).textContent = fmt(low);
-  document.getElementById('ld'+i).textContent = lowDate;
+  document.getElementById('ld'+i).textContent = data[prices.indexOf(low)]?.date ?? '';
   document.getElementById('a'+i).textContent = fmt(avg);
 }
 
@@ -583,41 +597,536 @@ function renderChart(dataMap) {
     return {
       label: t.name,
       data: data.map(d => ({ x: d.date, y: parseFloat(((d.price/base)*100).toFixed(2)) })),
-      borderColor: t.color,
-      backgroundColor: t.color + '10',
-      borderWidth: 1.8,
-      pointRadius: 0,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: t.color,
-      pointHoverBorderColor: '#fff',
-      pointHoverBorderWidth: 2,
-      fill: false,
-      tension: 0.3,
+      borderColor: t.color, backgroundColor: t.color + '10',
+      borderWidth: 1.8, pointRadius: 0, pointHoverRadius: 5,
+      pointHoverBackgroundColor: t.color, pointHoverBorderColor: '#fff', pointHoverBorderWidth: 2,
+      fill: false, tension: 0.3,
     };
   }).filter(Boolean);
-
   if (chart) chart.destroy();
   chart = new Chart(document.getElementById('mainChart'), {
-    type: 'line',
-    data: { datasets },
+    type: 'line', data: { datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
-        tooltip: {
-          backgroundColor: '#fff', borderColor: 'rgba(0,0,0,0.12)', borderWidth: 1,
-          titleColor: '#6a6960', bodyColor: '#1c1b18',
-          titleFont: { size: 11 }, bodyFont: { size: 12 }, padding: 10,
-          callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + ' (기준=100)' }
-        }
+        tooltip: { backgroundColor: '#fff', borderColor: 'rgba(0,0,0,0.12)', borderWidth: 1, titleColor: '#6B717B', bodyColor: '#16181D', titleFont: { size: 11 }, bodyFont: { size: 12 }, padding: 10,
+          callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + ' (기준=100)' } }
       },
       scales: {
-        x: { type: 'category', ticks: { maxTicksLimit: 10, color: '#a3a298', font: { size: 11 }, autoSkip: true, maxRotation: 0 }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } },
-        y: { ticks: { callback: v => v.toFixed(0), color: '#a3a298', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } }
+        x: { type: 'category', ticks: { maxTicksLimit: 10, color: '#6B717B', font: { size: 11 }, autoSkip: true, maxRotation: 0 }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } },
+        y: { ticks: { callback: v => v.toFixed(0), color: '#6B717B', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false } }
       }
     }
   });
+}
+
+function setPeriod(months, btn) {
+  currentMonths = months;
+  document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = getFilteredAll(months);
+  const allDates = Object.values(filtered).flatMap(d => [d[0]?.date, d[d.length-1]?.date]).filter(Boolean).sort();
+  if (allDates.length) { document.getElementById('dateFrom').value = allDates[0]; document.getElementById('dateTo').value = allDates[allDates.length-1]; }
+  renderAll(filtered);
+}
+
+function setCustom() {
+  const from = document.getElementById('dateFrom').value, to = document.getElementById('dateTo').value;
+  if (from && to && from <= to) { document.querySelectorAll('.pbtn').forEach(b => b.classList.remove('active')); renderAll(getCustomAll(from, to)); }
+}
+
+function setStatus(type, msg) {
+  document.getElementById('statusDot').className = 'dot ' + (type === 'ok' ? '' : type);
+  document.getElementById('statusText').textContent = msg;
+}
+
+loadAll();
+</script>
+<style>
+  :root {
+    --bg: #F7F8FA; --surface: #FFFFFF; --surface2: #F7F8FA;
+    --border: #E6E8EC; --border-mid: #E6E8EC;
+    --text: #16181D; --text-muted: #3A3F47; --text-hint: #6B717B;
+    --accent: #2B6CFF; --accent-ink: #0B3FB0;
+    --blue: #185FA5; --blue-light: #E6F1FB; --blue-dark: #0B3FB0;
+    --ok: #1E9E6A; --stop: #D24B45; --warn: #D8952B;
+    --green: #3B6D11; --green-bg: #EAF3DE; --green-dark: #27500A;
+    --red: #D24B45; --red-bg: #FCEBEB;
+    --amber: #D8952B; --amber-bg: #FEF3E2;
+    --orange: #C05A1F; --orange-bg: #FEF0E6; --orange-dark: #7A3A10;
+    --c1: #185FA5; --c2: #E07B39; --c3: #3B6D11;
+    --radius: 10px; --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .header { background: var(--surface); border-bottom: 1px solid var(--border-mid); padding: 13px 30px 13px 120px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .header-left { display: flex; align-items: center; gap: 11px; }
+  .header-title { font-size: 18px; font-weight: 650; letter-spacing: -0.3px; }
+  .header-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .last-update { font-size: 11px; color: var(--text-hint); }
+  .source-tag { font-size: 11px; color: var(--text-hint); background: var(--surface2); border-radius: 20px; padding: 3px 10px; border: 1px solid var(--border); }
+  .btn { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; transition: background .15s, transform .1s; }
+  .btn:hover { background: var(--surface2); }
+  .btn:active { transform: scale(0.97); }
+.main { max-width: 1100px; margin: 0 auto; padding: 24px 28px 56px; }
+
+  .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .status-left { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-muted); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+  .dot.loading { background: var(--warn); animation: blink 1.2s infinite; }
+  .dot.error { background: var(--stop); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* KPI Cards */
+  .kpi-section { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
+  .kpi-header { margin-bottom: 12px; }
+  .kpi-name { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .kpi-name-sub { font-size: 11px; color: var(--text-hint); font-weight: 400; margin-top: 2px; }
+  .kpi-price { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 4px; margin-top: 10px; }
+  .kpi-delta { font-size: 14px; font-weight: 600; margin-bottom: 12px; margin-top: 6px; }
+  .up { color: var(--ok); } .dn { color: var(--stop); } .nt { color: var(--text-hint); font-weight: 400; }
+  .kpi-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; border-top: 1px solid var(--border); padding-top: 10px; }
+  .kpi-stat-item { text-align: center; }
+  .kpi-stat-label { font-size: 11px; color: var(--text-hint); margin-bottom: 2px; }
+  .kpi-stat-val { font-size: 13px; font-weight: 600; color: var(--text); }
+  .kpi-stat-date { font-size: 11px; color: var(--text-hint); }
+  .rbob-note { margin-top: 12px; padding: 9px 12px; background: var(--orange-bg); border-left: 3px solid var(--orange); border-radius: var(--radius-sm); font-size: 11px; line-height: 1.6; color: var(--orange-dark); }
+  .te-link-btn { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--orange-dark); text-decoration: none; border-bottom: 1px solid var(--orange); padding-bottom: 1px; }
+  .te-link-btn:hover { color: var(--orange); }
+
+  /* FX Row */
+  .fx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .fx-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+  .fx-label { font-size: 11px; font-weight: 600; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .fx-val { font-size: 20px; font-weight: 700; }
+  .fx-note { font-size: 11px; color: var(--text-hint); }
+
+  /* Controls */
+  .controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .period-group { display: flex; gap: 4px; }
+  .pbtn { font-size: 12px; font-weight: 500; padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border-mid); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all .15s; }
+  .pbtn:hover { background: var(--surface2); }
+  .pbtn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .divider { width: 1px; height: 22px; background: var(--border-mid); margin: 0 4px; }
+  .date-input { font-size: 12px; padding: 5px 9px; border-radius: var(--radius-sm); border: 1px solid var(--border-mid); background: var(--surface); color: var(--text); cursor: pointer; }
+  .date-label { font-size: 12px; color: var(--text-muted); }
+
+  /* Chart */
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px; }
+  .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .chart-title { font-size: 14px; font-weight: 600; }
+  .chart-legend { display: flex; gap: 16px; font-size: 11px; color: var(--text-muted); flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
+  .chart-note { font-size: 11px; color: var(--text-hint); margin-top: 8px; }
+  .chart-wrap { position: relative; height: 300px; }
+
+  /* Events */
+  .events-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 16px; }
+  .section-title { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+  .section-badge { font-size: 11px; font-weight: 600; background: var(--blue-light); color: var(--blue-dark); padding: 2px 8px; border-radius: 20px; }
+  .event-row { display: grid; grid-template-columns: 90px auto 1fr; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .event-row:last-child { border-bottom: none; }
+  .event-date { font-weight: 600; color: var(--accent-ink); }
+  .event-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .event-tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .tag-brent { background: var(--blue-light); color: var(--blue-dark); }
+  .tag-naphtha { background: var(--orange-bg); color: var(--orange-dark); }
+  .tag-gas { background: var(--green-bg); color: var(--green-dark); }
+  .event-desc { color: var(--text-muted); }
+  .src { color: var(--text-hint); font-size: 11px; }
+  .scenario-caveat { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--amber-bg); font-size: 12px; line-height: 1.6; color: #633806; }
+  .scenario-caveat b { font-weight: 600; }
+
+  /* Scenario */
+  .scenario-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .scenario-head { background: var(--surface2); padding: 14px 22px; border-bottom: 1px solid var(--border-mid); }
+  .scenario-head-title { font-size: 14px; font-weight: 600; }
+  .scenario-head-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .scenario-table { width: 100%; border-collapse: collapse; }
+  .scenario-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.3px; color: var(--text-muted); text-transform: uppercase; padding: 10px 20px; text-align: left; border-bottom: 1px solid var(--border-mid); background: var(--surface2); }
+  .scenario-table th:not(:first-child) { border-left: 1px solid var(--border); }
+  .scenario-table td { padding: 16px 20px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .scenario-table td:not(:first-child) { border-left: 1px solid var(--border); }
+  .scenario-table tr:last-child td { border-bottom: none; }
+  .td-period { font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .pill-base { display: inline-flex; align-items: center; gap: 5px; background: var(--green-bg); color: #0F6E56; border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; font-weight: 700; }
+  .pill-risk { display: inline-flex; align-items: center; gap: 5px; background: var(--red-bg); color: #A32D2D; border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; font-weight: 700; }
+  .sc-desc { font-size: 11px; color: var(--text-hint); margin-top: 6px; line-height: 1.5; }
+  .tags { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+  .tag { font-size: 11px; font-weight: 600; border-radius: 20px; padding: 2px 8px; }
+  .tag-m { background: var(--amber-bg); color: var(--amber); }
+  .tag-f { background: var(--blue-light); color: var(--blue); }
+
+  .footer { text-align: center; font-size: 11px; color: var(--text-hint); padding-top: 8px; }
+
+  #overlay { position: fixed; inset: 0; background: rgba(247,248,250,0.88); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
+  .loader { width: 30px; height: 30px; border: 2px solid var(--border-mid); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-size: 14px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .kpi-section { grid-template-columns: 1fr; }
+    .fx-row { grid-template-columns: 1fr; }
+    .main { padding: 16px 14px 40px; }
+    .header-right .source-tag { display: none; }
+    .event-row { grid-template-columns: 80px 1fr; }
+    .event-desc { grid-column: 1 / -1; padding-left: 0; }
+  }
+  .aurora-home-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px 8px 12px;
+    background: #16181D;
+    border: 1px solid #16181D;
+    border-radius: 10px;
+    font-family: Arial, "Pretendard", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+    text-decoration: none;
+    box-shadow: none;
+    transition: background 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+  }
+  .aurora-home-btn:hover {
+    background: #3A3F47;
+    color: #FFFFFF;
+    border-color: #3A3F47;
+    transform: translateY(-1px);
+  }
+  .aurora-home-btn .arrow {
+    font-size: 15px;
+    line-height: 1;
+    transition: transform 0.18s;
+  }
+  .aurora-home-btn:hover .arrow {
+    transform: translateX(-2px);
+  }
+  @media (max-width: 640px) {
+    .aurora-home-btn {
+      top: 14px;
+      left: 14px;
+      padding: 7px 12px 7px 10px;
+      font-size: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+<a href="https://jaehyunlee-cmyk.github.io/aurora-hub/" class="aurora-home-btn">
+  <span class="arrow">←</span>
+  <span>Hub</span>
+</a>
+
+<div id="overlay">
+  <div class="loader"></div>
+  <div class="loader-text">시장 데이터 불러오는 중...</div>
+</div>
+
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="header-title">Petrochemical Price Monitor</div>
+      <div class="header-sub">Aurora World 생산운영팀 · 브렌트유 · RBOB 가솔린 · 천연가스</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="last-update" id="lastUpdate">—</span>
+    <span class="source-tag">출처: Yahoo Finance</span>
+    <button class="btn" onclick="loadAll()">↻ 새로고침</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="status-row">
+    <div class="status-left">
+      <span class="dot loading" id="statusDot"></span>
+      <span id="statusText">데이터 로딩 중...</span>
+    </div>
+    <span class="source-tag" id="dataRange">—</span>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-section">
+    <div class="kpi-card c1">
+      <div class="kpi-header">
+        <div class="kpi-name">🛢 브렌트유</div>
+        <div class="kpi-name-sub">Brent Crude Oil Futures · BZ=F</div>
+      </div>
+      <div class="kpi-price" id="p1">—</div>
+      <div class="kpi-delta" id="d1"><span class="nt">로딩 중</span></div>
+      <div class="kpi-stats">
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최고가</div><div class="kpi-stat-val" id="h1">—</div><div class="kpi-stat-date" id="hd1">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l1">—</div><div class="kpi-stat-date" id="ld1">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a1">—</div><div class="kpi-stat-date">기간 기준</div></div>
+      </div>
+    </div>
+
+    <div class="kpi-card c2">
+      <div class="kpi-header">
+        <div class="kpi-name">⚗️ RBOB 가솔린 <span style="font-size:11px; font-weight:400; color:var(--text-hint);">(석유화학 원료 지표)</span></div>
+        <div class="kpi-name-sub">RBOB Gasoline Futures · RB=F · 나프타 추세 대리지표</div>
+      </div>
+      <div class="kpi-price" id="p2">—</div>
+      <div class="kpi-delta" id="d2"><span class="nt">로딩 중</span></div>
+      <div class="kpi-stats">
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최고가</div><div class="kpi-stat-val" id="h2">—</div><div class="kpi-stat-date" id="hd2">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l2">—</div><div class="kpi-stat-date" id="ld2">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a2">—</div><div class="kpi-stat-date">기간 기준</div></div>
+      </div>
+      <div class="rbob-note">장외거래(OTC) 특성상 실시간 데이터는 유료로만 제공되어, 유사한 흐름의 RBOB 가솔린 선물을 대리지표로 활용. 정밀 모니터링 필요시 유료 데이터 도입 필요하며, 잠정적으로 아래 링크를 병행 참고.<br><br>
+        <a href="https://ko.tradingeconomics.com/commodity/naphtha" target="_blank" class="te-link-btn">🔗 나프타 실제 가격 확인 (TradingEconomics) ↗</a>
+      </div>
+    </div>
+    <div class="kpi-card c3">
+      <div class="kpi-header">
+        <div class="kpi-name">🔥 천연가스</div>
+        <div class="kpi-name-sub">Natural Gas Futures (Henry Hub) · NG=F</div>
+      </div>
+      <div class="kpi-price" id="p3">—</div>
+      <div class="kpi-delta" id="d3"><span class="nt">로딩 중</span></div>
+      <div class="kpi-stats">
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최고가</div><div class="kpi-stat-val" id="h3">—</div><div class="kpi-stat-date" id="hd3">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">최저가</div><div class="kpi-stat-val" id="l3">—</div><div class="kpi-stat-date" id="ld3">—</div></div>
+        <div class="kpi-stat-item"><div class="kpi-stat-label">평균가</div><div class="kpi-stat-val" id="a3">—</div><div class="kpi-stat-date">기간 기준</div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FX Row -->
+  <div class="fx-row">
+    <div class="fx-card">
+      <div>
+        <div class="fx-label">원 / 달러 환율 (KRW)</div>
+        <div class="fx-val" id="mFx">—</div>
+      </div>
+      <div class="fx-note" id="mFxNote">당일 기준 (참고용)</div>
+    </div>
+    <div class="fx-card">
+      <div>
+        <div class="fx-label">루피아 / 달러 환율 (IDR)</div>
+        <div class="fx-val" id="mIdr">—</div>
+      </div>
+      <div class="fx-note" id="mIdrNote">인도네시아 법인 참고용</div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="period-group">
+      <button class="pbtn" onclick="setPeriod(1,this)">1M</button>
+      <button class="pbtn active" onclick="setPeriod(3,this)">3M</button>
+      <button class="pbtn" onclick="setPeriod(6,this)">6M</button>
+      <button class="pbtn" onclick="setPeriod(12,this)">1Y</button>
+    </div>
+    <div class="divider"></div>
+    <span class="date-label">기간 직접 입력:</span>
+    <input class="date-input" type="date" id="dateFrom" onchange="setCustom()">
+    <span class="date-label">~</span>
+    <input class="date-input" type="date" id="dateTo" onchange="setCustom()">
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">원자재 가격 추이 (정규화 비교, 기준일 = 100)</div>
+      <div class="chart-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c1)"></span>브렌트유</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c2)"></span>RBOB 가솔린</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--c3)"></span>천연가스</div>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+    <div class="chart-note">※ 단위가 다른 3개 지표를 기준일 대비 상대 변화율로 정규화하여 동시 비교합니다. (기준일 = 선택 기간 첫째 날 = 100)<br>※ 나프타는 실시간 무료 데이터가 없어, 추세가 유사한 RBOB 가솔린 선물을 석유화학 원료 흐름의 대리지표로 사용합니다. 절대 가격이 아닌 추세 방향 참고용입니다.</div>
+  </div>
+
+  <!-- Events -->
+  <div class="events-card">
+    <div class="section-title">🚩 주요 이벤트 로그 <span class="section-badge">원부자재 · 운임 영향 시점</span></div>
+
+    <div class="event-row">
+      <span class="event-date">2026-02-28</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">호르무즈 해협 사실상 폐쇄 — 통항 급감, 이라크 불가항력 선언 <span class="src">(EIA STEO / TradingEconomics)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-03-13</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">봉쇄 지속으로 브렌트 $102 상회 · 전쟁위험보험료 상승에 따른 해상운임 급등 <span class="src">(TradingEconomics)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-04</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span><span class="event-tag tag-gas">🔥 천연가스</span></div>
+      <span class="event-desc">브렌트 연중 고점 형성 (6월 대비 약 $32 높은 수준) — 원부자재 원가 최고 압력 구간 <span class="src">(EIA 7월 STEO)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-06-18</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">미·이란 양해각서 체결 — 호르무즈 재개, 유조선 통항 회복 <span class="src">(EIA)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-01</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">브렌트 현물 $70 하회 — 봉쇄 이전 수준 회복, 원가 부담 일시 완화 <span class="src">(EIA)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-07</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">EIA 7월 STEO 발표 — 2026년 연평균 $82, 2027년 $65로 하향 조정 <span class="src">(EIA STEO, 7/1 기준 작성)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-14</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">미·이란 교전 재개, 이란 항만 해상 봉쇄 재개 — 브렌트 $84.73 마감 <span class="src">(CNBC)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-20</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">장중 브렌트 $90 상회 후 반락 — 호르무즈 통항 선박 피격 보도 <span class="src">(Bloomberg)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-07-31</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">7월 한 달 브렌트 약 +25% 급등 마감 — 호르무즈·홍해 공급 차질 지속 · 원부자재 원가 재상승 압력 <span class="src">(oilprice.com · TradingEconomics)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-08-03</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">트럼프 대이란 공격 취소·협상 재개 발표 → 브렌트 하루 약 -5%, $83~84 급락. OPEC+ 5개월 연속 증산으로 2023년 감산분 복원 완료 <span class="src">(TradingEconomics · Investing.com)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-08-10</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">미·이란 협상 교착 — 이란 "美 해상봉쇄 해제가 선결조건" 고수. 브렌트 약 +5%, $87.72 반등 <span class="src">(CNBC)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-08-12</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">EIA 8월 STEO 발표 — 2026년 브렌트 평균 <b>$87</b>로 상향(7월 $82 대비). 중동 생산 정상화는 2027년 초로 전망 <span class="src">(EIA / Al Jazeera)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-09-01</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span><span class="event-tag tag-naphtha">⚗️ 나프타</span></div>
+      <span class="event-desc">美, 유조선 2척 피격 후 호르무즈 주변 이란 표적 재타격 — 브렌트 약 +5%, $95 근접 (7월 말 이후 최고) <span class="src">(TradingEconomics)</span></span>
+    </div>
+    <div class="event-row">
+      <span class="event-date">2026-09-02</span>
+      <div class="event-tags"><span class="event-tag tag-brent">🛢 브렌트유</span></div>
+      <span class="event-desc">브렌트 $94.86 — 전월 대비 +13.2%, 전년 동기 대비 +40.3%. 교전 장기화 우려로 원부자재 원가 재상승 압력 <span class="src">(TradingEconomics)</span></span>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div class="scenario-card">
+    <div class="scenario-head">
+      <div class="scenario-head-title">📊 가격 전망 (외부 기관 인용)</div>
+      <div class="scenario-head-sub">미국 에너지정보청(EIA) 2026년 8월 Short-Term Energy Outlook 기준 · 자체 전망 아님</div>
+    </div>
+    <table class="scenario-table">
+      <thead>
+        <tr>
+          <th style="width:130px;">시기</th>
+          <th>EIA 브렌트 전망 <span style="font-weight:400;">(7월 STEO)</span></th>
+          <th>SCM 영향 · 유의사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-period">2026년<br>연평균</td>
+          <td><div class="pill-base">평균 $87 / bbl</div><div class="sc-desc">8월 STEO 기준. 7월 전망($82) 대비 $5 상향 — 호르무즈 정상화 지연 반영.</div></td>
+          <td><div class="sc-desc">중동 생산은 2027년 초까지 pre-conflict 수준 미회복 전망. 원부자재 고원가 국면 지속.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 지속</span><span class="tag tag-f">해상운임 ↑ 고위</span></div></td>
+        </tr>
+        <tr>
+          <td class="td-period">2026년<br>4분기</td>
+          <td><div class="pill-base">고위 변동 지속</div><div class="sc-desc">호르무즈 통항 정상화 여부가 최대 변수. 교전 재개 시 $90+ 재상승 반복.</div></td>
+          <td><div class="sc-desc">OPEC+ 증산 완료분은 하방 요인이나, 지정학 프리미엄이 이를 상쇄. 원가 헤지·재고 확보 검토 구간.</div><div class="tags"><span class="tag tag-m">원부자재 ↑ 변동</span><span class="tag tag-f">운임 ↑ 리스크</span></div></td>
+        </tr>
+        <tr>
+          <td class="td-period">2027년</td>
+          <td><div class="pill-base">점진 하향 전망</div><div class="sc-desc">중동 공급·통항 정상화 시 하락. EIA는 2027년 공급이 소비를 상회할 것으로 전망.</div></td>
+          <td><div class="sc-desc">정상화 시점에 장기 소싱 단가 협상 유리. 다만 정상화 지연 리스크 상존.</div><div class="tags"><span class="tag tag-m">원부자재 → 안정(조건부)</span><span class="tag tag-f">운임 ↓ 하향(조건부)</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="scenario-caveat">⚠️ 8월 3일 미·이란 협상 재개 기대로 $83~84까지 하락했으나, <b>협상 교착·교전 재개로 9월 2일 브렌트 $94.86까지 재급등</b>(7월 말 이후 최고)했습니다. 호르무즈 통항 정상화 여부에 따라 변동성이 매우 큰 국면으로, 표의 연평균 전망과 현재 시세 간 괴리가 큽니다. 실시간 시세는 상단 카드를 기준으로 판단하시기 바랍니다.</div>
+  </div>
+
+  <div class="footer">Aurora World 생산운영팀 · 시세: Yahoo Finance (BZ=F, RB=F, NG=F) 15분 지연 · 전망: U.S. EIA Short-Term Energy Outlook (2026년 8월) · 이벤트 로그 출처: EIA · Bloomberg · CNBC · TradingEconomics</div>
+</div>
+
+<script>
+const TICKERS = [
+  { yahoo: 'BZ=F', name: '브렌트유', unit: 'USD/bbl', prefix: '$', decimals: 2, idx: 1, color: '#185FA5',
+    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCBRENT' },
+  { yahoo: 'RB=F', name: 'RBOB 가솔린', unit: 'USD/gal', prefix: '$', decimals: 4, idx: 2, color: '#E07B39',
+    eiaPath: 'petroleum/pri/spt/data/', eiaFacetKey: 'product', eiaId: 'EPCRBOB' },
+  { yahoo: 'NG=F', name: '천연가스', unit: 'USD/MMBtu', prefix: '$', decimals: 3, idx: 3, color: '#3B6D11',
+    eiaPath: 'natural-gas/pri/fut/data/', eiaFacetKey: 'process', eiaId: 'PNK' },
+];
+
+let allDataMap = {};
+let chart = null;
+let currentMonths = 3;
+
+async function fetchData(ticker) {
+  // 1순위: EIA 직접 호출 (프록시 불필요, 안정적)
+  if (ticker.eiaId) {
+    try {
+      const end = new Date(), start = new Date();
+      start.setFullYear(start.getFullYear() - 1);
+      const fmt = d => d.toISOString().slice(0,10);
+      const eiaUrl = 'https://api.eia.gov/v2/' + ticker.eiaPath + '?api_key=c8jNAloqAYOql8eZU7SmRcvJ7br5JKOwwTxdl0gY&frequency=daily&data[0]=value&facets[' + ticker.eiaFacetKey + '][]=' + ticker.eiaId + '&sort[0][column]=period&sort[0][direction]=asc&start=' + fmt(start) + '&end=' + fmt(end) + '&length=400';
+      const res = await fetch(eiaUrl);
+      if (res.ok) {
+        const json = await res.json();
+        const rows = json?.response?.data;
+        if (rows && rows.length > 0) {
+          return rows.filter(r => r.value != null).map(r => ({date: r.period, price: parseFloat(r.value)})).sort((a,b) => a.date.localeCompare(b.date));
+        }
+      }
+    } catch(e) {}
+  }
+
+  // 2순위: Yahoo Finance via proxy (3개 동시 경쟁)
+  const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker.yahoo) + '?interval=1d&range=1y';
+  const makeReq = (proxyUrl) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    return fetch(proxyUrl, {
+      headers: { 'x-requested-with': 'XMLHttpRequest' },
+      signal: controller.signal
+    }).then(res => {
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).catch(e => { clearTimeout(timeout); throw e; });
+  };
+
+  const json = await Promise.any([
+    makeReq('https://corsproxy.io/?' + yahooUrl),
+    makeReq('https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl)),
+  ]).catch(() => { throw new Error('데이터 로드 실패'); });
+
+  const result = json?.chart?.result?.[0];
+  if (!result?.timestamp) throw new Error('No data');
+  const timestamps = result.timestamp;
+  const closes = result.indicators?.quote?.[0]?.close;
+  return timestamps.map((ts, i) => ({
+    date: new Date(ts * 1000).toISOString().slice(0, 10),
+    price: closes[i] ? closes[i] : null
+  })).filter(d => d.price !== null).sort((a, b) => a.date.localeCompare(b.date));
 }
 
 async function fetchFx() {
