@@ -441,22 +441,31 @@ let currentMonths = 3;
 
 async function fetchYahoo(ticker) {
   const yahooUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(ticker) + '?interval=1d&range=1y';
-  const proxies = [
-    'https://corsproxy.io/?' + yahooUrl,
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl),
-  ];
-  let res = null;
-  for (const proxyUrl of proxies) {
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 6000);
-      res = await fetch(proxyUrl, { headers: { 'x-requested-with': 'XMLHttpRequest' }, signal: controller.signal });
+
+  // 3개 프록시 동시 호출 — 가장 먼저 응답하는 것 사용
+  const makeReq = (proxyUrl) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    return fetch(proxyUrl, {
+      headers: { 'x-requested-with': 'XMLHttpRequest' },
+      signal: controller.signal
+    }).then(res => {
       clearTimeout(timeout);
-      if (res.ok) break;
-    } catch(e) { res = null; }
-  }
-  if (!res || !res.ok) throw new Error('모든 프록시 실패');
-  const json = await res.json();
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).catch(e => {
+      clearTimeout(timeout);
+      throw e;
+    });
+  };
+
+  // 동시 호출: 가장 먼저 성공한 것 반환
+  const json = await Promise.any([
+    makeReq('https://corsproxy.io/?' + yahooUrl),
+    makeReq('https://api.allorigins.win/raw?url=' + encodeURIComponent(yahooUrl)),
+    makeReq('https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(yahooUrl)),
+  ]).catch(() => { throw new Error('모든 프록시 실패'); });
+
   const result = json?.chart?.result?.[0];
   if (!result) throw new Error('No data');
   const timestamps = result.timestamp;
