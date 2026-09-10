@@ -157,6 +157,7 @@ h1 strong { font-weight: 700; }
 .dash-card:nth-child(3) { animation-delay: 0.16s; }
 .dash-card:nth-child(4) { animation-delay: 0.22s; }
 .dash-card:nth-child(5) { animation-delay: 0.28s; }
+.dash-card:nth-child(6) { animation-delay: 0.34s; }
 
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -241,6 +242,7 @@ h1 strong { font-weight: 700; }
 .theme-blue   { --accent-color: var(--blue);   }
 .theme-green  { --accent-color: var(--green);  }
 .theme-orange { --accent-color: var(--orange); }
+.theme-ink    { --accent-color: var(--ink);    }
 
 .dash-card.placeholder {
   border-style: dashed;
@@ -291,6 +293,16 @@ footer {
 
   <div class="section-label">Active Dashboards</div>
   <div class="dashboard-grid">
+
+    <a class="dash-card theme-ink"
+       href="https://jaehyunlee-cmyk.github.io/aurora-hub/global-brief.html"
+       target="_blank" rel="noopener">
+      <div class="card-inner">
+        <div class="card-title">Aurora Global Brief</div>
+        <div class="card-sub">주간 외부환경 브리핑 · 원가·환율·통상·물류<br>기후·인권·소비 12개 이슈 통합</div>
+        <div class="card-arrow">↗</div>
+      </div>
+    </a>
 
     <a class="dash-card theme-gold"
        href="https://jaehyunlee-cmyk.github.io/aurora-hub/raw_material_dashboard.html"
