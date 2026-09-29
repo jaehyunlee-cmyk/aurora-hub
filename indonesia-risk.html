@@ -81,9 +81,9 @@
   .rail-title h2{font-size:14px;font-weight:700}
   .rail-title .status{font-size:13px;color:var(--muted)}
   .rail{position:relative;height:13px;border-radius:8px;margin:36px 6px 8px;background:linear-gradient(90deg,
-    var(--green-rail) 0%, var(--green-rail) 50%,
-    var(--amber-rail) 50%, var(--amber-rail) 80%,
-    var(--red-rail) 80%, var(--red-rail) 100%)}
+    var(--green-rail) 0%, var(--green-rail) 42.86%,
+    var(--amber-rail) 42.86%, var(--amber-rail) 85.71%,
+    var(--red-rail) 85.71%, var(--red-rail) 100%)}
   .rail-marker{position:absolute;top:-28px;transform:translateX(-50%);text-align:center;transition:left .5s ease}
   .rail-marker .tick{width:2px;height:38px;background:var(--text);margin:0 auto;border-radius:1px}
   .rail-marker .tag{font-size:12px;font-weight:700;background:var(--text);color:#fff;padding:2px 9px;border-radius:5px;white-space:nowrap;margin-bottom:3px;display:inline-block;font-variant-numeric:tabular-nums}
@@ -204,14 +204,14 @@
 <!-- ── [C] 지난 검토 대비 델타 ── -->
 <div class="delta-box">
   <div class="delta-col">
-    <div class="delta-h">금주 변동 <span id="deltaAsOf" style="font-weight:400;letter-spacing:0;text-transform:none">· 09.03 기준</span></div>
-    <ul id="deltaChanged"><li>재무장관 전격 교체(09.14) — 재정적자 3% 상한 개정 논의 부상</li><li>연준 +25bp 인상(3.75~4.00%) · BoJ·ECB도 인상</li><li>루피아 17,884·JCI 6,277 동반 약세, FTSE 29종목 제외</li><li>유가 $108 → $99 반락</li></ul>
+    <div class="delta-h">금주 변동 <span id="deltaAsOf" style="font-weight:400;letter-spacing:0;text-transform:none">· 09.29 기준</span></div>
+    <ul id="deltaChanged"><li>BI 동결 5.75%(09.23, 3회 연속) · 현물 개입 비중 30%</li><li>루피아 17,978 → 09.29 장중 18,000 터치</li><li>유가 $99 → $105 재반등 — 트럼프 이란 제안 거부</li><li>JCI 6,148, 외국인 순매도 · DPR 3% 상한 변경 제안</li></ul>
   </div>
   <div class="delta-col">
     <div class="delta-h">금주 일정</div>
-    <ul id="deltaSchedule"><li>09.23 BI RDG 결과 (컨센서스 동결 12/14)</li><li>10.01 9월 물가·8월 무역수지</li><li>10.07경 9월 외환보유고</li></ul>
+    <ul id="deltaSchedule"><li>10.01 9월 물가·8월 무역수지</li><li>10.07경 9월 외환보유고</li><li>10.20~21 BI RDG (분기)</li></ul>
   </div>
-  <div class="delta-foot" id="deltaUnchanged">현상 유지 — BI Rate 5.75%(09.23 결과 발표 전) · 미 관세 10% · 신용등급 3사 · 보유고 $146.5B</div>
+  <div class="delta-foot" id="deltaUnchanged">현상 유지 — BI Rate 5.75% · 미 관세 10% · 신용등급 3사 · 보유고 $146.5B(8월)</div>
 </div>
 
 <!-- ── LIVE CARDS ── -->
@@ -219,7 +219,7 @@
   <div class="live-card">
     <div class="lbl">USD/IDR <span id="liveTag">(연결 중…)</span></div>
     <div class="val red" id="liveRate">—</div>
-    <div class="sub" id="liveBase">참고 · 09.22 종가 17,884 (-0.77%) — 09.10 17,536 대비 2주간 -2.0% · 재무장관 교체·재정준칙 개정 논의·FTSE 종목 제외가 겹침 · 주의선(18,000)까지 116pt로 근접 · 09.23 RDG 결과 대기</div>
+    <div class="sub" id="liveBase">참고 · 09.28 종가 17,978 (-0.42%, Bloomberg) — 09.29 개장 직후 장중 18,000 터치 · 09.22 17,884 대비 1주 -0.5% · BI 동결(09.23) 후에도 외국인 유출·수입업체 달러 수요·유가 재반등이 겹침 · 주의선(18,000)까지 22pt</div>
   </div>
   <div class="live-card">
     <div class="lbl">주의 기준선까지</div>
@@ -233,8 +233,8 @@
   </div>
   <div class="live-card">
     <div class="lbl">외환보유고</div>
-    <div class="val amber" id="fxReserve">$145.3B</div>
-    <div class="sub" id="fxReserveSub">2026.07 · 소폭 감소 (-$0.3B) · 수입 5.5개월분</div>
+    <div class="val amber" id="fxReserve">$146.5B</div>
+    <div class="sub" id="fxReserveSub">2026.08 · +$1.2B 반등 · 수입 5.4개월분</div>
   </div>
 </div>
 
@@ -272,9 +272,9 @@
   <div class="src-note">
     <b>외부 기관 시각 인용</b>
     <ul style="list-style:none;margin-top:8px">
-      <li style="padding:3px 0">• <b>외환 펀더멘털</b> : 보유고 <span data-reserve-val>$145.3B</span> · 수입커버 <span data-reserve-months>5.4개월</span> · 변동환율제 — 1998년과 비교 불가 수준으로 양호. <b>단, Q2 경상적자 3.3%</b>로 방어가 자본유입 의존 구조</li>
-      <li style="padding:3px 0">• <b>단기 완화 요인</b> : <b>유가 $108 → $99 반락</b> — 사우디 우회 수출 확대·파이프라인 재가동 준비 · 보유고 $146.5B(2개월 연속 반등, 수입 5.4개월분) · 7월 무역흑자 복귀 · 신임 재무장관 Suahasil은 재무부 차관 7년의 테크노크라트, "채무 60% 상한 유지" 표명 · 세수 +23.7%·7월까지 적자 0.91%로 재정 집행은 양호 · 미 관세 확정(인니 10% vs 경쟁국 12.5%) · S&P Stable(유일)</li>
-      <li style="padding:3px 0">• <b>구조 리스크 심화</b> : <b>재정 규율 신뢰 훼손</b> — 재무장관 1년 만에 재교체(2025.09 Sri Mulyani → 2026.09 Purbaya), 공식 사유 미발표 + <b>재정적자 3% 법정상한 개정 논의</b> 부상 · <b>주요국 동시 긴축</b>(연준 3.75~4.00%·BoJ·ECB 인상) · 자본시장 이탈 — JCI 장관 교체 후 -3.9%, 외국인 순매도, FTSE 29종목 제외·베트남 승격 · 루피아 2주 -2%로 주의선 116pt 근접 · Q2 경상적자 3.3% · 유가 $99(전년 +36%), 선거 전 호르무즈 합의 기대 후퇴</li>
+      <li style="padding:3px 0">• <b>외환 펀더멘털</b> : 보유고 <span data-reserve-val>$146.5B</span> · 수입커버 <span data-reserve-months>5.4개월</span> · 변동환율제 — 1998년과 비교 불가 수준으로 양호. <b>단, Q2 경상적자 3.3%</b>로 방어가 자본유입 의존 구조</li>
+      <li style="padding:3px 0">• <b>단기 완화 요인</b> : <b>BI 동결(09.23)로 통화정책 불확실성 해소</b> — 현물 개입 비중 30%로 보유고 보존 · 보유고 $146.5B(2개월 연속 반등, 수입 5.4개월분) · 사우디 동-서 파이프라인 재가동·호르무즈 통과 회복(주 132척) · 신임 장관 Suahasil "적자 3% 최대치 준수", 2026 전망 2.85% 유지 · 미 관세 확정(인니 10% vs 경쟁국 12.5%) · S&amp;P Stable(유일)</li>
+      <li style="padding:3px 0">• <b>구조 리스크 심화</b> : <b>루피아 주의선 도달</b> — 09.28 종가 17,978, 09.29 장중 18,000 터치 · <b>재정 규율 논쟁</b> — DPR이 적자 3%·채무 60% 상한 변경 제안(09.17), 재무장관 1년 만에 재교체 · <b>유가 $105 재반등</b> — 트럼프 이란 제안 거부·후티 사우디 공격, 전년 +55% · 자본시장 이탈 — JCI 6,148(장관 교체 후 -5.9%), 외국인 순매도 지속 · 주요국 동시 긴축(연준 3.75~4.00%) · Q2 경상적자 3.3%</li>
       <li style="padding:3px 0;color:var(--faint)">※ 본 페이지는 공개 지표 모니터링용 — 환율·위기 시점을 자체 전망하지 않음</li>
     </ul>
   </div>
@@ -409,13 +409,13 @@
           <thead><tr><th>지표</th><th>1997~1998</th><th>2026 현재</th><th>판단</th></tr></thead>
           <tbody>
             <tr><td>환율 절하폭</td><td class="mono">-580% (2,500→17,000)</td><td class="mono">-13% (16,000→18,100대)</td><td>🟢 비교 불가</td></tr>
-            <tr><td>외환보유고</td><td>거의 고갈</td><td class="mono"><span data-reserve-val>$145.3B</span> (<span data-reserve-months>5.4개월</span>)</td><td>🟢 양호</td></tr>
+            <tr><td>외환보유고</td><td>거의 고갈</td><td class="mono"><span data-reserve-val>$146.5B</span> (<span data-reserve-months>5.4개월</span>)</td><td>🟢 양호</td></tr>
             <tr><td>경상수지</td><td class="mono">-3.4% → 위기 후 흑자 전환</td><td class="mono">Q2 -3.3% GDP (Q1 -1.0%)</td><td>🔴 1998 직전 수준 — 단, 자본유입으로 상쇄 중</td></tr>
             <tr><td>환율 제도</td><td>고정환율 붕괴</td><td>변동환율</td><td>🟢 구조적 안전</td></tr>
             <tr><td>단기 외채 / 은행</td><td>과다 / NPL 폭증</td><td>GDP 30% 장기물 / NPL 2.3%</td><td>🟢 양호</td></tr>
             <tr><td>GDP</td><td class="mono">-13.6%</td><td class="mono">+5.29%</td><td>🟢 전혀 다름</td></tr>
             <tr><td>신용등급 전망</td><td>N/A</td><td>Negative ×2</td><td>🔴 주의</td></tr>
-            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">$99 (09.14 $108 고점 후 반락, 전년 +36%) / JCI 6,277 (연초 -26%)</td><td>🔴 에너지 스트레스 지속</td></tr>
+            <tr><td>유가 / 주식시장</td><td>— / -60%+</td><td class="mono">~$105 (09.28 장중 $104~107, 전년 +55%) / JCI 6,148 (연초 약 -27%)</td><td>🔴 에너지 스트레스 지속</td></tr>
           </tbody>
         </table>
       </div>
@@ -445,7 +445,7 @@
 <footer>
   <div class="foot-row">
     <span>Aurora World 생산운영팀 · Indonesia Risk Watch · Internal Use Only</span>
-    <span><span id="footDate">Data as of 2026.09.23</span> · <span class="review" id="footReview">다음 검토: 2026.10</span></span>
+    <span><span id="footDate">Data as of 2026.09.29</span> · <span class="review" id="footReview">다음 검토: 2026.10</span></span>
   </div>
   <div style="margin-top:8px">출처: Bank Indonesia(JISDOR) · Bloomberg · BPS · Moody's · Fitch · Trading Economics · IDX · ExchangeRate-API. 본 페이지는 공개 지표 모니터링용 내부 참고 자료이며, 환율·위기 시점에 대한 자체 전망이나 공식 투자·법률 자문이 아닙니다.</div>
 </footer>
@@ -462,50 +462,55 @@
    환율은 페이지 열 때마다 라이브 API 자동 갱신
    ════════════════════════════════════════════════════════════ */
 const DATA = {
-  asOf: "2026.09.23",
+  asOf: "2026.09.29",
   /* [C] 지난 검토 대비 델타 — 매 갱신 시 3줄 내외로 교체 */
   delta: {
     changed: [
-      "재무장관 전격 교체(09.14) — Purbaya → Suahasil Nazara, 재정적자 3% 상한 개정(UU 17/2003) 논의 부상",
-      "연준 +25bp 인상 확정(09.16) — 3.75~4.00%, 추가 인상 여지 · BoJ·ECB도 9월 인상",
-      "루피아 17,884·JCI 6,277 동반 약세 — 장관 교체 후 JCI -3.9%, 외국인 순매도, FTSE 29종목 제외",
-      "유가 $108 → $99 반락 — 사우디 파이프라인 재가동 준비·호르무즈 우회 선적 확대",
+      "BI 동결 5.75%(09.23, 3회 연속) — Destry 첫 RDG, 컨센서스와 일치 · 현물 개입은 전체 개입의 약 30%로 보유고 보존",
+      "루피아 17,978(09.28 종가) → 09.29 장중 18,000 터치 — 주의선 사실상 도달, 종가 기준 미돌파",
+      "유가 $99 → $105 재반등 — 후티 사우디 미사일(09.24)·트럼프 이란 호르무즈 제안 거부(09.28)",
+      "JCI 6,148(09.28 -1.51%), 외국인 순매도 Rp1.13조 · 재정: DPR 3% 상한 변경 제안(09.17) vs 장관 \"3% 준수\"(09.18)",
     ],
-    unchanged: "BI Rate 5.75%(09.23 결과 발표 전) · 미 관세 10% · 신용등급 3사 · 보유고 $146.5B",
+    unchanged: "BI Rate 5.75% · 미 관세 10% · 신용등급 3사 · 보유고 $146.5B(8월)",
     schedule: [
-      "09.23 BI RDG 결과 — 컨센서스 동결 12/14, 인상 2/14 (Destry 첫 RDG)",
       "10.01 BPS 9월 물가·8월 무역수지",
       "10.07경 9월 외환보유고",
+      "10.20~21 BI RDG (분기 회의)",
     ],
   },
   nextReview: "2026.10",
-  manualRate: 17884,
-  biLabel: "참고 · 09.22 종가 17,884 (-0.77%) — 09.10 17,536 대비 2주간 -2.0% · 재무장관 교체·재정준칙 개정 논의·FTSE 종목 제외가 겹침 · 주의선(18,000)까지 116pt로 근접 · 09.23 RDG 결과 대기",
+  manualRate: 17978,
+  biLabel: "참고 · 09.28 종가 17,978 (-0.42%, Bloomberg) — 09.29 개장 직후 장중 18,000 터치 · 09.22 17,884 대비 1주 -0.5% · BI 동결(09.23) 후에도 외국인 유출·수입업체 달러 수요·유가 재반등이 겹침 · 주의선(18,000)까지 22pt",
   trigger: { p1: 18000, p2: 19500 },
   railMin: 16500, railMax: 20000,
   reserve: { val: "$146.5B", sub: "2026.08 · +$1.2B 반등 · 수입 5.4개월분", months:"5.4개월" },
   /* t = 분기별 추세 (25.1Q→현재) · up: good=오르면 좋음 / bad=오르면 나쁨 / neutral */
   indicators: [
-    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"<b>09.22 종가 17,884(-0.77%)</b> — 09.10 17,536에서 2주간 약 -2% 약세, 주의선(18,000)까지 116pt · 원인: 재무장관 교체·재정적자 상한 개정 논의·연준 인상·FTSE 29종목 제외에 따른 포트폴리오 유출·수입업체 달러 수요 · 09.23 전망 17,880~17,930(Laba Forexindo) · BI는 현물·NDF·DNDF 개입 지속", s:"a", src:"시장환율(라이브)·JournalArta·Faktual·Bisnis", cw:"달러결제 수입자재 원가·본사 정산환율 — 04 구간별 대응 연동", t:[17930,17861,17862,17760,17780,17884]},
+    {g:"외환·통화", n:"USD/IDR 환율", v:"LIVE", d:"<b>09.28 종가 17,978(-0.42%, Bloomberg)</b> — 09.29 개장 직후 장중 18,000 터치(09:08 WIB), 주의선까지 22pt · 원인: 외국인 자금 유출·수입업체 달러 수요·달러지수 강세·유가 재반등 · 09.29 예상 범위 17,900~18,050(Doo Financial) · BI는 현물·NDF·DNDF 개입 지속, 현물 비중은 전체 개입의 약 30%(Destry) <span style=\"color:var(--faint)\">※ Refinitiv 기준 종가는 17,965</span>", s:"a", src:"시장환율(라이브)·Bloomberg·Suara·IDN Times·CNBC Indonesia", cw:"달러결제 수입자재 원가·본사 정산환율 — 04 구간별 대응 연동", t:[17861, 17862, 17760, 17780, 17884, 17978]},
     {g:"외환·통화", n:"외환보유고", v:"$146.5B", d:"<b>08월 +$1.2B 반등</b>(09.07 발표) — 세수·서비스 수입·정부 해외차입이 대외채무 상환·환율 방어 개입을 상쇄 · 수입 <b>5.4개월분</b>(채무상환 포함 5.3개월)으로 국제기준 3개월 크게 상회 · 2개월 연속 반등($144.9→145.3→146.5)으로 5월 저점에서 회복 궤도 · BI \"외자 유입이 긍정적 투자심리를 반영\"", s:"a", src:"Bank Indonesia (09.07)", cw:"급감 시 외환규제·본사-법인 송금 제약 리스크", t:[156.5,144.9,145.6,145.3,145.3,146.5], up:"good"},
-    {g:"외환·통화", n:"경상수지 (Q2)", v:"-3.3% GDP", d:"Q2 적자 $125억 — Q1 $36억(1.0%)에서 급확대, 통상 경계 임계(3%) 상회 · migas 적자 확대(유가발 원유수입)·비migas 흑자 축소·1차소득 적자 · 상쇄: 자본·금융계정 +$120억(직접·포트폴리오 유입) → NPI 적자 $9억으로 축소 · <b>유가 $108로 Q3 적자 확대 우려 심화</b> — 외환 방어가 단기 자본유입 의존 구조", s:"r", src:"Bank Indonesia (08.21)", cw:"루피아 구조적 약세 압력 — 환헤지 필요성 판단의 기초 지표"},
-    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"<b>09.22~23 RDG 진행 중 — 오늘 결과 발표</b>(Destry 정식 총재 첫 RDG) · 컨센서스: 동결 12/14, +25bp 2/14(BCA 등) — Bisnis BIG Consensus · 인상 압력: 연준 3.75~4.00%로 인상(09.16)·루피아 2주 -2%·유가 $99 / 동결 논리: 물가 3.19%로 목표 내·성장 부담 · Kiwoom \"동결하되 매파적 기조\" 기본 시나리오", s:"a", src:"Bank Indonesia·Bisnis·Liputan6·Kiwoom", cw:"현지 운전자금 조달금리·리스 비용", t:[5.25,5.25,5.75,5.75,5.75,5.75], up:"neutral"},
+    {g:"외환·통화", n:"경상수지 (Q2)", v:"-3.3% GDP", d:"Q2 적자 $125억 — Q1 $36억(1.0%)에서 급확대, 통상 경계 임계(3%) 상회 · migas 적자 확대(유가발 원유수입)·비migas 흑자 축소·1차소득 적자 · 상쇄: 자본·금융계정 +$120억(직접·포트폴리오 유입) → NPI 적자 $9억으로 축소 · <b>유가 $100대 재진입으로 Q3 적자 확대 우려 지속</b> — 외환 방어가 단기 자본유입 의존 구조", s:"r", src:"Bank Indonesia (08.21)", cw:"루피아 구조적 약세 압력 — 환헤지 필요성 판단의 기초 지표"},
+    {g:"외환·통화", n:"BI Rate", v:"5.75%", d:"<b>09.23 RDG 동결 5.75%</b>(3회 연속, Destry 정식 총재 첫 RDG) · 예금금리 4.75%·대출금리 6.50%도 동결 · BI \"외부 압력이 지속되는 가운데 환율 안정 전략과 일관된 결정\" · 컨센서스(동결 12/14)와 일치 · 인상 압력은 잔존: 연준 추가 인상 기대·루피아 18,000 근접 · 다음 RDG 10.20~21(분기 회의)", s:"a", src:"Bank Indonesia·Antara·CNBC Indonesia·Bisnis", cw:"현지 운전자금 조달금리·리스 비용", t:[5.25, 5.75, 5.75, 5.75, 5.75, 5.75], up:"neutral"},
     {g:"실물 경제", n:"GDP 성장률", tier:"s", v:"+5.29%", d:"2026 Q2 YoY 확정(08.05) — Q1 5.61%에서 둔화했으나 Bloomberg 컨센서스 5.1% 상회 · 제조업 최대 기여(0.90%p) · 다만 8월 PMI 49.8로 위축 전환(7월 50.2) · BI 2026 전망 4.9~5.7%", s:"g", src:"BPS (08.05)"},
-    {g:"실물 경제", n:"인플레이션", v:"3.19%", d:"2026.08 BPS — 7월 2.88%에서 반등, 컨센서스(2.86%) 상회 · 목표(2.5±1%) 내이나 상단 3.5% 재접근 · <b>유가 $108이 아직 9월 물가에 미반영</b> — Pertamina 비보조금 연료 인상(09.01)에 이어 추가 조정 가능성 · Bank Permata 연말 3.13% 전망, 엘니뇨·에너지가 상방 리스크", s:"a", src:"BPS (09.01)·Bank Permata", cw:"현지 임금인상 협상의 선행지표 — 반등은 압력 요인", t:[3.08,3.34,3.34,2.88,3.19,3.19], up:"bad"},
-    {g:"실물 경제", n:"브렌트유", v:"$99", d:"09.14 $108(4개월 최고) → <b>09.22 $98~99, 5거래일 연속 하락</b> · 사우디가 호르무즈 외곽 선박간 환적(STS)으로 우회 수출 확대, 동-서 파이프라인 재가동 준비(주말 목표) · 이란 \"미국이 봉쇄 해제 조치 시 7일 내 호르무즈 재개방\" 제안 보도 <span style=\"color:var(--faint)\">(교도통신·이란 고위관리 발언, 미확인)</span> · 트럼프 UN 연설 \"합의는 11.03 중간선거 직후\" — 선거 전 합의 기대 후퇴 · EIA 하반기 평균 $90 전망 · 전년 +36%", s:"r", src:"Trading Economics·CNBC·Bloomberg·EIA", cw:"화섬 원자재(PET솜·원단)·해상운임 원가 직결", t:[84,80,91,95,108,99], up:"bad"},
-    {g:"실물 경제", n:"재정적자", v:"~2.78%", d:"<b>재정 신뢰 흔들림</b> — 09.14 Purbaya 재무장관 전격 교체(Keppres 97/P/2026, 후임 Suahasil Nazara 전 차관, 공식 사유 미발표) · <b>재정적자 3% 법정상한(UU 17/2003) 개정 논의</b> — Suahasil \"건설적으로 논의, 국가채무 60% 상한은 앵커로 유지\" · 7월까지 적자 0.91% GDP·세수 +23.7%로 집행 자체는 양호 · RAPBN 2027 목표 2.40% <span style=\"color:var(--faint)\">※ 2026 목표 2.68→2.85% 상향 보도는 단일 출처 분석으로 확인 필요</span>", s:"r", cw:"보조금 개편 → 연료·전기료 → 공장 유틸리티 비용", src:"Kompas·Kontan·Faktual·Kemenkeu"},
+    {g:"실물 경제", n:"인플레이션", v:"3.19%", d:"2026.08 BPS — 7월 2.88%에서 반등, 컨센서스(2.86%) 상회 · 목표(2.5±1%) 내이나 상단 3.5% 재접근 · <b>유가 $100대 재진입이 9월 물가(10.01 발표)에 반영될지 주시</b> — Pertamina 비보조금 연료 인상(09.01)에 이어 추가 조정 가능성 · Bank Permata 연말 3.13% 전망, 엘니뇨·에너지가 상방 리스크", s:"a", src:"BPS (09.01)·Bank Permata", cw:"현지 임금인상 협상의 선행지표 — 반등은 압력 요인", t:[3.08,3.34,3.34,2.88,3.19,3.19], up:"bad"},
+    {g:"실물 경제", n:"브렌트유", v:"~$105", d:"<b>09.22 $99 → 09.28 장중 $104~107로 재반등</b> · 09.24 후티가 사우디(타이프·얀부)에 탄도미사일 6발(요격)·UN 총회 미-이란 협상 진전 없음 → 하루 +4%대 · 09.28 트럼프, 이란의 \"7일 내 호르무즈 재개방\" 조건부 제안(동결자금 해제·제재 해제·해상봉쇄 종료 요구) 거부 → +3% · 완화 요인: 사우디 동-서 파이프라인 재가동, 호르무즈 통과 132척/주(09.21~27, 전주 116) · EIA 하반기 평균 $90 전망 · 전년 +55%", s:"r", src:"Al Jazeera·CNBC·The National·Fortune·EIA", cw:"화섬 원자재(PET솜·원단)·해상운임 원가 직결", t:[80, 91, 95, 108, 99, 105], up:"bad"},
+    {g:"실물 경제", n:"재정적자", v:"2.85%(전망)", d:"<b>재정 규율 논쟁 — 의회 vs 재무부</b> · 09.17 DPR 11분과(위원장 Misbakhun)가 국가재정법(UU 17/2003) 개정 논의에서 적자 3%·국가채무 60% 상한 변경 제안(\"3%가 너무 신성시된다\") · 09.18 Suahasil 장관 \"3%를 적자 최대치로 사용\", 2026 적자 전망 2.85% 유지, 상한 변경은 의회와 건설적으로 논의 · 배경: 09.14 Purbaya → Suahasil 전격 교체(공식 사유 미발표) · 8월 말 적자 0.93% GDP로 집행은 양호 · RAPBN 2027 목표 2.40%", s:"r", cw:"보조금 개편 → 연료·전기료 → 공장 유틸리티 비용", src:"Antara·Suara·Kontan·Kemenkeu"},
     {g:"실물 경제", n:"미 관세(대미 수출)", v:"10% 확정", d:"07.23 확정·07.24 00:01(EDT) 발효 — 인니 10%+MFN (122 대체, 만료 없는 항구 체제) · 경쟁국 중·베·태 12.5% · 미국산 면 사용 시 섬유 TRQ 3년 · 정부는 팜유 품목 면제를 공식 요청(07.27, 심사 진행) · 과잉설비 301 결과 별도 대기 (→ US Tariff Watch)", s:"a", src:"USTR·Federal Register", cw:"대미 수출원가 +10% — 경쟁국 대비 -2.5%p 우위는 단가협상 카드"},
     {g:"신용·자본시장", n:"Moody's", tier:"s", v:"Baa2 Neg.", d:"2026.02.05 전망 하향 (최신)", s:"r", src:"Moody's (02.05)"},
     {g:"신용·자본시장", n:"S&P", tier:"s", v:"안정적", d:"07월 투자등급 확인·Stable 전망 유지 — 3대 평가사 중 유일한 Stable", s:"g", src:"S&P (07월)"},
     {g:"신용·자본시장", n:"Fitch", tier:"s", v:"BBB Neg.", d:"07.01 등급 확인·Negative 유지 — 보유고 감소·Danantara 정책 경고", s:"r", src:"Fitch (07.01)"},
     {g:"신용·자본시장", n:"MSCI 분류", v:"EM 유지·축소 지속", d:"<b>08.13 결과: 연례 국가리뷰에서 EM 분류 유지 확정</b>(강등 회피) — 그러나 종목 단위 축소는 계속: <b>GOTO 지수 완전 제외, CPIN Standard→Small Cap 강등, Small Cap 9종 제외</b>(ARTO·BUKA·SMGR 등), 신규 편입 0건. Standard 지수 내 인니 종목은 9개만 잔존, 08.31 발효 · 동결(freeze) 정책 유지 — 리스크의 성격이 \"11월 일괄 강등\"에서 <b>\"분기마다 단계적 축소\"로 이동</b> <span style=\"color:var(--faint)\">※ 기존 표기 \"11월 강등 리뷰($130억 유출 추정)\"는 이번 연례리뷰와의 관계가 MSCI 공지상 불명확해 확인 필요로 재분류</span>", s:"r", src:"MSCI·Kompas·Kontan", cw:"자본유출 → 환율 2차 압력 (직접 영향 제한적)"},
-    {g:"신용·자본시장", n:"주식시장 JCI", v:"6,277", d:"<b>09.22 -1.69%(6,277)</b> — 장관 교체일(09.14, 6,535) 대비 -3.9%, 09.14~18 주간 외국인 순매도 Rp2.9조 · FTSE Russell이 인니 29종목 제외, 베트남은 신흥시장 승격(09.21) → 지역 내 자금 재배분 우려 · 아시아 증시 대부분 상승과 대조적 · 연초 대비 -26%", s:"a", src:"IDX·Suara·Faktual·JournalArta", cw:"심리 지표 — 급락 시 환율 동반 약세 주시", t:[6234,6268,6450,6600,6541,6277], up:"good"},
+    {g:"신용·자본시장", n:"주식시장 JCI", v:"6,148", d:"<b>09.28 -1.51%(6,147.86)</b> — 외국인 순매도 Rp1.13조 · 같은 날 BEI 최저호가 Rp50→Rp1 인하 시행(49종목 해당) · 09.22 6,277 대비 -2.1%, 장관 교체일(09.14, 6,535) 대비 -5.9% · 유가 재반등·연준 추가 인상 기대로 위험회피 · 연초 대비 약 -27%", s:"a", src:"IDX·CNBC Indonesia·Kontan", cw:"심리 지표 — 급락 시 환율 동반 약세 주시", t:[6268, 6450, 6600, 6541, 6277, 6148], up:"good"},
   ],
   /* 이벤트 로그 (최신순) · t: fx 환율 / rate 통화정책 / credit 신용등급 / trade 무역 / geo 지정학 / social 정치사회 / market 자본시장 */
   events: [
-    {d:"2026.09.23", t:"rate",   tx:"<b>[오늘] BI RDG 9월 결과 발표</b>(09.22~23, Destry 정식 총재 첫 회의). 컨센서스 동결 5.75% — Bisnis 조사 14명 중 12명 동결, 2명(BCA 등) +25bp. 루피아 2주 -2%·연준 인상 직후라 \"동결하되 매파적 가이던스\"가 기본 시나리오. 결과 확인 후 갱신 필요 (Bisnis·Liputan6·Kiwoom)"},
+    {d:"2026.09.29", t:"fx",     tx:"<b>루피아 장중 18,000 터치 — 주의선 도달</b>. 개장 직후 18,000(09:08 WIB, Bloomberg), 09.28 종가 17,978 대비 -0.09%. 연준 추가 인상 기대·미 국채금리 상승 영향. 당일 예상 범위 17,900~18,050. 종가 기준 돌파 여부는 미확정 (IDN Times·CNBC Indonesia)"},
+    {d:"2026.09.28", t:"geo",    tx:"<b>트럼프, 이란의 호르무즈 재개방 제안 거부 — 브렌트 $107 돌파</b>(아시아 장중 +3%). 이란은 동결자금 해제·제재 해제·해상봉쇄 종료를 조건으로 \"7일 내 재개방\" 제시 → 미국 \"수용 불가\". 호르무즈 통과는 주 132척(09.21~27)으로 전주 116척에서 증가 (Al Jazeera·CNBC) — 09.22 \"미확인\"으로 표기한 이란 제안이 사실로 확인됨"},
+    {d:"2026.09.28", t:"market", tx:"<b>JCI -1.51%(6,147.86)·루피아 17,978(-0.42%) 동반 약세</b>. 외국인 순매도 Rp1.13조. 같은 날 BEI가 최저호가를 Rp50→Rp1로 인하(49종목). 원인: 외국인 자금 유출·수입업체 달러 수요·달러지수 강세·중동 긴장 (CNBC Indonesia·Suara·Kontan)"},
+    {d:"2026.09.24", t:"geo",    tx:"<b>유가 하루 +4%대, $105 돌파</b>. 후티가 사우디 타이프·얀부에 탄도미사일 6발 발사(동맹군 요격), UN 총회 계기 미-이란 협상 진전 없음. 사우디 동-서 파이프라인은 재가동 (The National·GV Wire)"},
+    {d:"2026.09.23", t:"rate",   tx:"<b>BI RDG 9월 동결 — BI Rate 5.75%</b>(3회 연속, Destry 정식 총재 첫 회의·1년 반 만의 대면 회의). 예금금리 4.75%·대출금리 6.50% 동결. \"외부 압력 지속 속 환율 안정 전략과 일관\" — 컨센서스(Bisnis 14명 중 12명 동결)와 일치. 인상 소수의견 2명은 연준 추가 인상을 근거로 제시 (Antara·CNBC Indonesia·Bisnis)"},
     {d:"2026.09.22", t:"market", tx:"<b>JCI -1.69%(6,277)·루피아 17,884(-0.77%) 동반 약세</b>. 아시아 증시 대부분 상승 속 역행. 원인: FTSE Russell의 인니 29종목 제외·베트남 신흥시장 승격(09.21)에 따른 지역 자금 재배분 우려, RDG 대기, 재정 불확실성. 장관 교체일 대비 JCI -3.9% (Faktual·JournalArta·Suara·Pilarmas)"},
-    {d:"2026.09.22", t:"geo",    tx:"<b>유가 $98~99 — 5거래일 연속 하락</b>. 사우디 동-서 파이프라인 재가동 준비(주말 목표), 호르무즈 외곽 선박간 환적으로 우회 수출 확대. 이란이 \"미 봉쇄 해제 시 7일 내 호르무즈 재개방\" 제안을 전달했다는 보도 <span style=\"color:var(--faint)\">(교도통신, 미확인)</span>. 트럼프 UN 연설 \"합의는 11.03 중간선거 직후\" — 시장은 선거 전 타결 기대 후퇴로 해석 (Trading Economics·NBC·Bloomberg)"},
+    {d:"2026.09.22", t:"geo",    tx:"<b>유가 $98~99 — 5거래일 연속 하락</b>. 사우디 동-서 파이프라인 재가동 준비(주말 목표), 호르무즈 외곽 선박간 환적으로 우회 수출 확대. 이란이 \"미 봉쇄 해제 시 7일 내 호르무즈 재개방\" 제안을 전달했다는 보도 <span style=\"color:var(--faint)\">(교도통신 보도 → 09.28 Al Jazeera 등으로 확인)</span>. 트럼프 UN 연설 \"합의는 11.03 중간선거 직후\" — 시장은 선거 전 타결 기대 후퇴로 해석 (Trading Economics·NBC·Bloomberg)"},
+    {d:"2026.09.18", t:"social", tx:"<b>재정 상한 논쟁 — DPR \"3% 변경\" vs 재무장관 \"3% 준수\"</b>. 09.17 DPR 11분과(위원장 Misbakhun)가 국가재정법(UU 17/2003) 개정 논의에서 적자 3%·채무 60% 상한 변경 제안. 09.18 Suahasil 장관 \"3%를 적자 최대치로 사용\", 2026 적자 전망 2.85% 유지 (Antara·Suara·Kontan)"},
     {d:"2026.09.16", t:"rate",   tx:"<b>연준 +25bp 인상 — 3.75~4.00%</b>, 추가 인상 여지 시사. 미 CPI 3.4%·core PCE 3.3% 대응. 같은 달 BoJ·ECB도 25bp 인상 — 주요국 동시 긴축으로 신흥국 금리차 압박. IHSG 09.18 -0.33%(6,441) (CNBC Indonesia·Finansial Insight)"},
     {d:"2026.09.14", t:"social", tx:"<b>재무장관 전격 교체 — Purbaya → Suahasil Nazara</b>(Keppres 97/P/2026). 전 차관(2019~)으로 테크노크라트 출신, 본인도 당일 오전 통보. 공식 사유 미발표 — Purbaya는 4일 전 수백 명 인사 단행. 이어 <b>재정적자 3% 법정상한(UU 17/2003) 개정 논의</b>가 부상, Suahasil \"건설적 논의·채무 60% 상한 유지\" · 시장은 단기 긍정·장기 중립(NH Korindo) 예상과 달리 JCI 1주 -1.5%·외국인 Rp2.9조 순매도로 반응 (Kompas·Kontan·Detik·Tempo)"},
     {d:"2026.09.14", t:"geo",    tx:"<b>유가 $108 — 4개월 최고, 호르무즈 대안까지 차단</b>. 09.11 사우디 동-서 파이프라인(East-West, 7M bpd)이 이라크 영토발 드론 공격으로 폐쇄 → 호르무즈를 우회하던 홍해 경유 루트까지 차단. GCC-이란 통항 회담 무기한 연기(바레인 불참·사우디 유보·테헤란 연기). 사우디 산유량 1990년 이후 최저, 중국 8월 원유 주문 증가, 미 SPR 역대 최저 근접 (Trading Economics·Tempo·Bloomberg)"},
