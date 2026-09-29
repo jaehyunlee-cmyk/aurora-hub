@@ -171,6 +171,40 @@
   
   
 
+
+  /* ── 금주 주목 변수 ── */
+  .watch{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 16px;margin-bottom:24px;}
+  .watch-label{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .watch-label span{font-weight:400;color:var(--slate);}
+  .watch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;}
+  .watch-item{background:var(--paper);border-radius:6px;padding:8px 10px;font-size:12px;line-height:1.55;color:var(--text-2);display:flex;flex-direction:column;gap:2px;}
+  .watch-item b{color:var(--ink);}
+  /* ── 히트맵 색상 ── */
+  table.hm{table-layout:fixed;}
+  table.hm td:not(.lc-c):not(.lc-s){text-align:right;padding-right:8px;}
+  table.hm td[colspan]{text-align:left!important;padding-left:10px;}
+  table.hm td.h0{background:transparent;}
+  table.hm td.h10{background:#EAF1FF;}
+  table.hm td.h125{background:#CFE0FF;}
+  table.hm td.h20{background:#9CBCFF;}
+  table.hm td.h30{background:#5E93FF;color:#fff;}
+  table.hm td.h145{background:#0B3FB0;color:#fff;}
+  table.hm tr:not(.tr) td.h10,table.hm tr:not(.tr) td.h125,table.hm tr:not(.tr) td.h20{font-weight:400;}
+  table.hm tr.tr td.h10{background:#EAF1FF!important;}
+  table.hm tr.tr td.h125{background:#CFE0FF!important;}
+  table.hm tr.tr td.h20{background:#9CBCFF!important;}
+  .hm-legend{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:12px;color:var(--text-2);margin-top:12px;padding:0 18px;}
+  .hm-legend i{display:inline-block;width:14px;height:10px;border-radius:2px;border:1px solid var(--cloud);margin-right:4px;vertical-align:-1px;}
+  .hm-legend i.h10{background:#EAF1FF;}.hm-legend i.h125{background:#CFE0FF;}.hm-legend i.h20{background:#9CBCFF;}.hm-legend i.h30{background:#5E93FF;}.hm-legend i.h145{background:#0B3FB0;}
+  .hm-legend-note{color:var(--slate);}
+  .hm-notes{margin:8px 18px 16px 34px;font-size:12px;color:var(--text-2);line-height:1.8;}
+  .hm-notes b{color:var(--ink);}
+  /* ── 공급과잉 상세 ── */
+  .oc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+  .oc-h{font-size:12px;font-weight:600;color:var(--slate);margin-bottom:6px;}
+  .oc-list{margin-left:16px;font-size:12px;color:var(--text-2);line-height:1.8;}
+  .oc-list b{color:var(--ink);}
+  .oc-note{font-size:12px;color:var(--text-3);margin:4px 2px 0;line-height:1.7;}
   /* ── SHARE MODAL ── */
   .share-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;}
   .share-modal-backdrop.open{display:flex;}
@@ -214,7 +248,7 @@
     </div>
   </div>
   <div class="nav-right">
-    <span class="nav-date" id="nav-date">검증 기준 2026-09-29 · 자동 갱신 없음</span>
+    <span class="nav-date" id="nav-date">검증 기준 2026-09-30 · 자동 갱신 없음</span>
     <button class="btn btn-primary" onclick="openShare()"><i class="ti ti-share"></i> 공유</button>
   </div>
 </nav>
@@ -235,92 +269,19 @@
       <div class="metric-badge badge-active">발효 중</div>
       <div style="font-size:12px;color:var(--text-3);margin-top:4px;">HTS 9503.00.00 · MFN Free (공개 확인) · 접미 0090은 브로커 확인값 · 티어는 <strong>변동 가능</strong></div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">환급 2트랙 (진행 중)</div>
-      <div class="metric-value">~$10M+α</div>
-      <div class="metric-sub">IEEPA 약 $10M(내부 집계): 청산확정분은 <strong>10/6 CAPE 3단계 — 소송 참여사만</strong> · 집단소송 결정 대기<br>S122 5개월치(2/24~7/23): 권리 보전 진행 중</div>
-      <div class="metric-badge badge-danger">조치 필요</div>
+  </div>
+
+  <!-- UPDATE: 금주 주목 변수 (주 1회) -->
+  <div class="watch">
+    <div class="watch-label">금주 주목 변수 <span>(미확정 · 9/30 기준)</span></div>
+    <div class="watch-grid">
+      <div class="watch-item"><b>① 완구 관세 인하</b><span>9/27 미중 인하 목록 포함 — 세율·시행일 미정 (미국 "권고" / 중국 "합의·약 90% MFN")</span></div>
+      <div class="watch-item"><b>② 신규 301 적법성 소송</b><span>9/30 CIT(국제무역법원) 약식 판결 심리 · 정부 답변서 기한 10/2</span></div>
+      <div class="watch-item"><b>③ 공급과잉 301 판정</b><span>회담 후에도 미발표 · 중국 +7.5%(총 20%) 보도 · 인니 미보도</span></div>
+      <div class="watch-item"><b>④ IEEPA 환급</b><span>10/6 CAPE 3단계(청산확정분, 소송 참여사만) · 집단소송 결정 대기</span></div>
+      <div class="watch-item"><b>⑤ 미중 휴전</b><span>11/10 → 2027-01-10 연장(9/23) — 만료 시 중국 20% 상한 소멸</span></div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">다음 미확정 변수 (3건)</div>
-      <div class="metric-value" style="font-size:12px;padding-top:6px;">완구 인하 · 공급과잉 · 적법성 소송</div>
-      <div class="metric-sub">완구 인하: <strong>세율·시행일 미정</strong> (미국 "권고" / 중국 "합의")<br>공급과잉: 중국 +7.5% 검토(미확정) — 회담 후에도 미발표<br>적법성 소송: <strong>9/30 심리</strong> · 정부 답변서 기한 10/2</div>
-      <div class="metric-badge badge-warn">모니터링</div>
-    </div>
   </div>
-
-  <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent,#2B6CFF);border-radius:var(--r-md);padding:10px 16px;margin-bottom:14px;font-size:12px;color:var(--text-2);line-height:1.8;">
-    <span style="font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--slate);">변경점 (9/29)</span><br>
-    <strong>9/27 미중 합의 — 완구(HTS 9503) 관세 인하 목록 포함, 시행 전</strong> — 백악관 U.S. Import List 49번(무선 기능 제품 제외) · USTR(무역대표부) "향후 유리한 관세 대우 권고"(9/27) vs 중국 상무부 "합의 · 약 90% MFN 수준 · 국내 절차 후 동시 시행"(9/28) — 완구 세율·시행일 미정 · 미중 휴전 2027-01-10까지 연장(양국 확인) · 공급과잉 관세 회담 후에도 미발표 · IEEPA CAPE 3단계 10/6 개시(소송 참여사 한정) · 9/30 적법성 심리 D-1
-  </div>
-
-  <div class="warn-strip">
-    
-    <details>
-      <summary><i class="ti ti-alert-triangle"></i>IEEPA 환급 <strong>&nbsp;약 $10M</strong>&nbsp;— 잔액 회수 리스크 · <strong>10/6 3단계는 소송 참여사만</strong><span class="chev">▶</span></summary>
-      <div class="warn-detail">
-        <div class="wd-row"><span class="wd-label">법원 명령</span><span class="wd-val">CIT(국제무역법원)가 세관에 "<strong>소송을 건 회사들</strong>의 세액 확정·마감된 통관 건(청산확정 entry)까지 전부 환급하라"고 명령 — 같은 명령이 소송 중인 약 3,700개 회사에 순차 발부 중 <span class="sub">(7/15 공지·7/17자 명령 · Princess Awesome #25-00078 등)</span></span></div>
-        <div class="wd-row"><span class="wd-label">핵심 문제</span><span class="wd-val">정부·세관 입장: 세액이 확정·마감된 건은 <strong>소송한 회사에만</strong> 환급 가능 — <strong>소송 안 한 회사는 현재 경로 없음</strong> <span class="sub">(해당 규모 ~$11.4B · AD/CVD 중복 entry는 CAPE 대상 제외 · ACH 미등록분 $1.7B 적체 — 8/4 CBP 보고)</span></span></div>
-        <div class="wd-row"><span class="wd-label">3단계 (10/6)</span><span class="wd-val">CBP(관세국경보호청) 진술서(9/15): CAPE 3단계 <strong>10/6 개시</strong> — 대상은 CIT(국제무역법원)가 재청산을 명령한 청산확정 통관 건(entry), 신청 자격은 <strong>7/30까지 수입자 번호(IOR)를 제출한 소송 참여사만</strong> (기한 후 제출자는 별도 안내 예정) <span class="sub">(누적 인증·재무부 송금 약 $122B, 이자 포함 · 9/17 보도 기준)</span></span></div>
-        <div class="wd-row"><span class="wd-label">사각지대</span><span class="wd-val">이의신청(protest) 중인 건은 환급 신청 절차 자체가 아직 없음 · 소송 제기 시효(2년)가 이미 초기 통관 건부터 진행 중 · <strong>단, 7/13부터 신규 제소 사건의 자동 정지가 철회</strong>되어 지금 제소해도 기존 소송인과 같은 재청산 구제를 즉시 요청 가능 — 제소 실효성 상승</span></div>
-        <div class="wd-row"><span class="wd-label">일정</span><span class="wd-val">집단소송 인정 여부: 8/6 심리 완료 — <strong>결정은 9/29 기준에도 대기 중</strong>. 결정이 나와도 <strong>패소 측 항소가 확실시</strong>되어 최종 확정은 연말 이후 가능성(전문가 전망) — "결정 = 즉시 해결"로 기대하지 않는 것이 안전</span></div>
-        <div class="wd-row"><span class="wd-label">참고</span><span class="wd-val">"정부 항소(No. 2026-1898) 7/28 종결" 보도는 여전히 단일 출처 — 다만 배경 정합 확인: 항소 대상 명령의 원사건(Euro-Notions)이 7/16 자진 취하되고 대표사건이 Freestyle World로 교체됨 → <strong>절차적 종결일 개연성</strong> (소송 안 한 회사의 승소를 뜻하지 않음, 정부 입장 지속). 로펌 확인 시까지 판단 보류 유지</span></div>
-        <div class="wd-row"><span class="wd-label">당사 확인</span><span class="wd-val">약 $10M(내부 집계 — 공개 독립검증 불가) 중 일부만 수령 — 남은 금액이 "확정·마감" 건에 있고 소송을 안 했다면 <strong>회수가 막힐 수 있음</strong> → 미국 법인에 ⓐ 남은 건들의 확정 여부 ⓑ 소송 제기 여부 ⓒ 7/30까지 IOR 제출 여부 확인 요청 — <strong>10/6 전 회신 필요</strong> <span class="sub">(못 받는 동안 이자 연 6% 복리로 불어나는 중)</span></span></div>
-      </div>
-    </details>
-    
-  </div>
-
-  <!-- 주요 사항 모니터링 -->
-  <div class="section-label"><i class="ti ti-eye"></i> 주요 사항 모니터링</div>
-  <div class="card" style="margin-bottom:24px;"><div class="card-body" style="padding:12px 16px;">
-    <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <thead><tr style="background:var(--surface2);">
-        <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--text-3);letter-spacing:.05em;">항목</th>
-        <th style="text-align:center;padding:8px;font-size:12px;color:var(--text-3);white-space:nowrap;">상태 (9/29 확인)</th>
-        <th style="text-align:left;padding:8px 12px;font-size:12px;color:var(--text-3);">발동 시 당사 영향</th>
-        <th style="text-align:center;padding:8px;font-size:12px;color:var(--text-3);white-space:nowrap;">트리거</th>
-      </tr></thead>
-      <tbody>
-        <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">미중 완구 관세 인하 (30-for-30)</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-warn">시행 전</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">완구(HTS 9503, 무선 기능 제품 제외) 목록 포함 · 중국 "약 90% 품목 MFN 수준" 발표 — <strong>완구가 90%에 들면 MFN Free라 0% 가능(추론)</strong> · 미국은 "권고" 표현, 세율·시행일 미정 · 인하 폭 2.5%p 초과 시 중국산이 인니산(10%)보다 낮아짐</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">USTR 고시</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">IEEPA 집단소송 결정</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-warn">결정 대기</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">인용 시: 미제소여도 $10M 잔액 회수 경로 — 단 패소 측 항소로 최종 확정은 연말 이후 전망 · 기각 시: 자체 제소 판단 즉시 필요</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">법원 결정 발표</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">공급과잉 판정 (16개국)</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-warn">보도 단계</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">Bloomberg: 중국 +7.5% 준비(8/24) → 총 20%(미중 휴전 상한) · <strong>9/24 회담 후에도 미발표</strong>(9/29 기준) · 세율 미확정 · <strong>인니 미보도</strong> · 중국 20% 시 인니와 격차 10%p로 확대</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">USTR 고시</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">신규 301조 적법성 소송</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-warn">9/30 심리</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">CIT(8/19): Learning Resources(완구업체)를 대표 사건으로 지정, <strong>9/30 약식 판결 심리</strong> — 나머지 2건 정지. 정부 답변서 기한 10/2 · 위법 판결 시 12.5%/10% 징수 중단 + 환급 경로 (납부 기록 보관 중)</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">9/30 판결</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">S122 항소 (CAFC)</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-neutral">계류</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">위법 확정 시: 5개월치 10% 환급 가능성 — 단 권리 보전(이의신청/제소)을 해둔 경우에 한함 (액션 ② 진행 중)</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">CAFC 판결</td>
-        </tr>
-        <tr>
-          <td style="padding:9px 12px;font-weight:600;color:var(--text);">미중 휴전 만료(2027-01-10) · exclusion 만료(11/10)</td>
-          <td style="padding:9px;text-align:center;"><span class="metric-badge badge-neutral">예정</span></td>
-          <td style="padding:9px 12px;color:var(--text-2);line-height:1.6;">휴전 11/10 → <strong>2027-01-10 연장</strong>(9/23, 양국 확인) · 재연장 실패 시 <strong>중국 20% 상한 소멸</strong> — 공급과잉 세율의 천장이 사라짐 · exclusion 178건은 완구 무관(참고)</td>
-          <td style="padding:9px;text-align:center;color:var(--text-3);">일자 도래</td>
-        </tr>
-      </tbody>
-    </table>
-  </div></div>
 
   <!-- HEATMAP -->
   <div class="section-label"><i class="ti ti-table"></i> 월별 추가관세 히트맵 (2026)</div>
@@ -346,62 +307,62 @@
             <tr>
               <td class="lc-c" rowspan="4">China</td>
               <td class="lc-s">IEEPA</td>
-              <td class="val-active">20%</td>
-              <td class="val-active">20→0%</td>
-              <td class="val-exp" colspan="10" style="text-align:center;">종료 — 대법원 "관세 권한 없음" 판시(2/20) → 2/24 징수 중단</td>
+              <td class="val-active h20">20%</td>
+              <td class="val-active h0">20→0%</td>
+              <td class="val-exp" colspan="10" style="">종료 — 대법원 "관세 권한 없음" 판시(2/20) → 2/24 징수 중단</td>
             </tr>
             <tr>
               <td class="lc-s">Section 122</td>
-              <td class="val-zero"></td>
-              <td class="val-active">0→10%</td>
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <td class="val-active">10→0%</td>
-              <td class="val-exp dth" colspan="5" style="text-align:center;">만료 (7/24 00:01 EDT 소멸)</td>
+              <td class="val-zero h0"></td>
+              <td class="val-active h10">0→10%</td>
+              <td class="val-active h10">10%</td><td class="val-active h10">10%</td><td class="val-active h10">10%</td><td class="val-active h10">10%</td>
+              <td class="val-active h0">10→0%</td>
+              <td class="val-exp dth" colspan="5" style="">만료 (7/24 00:01 EDT 소멸)</td>
             </tr>
             <tr>
               <td class="lc-s">Section 301</td>
-              <td class="val-exp" colspan="6" style="text-align:center;">기존: List 4B 유예 — 미적용 (0%) · 원문 확인</td>
-              <td class="val-active">0→12.5%</td>
-              <td class="val-active dth" colspan="5" style="text-align:center;">신규 301조(강제노동) 12.5% (7/24~) · 기존 4B 유예 지속</td>
+              <td class="val-exp" colspan="6" style="">기존: List 4B 유예 — 미적용 (0%) · 원문 확인</td>
+              <td class="val-active h125">0→12.5%</td>
+              <td class="val-active dth h125" colspan="5" style="">신규 301조(강제노동) 12.5% (7/24~) · 기존 4B 유예 지속</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
-              <td class="val-total-hi">20%</td>
-              <td class="val-total">20→10%</td>
-              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <td class="val-total-hi">10→12.5%</td>
-              <td class="val-total-hi dth">12.5%</td><td class="val-total-hi">12.5%</td><td class="val-total-hi">12.5%</td><td class="val-total-hi">12.5%</td><td class="val-total-hi">12.5%</td>
+              <td class="val-total-hi h20">20%</td>
+              <td class="val-total h10">20→10%</td>
+              <td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td>
+              <td class="val-total-hi h125">10→12.5%</td>
+              <td class="val-total-hi dth h125">12.5%</td><td class="val-total-hi h125">12.5%</td><td class="val-total-hi h125">12.5%</td><td class="val-total-hi h125">12.5%</td><td class="val-total-hi h125">12.5%</td>
             </tr>
             <tr class="sp"><td colspan="14"></td></tr>
             <!-- ── Indonesia ── -->
             <tr>
               <td class="lc-c" rowspan="4">Indonesia</td>
               <td class="lc-s">IEEPA</td>
-              <td class="val-active">19%</td>
-              <td class="val-active">19→0%</td>
-              <td class="val-exp" colspan="10" style="text-align:center;">종료 — 대법원 "관세 권한 없음" 판시(2/20) → 2/24 징수 중단</td>
+              <td class="val-active h20">19%</td>
+              <td class="val-active h0">19→0%</td>
+              <td class="val-exp" colspan="10" style="">종료 — 대법원 "관세 권한 없음" 판시(2/20) → 2/24 징수 중단</td>
             </tr>
             <tr>
               <td class="lc-s">Section 122</td>
-              <td class="val-zero"></td>
-              <td class="val-active">0→10%</td>
-              <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-              <td class="val-active">10→0%</td>
-              <td class="val-exp dth" colspan="5" style="text-align:center;">만료 (7/24 00:01 EDT 소멸)</td>
+              <td class="val-zero h0"></td>
+              <td class="val-active h10">0→10%</td>
+              <td class="val-active h10">10%</td><td class="val-active h10">10%</td><td class="val-active h10">10%</td><td class="val-active h10">10%</td>
+              <td class="val-active h0">10→0%</td>
+              <td class="val-exp dth" colspan="5" style="">만료 (7/24 00:01 EDT 소멸)</td>
             </tr>
             <tr>
               <td class="lc-s">Section 301</td>
-              <td class="val-zero" colspan="6" style="text-align:center;"></td>
-              <td class="val-active">0→10%</td>
-              <td class="val-active dth" colspan="5" style="text-align:center;">신규 301조(강제노동) 10% (7/24~)</td>
+              <td class="val-zero" colspan="6" style=""></td>
+              <td class="val-active h10">0→10%</td>
+              <td class="val-active dth h10" colspan="5" style="">신규 301조(강제노동) 10% (7/24~)</td>
             </tr>
             <tr class="tr">
               <td class="lc-s">합산</td>
-              <td class="val-total-hi">19%</td>
-              <td class="val-total">19→10%</td>
-              <td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
-              <td class="val-total">10%</td>
-              <td class="val-total dth">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td><td class="val-total">10%</td>
+              <td class="val-total-hi h20">19%</td>
+              <td class="val-total h10">19→10%</td>
+              <td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td>
+              <td class="val-total h10">10%</td>
+              <td class="val-total dth h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td><td class="val-total h10">10%</td>
             </tr>
           </tbody>
         </table>
@@ -423,23 +384,23 @@
                 <tr>
                   <td class="lc-c">China</td>
                   <td class="lc-s">펜타닐+상호 IEEPA</td>
-                  <td class="val-zero"></td>
-                  <td class="val-active">0→10%</td>
-                  <td class="val-active">10→20%</td>
-                  <td class="val-total-hi">20→145%</td>
-                  <td class="val-total-hi">145→30%</td>
-                  <td class="val-active">30%</td><td class="val-active">30%</td><td class="val-active">30%</td><td class="val-active">30%</td><td class="val-active">30%</td>
-                  <td class="val-active">30→20%</td>
-                  <td class="val-active">20%</td>
+                  <td class="val-zero h0"></td>
+                  <td class="val-active h10">0→10%</td>
+                  <td class="val-active h20">10→20%</td>
+                  <td class="val-total-hi h145">20→145%</td>
+                  <td class="val-total-hi h30">145→30%</td>
+                  <td class="val-active h30">30%</td><td class="val-active h30">30%</td><td class="val-active h30">30%</td><td class="val-active h30">30%</td><td class="val-active h30">30%</td>
+                  <td class="val-active h20">30→20%</td>
+                  <td class="val-active h20">20%</td>
                 </tr>
                 <tr>
                   <td class="lc-c">Indonesia</td>
                   <td class="lc-s">상호 IEEPA</td>
-                  <td class="val-zero"></td><td class="val-zero"></td><td class="val-zero"></td>
-                  <td class="val-active">0→10→32→10%</td>
-                  <td class="val-active">10%</td><td class="val-active">10%</td><td class="val-active">10%</td>
-                  <td class="val-active">10→19%</td>
-                  <td class="val-active">19%</td><td class="val-active">19%</td><td class="val-active">19%</td><td class="val-active">19%</td>
+                  <td class="val-zero h0"></td><td class="val-zero h0"></td><td class="val-zero h0"></td>
+                  <td class="val-active h10">0→10→32→10%</td>
+                  <td class="val-active h10">10%</td><td class="val-active h10">10%</td><td class="val-active h10">10%</td>
+                  <td class="val-active h20">10→19%</td>
+                  <td class="val-active h20">19%</td><td class="val-active h20">19%</td><td class="val-active h20">19%</td><td class="val-active h20">19%</td>
                 </tr>
               </tbody>
             </table>
@@ -452,14 +413,16 @@
         </div>
       </details>
 
-      <div style="font-size:12px;color:var(--text-3);margin-top:10px;line-height:1.7;">
-        ※ IEEPA 종료: 대법원이 2026-02-20(6-3) <strong>IEEPA는 대통령에게 관세 부과 권한을 부여하지 않는다</strong>고 판시 — CBP(관세국경보호청)는 2/24부터 징수 중단 (위헌 선고가 아닌 법률 해석 판결)<br>
-        ※ 기존 Section 301(2018-19 대중국): HTS 9503.00.00은 <strong>List 4B(유예·0%) 소속 — 84 FR 43304 U.S. note 20(s) 원문 전수 확인(2026-07-22)</strong>. List 4A(9903.88.15) 열거 목록에 9503 부재 + CBP 판례 8건(2022~2025: N323790·N326979·N337145·N346790·N353569 등) 전 건에서 완구에 301 헤딩(9903.88.xx) 부착 사례 0건 + 실납부 정합. <strong>N353569(2025-10-01)</strong>는 중국산 플러쉬 건에서 IEEPA 계열 헤딩 신고를 지시하되 301 헤딩은 완구에 부과하지 않음 — 2024년 4년 재검토 이후에도 4A 미해당 확인. 딥리서치의 "List 4A 7.5% 잔존" 주장은 반증<br>
-        ※ <strong>4A설 오류 원인 규명</strong>: Chapter 95 내 타 헤딩(9504 게임·9505.10.10 파티용품·9506 스포츠·9507·9508)은 실제 List 4A 수록 — "완구류(Ch.95) = 4A 7.5%"로 뭉뚱그린 일부 업계 자료·딥리서치의 혼동. 판례에서 301 헤딩은 전부 동봉된 비완구 품목(파우치 4202→List 3, 베개 9404→4A)에 부착된 것<br>
-        ※ <strong>신규 강제노동 301조 확정·발효(2026-07-24)</strong> — 국가 전체 대상, 별개 조치. 중국 12.5% / 인니 10% (최종 고시에 종료일 없음 — 301조의 법정 검토·수정 절차 적용). 기존 중국 301과 <strong>중첩 부과</strong>(List 4A 품목은 7.5+12.5=20%) — 완구는 4B 유예로 12.5%만. 국가별·일반 면제 리스트에 완구 미포함(브로커 계산 정합, 2026-07-25). Jul 셀 화살표: 7/23까지 S122 10% → 7/24부터 신규 세율<br>
-        ※ 2026 Aug 이후 수치: <strong>확정</strong> — 2026-07-23 USTR(무역대표부) 최종 고시(도켓 USTR-2026-0265/0266, CBP CSMS #69326983)<br>
-        ※ MFN 기본관세: HTS 9503.00.00 <strong>Free (공개 확인)</strong> · 통계접미 <strong>0090은 브로커 확인값</strong>(공식 서한 2026-07-25) — 기존 "4.7%" 표기 논쟁 종결. 총부담 = 표의 추가관세 수치 그대로
+      <div class="hm-legend">
+        <span><i class="h0"></i>0%</span><span><i class="h10"></i>~10%</span><span><i class="h125"></i>12.5%</span><span><i class="h20"></i>19~20%</span><span><i class="h30"></i>30%</span><span><i class="h145"></i>145%</span>
+        <span class="hm-legend-note">→ 는 월중 변동 (예: Jul — 7/23까지 S122 10% → 7/24부터 신규 301)</span>
       </div>
+      <ul class="hm-notes">
+        <li><b>IEEPA 종료</b> — 대법원 "관세 부과 권한 없음" 판시(2/20, 6-3 · 위헌 선고 아님) → CBP(관세국경보호청) 2/24 징수 중단</li>
+        <li><b>기존 301: 완구는 List 4B 유예(0%)</b> — 84 FR 43304 원문 + CBP 판례 8건 · "4A 7.5%"설은 Ch.95 타 헤딩(9504~9508) 혼동</li>
+        <li><b>신규 301(강제노동)</b> — 7/24 발효 · 중국 12.5% / 인니 10% · 종료일 없음 · 완구는 면제 목록에 없음 (USTR(무역대표부) 최종 고시 7/23)</li>
+        <li><b>MFN</b> — HTS 9503.00.0090 Free (브로커 서한 7/25) → 표의 수치 = 총부담</li>
+      </ul>
     </div>
   </div>
 
@@ -604,111 +567,39 @@
     <div style="padding:14px 16px;">
   <div class="card" style="margin-bottom:8px;">
     <div class="card-body" style="padding:16px 18px;">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+      <div class="oc-grid">
         <div>
-          <div style="font-size:12px;color:var(--text-3);letter-spacing:.06em;margin-bottom:6px;">조사 개요</div>
-          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
-            · 개시: <strong>2026-03-11</strong> (FR doc 2026-05214 · 도켓 USTR(무역대표부)-2026-0067/0068)<br>
-            · 대상 16개 경제권: 중국·EU·싱가포르·스위스·노르웨이·<strong>인도네시아</strong>·말레이시아·캄보디아·태국·한국·베트남·대만·방글라데시·멕시코·일본·인도<br>
-            · <strong style="color:var(--text);">중국·인도네시아 모두 포함</strong> — 오로라 생산기지 두 곳 동시 조사 대상 (대체 생산 후보국 대부분도 포함)
-          </div>
+          <div class="oc-h">조사 개요</div>
+          <ul class="oc-list">
+            <li>개시 2026-03-11 · 도켓 USTR(무역대표부)-2026-0067/0068</li>
+            <li>대상 16개국 — <b>중국·인도네시아 모두 포함</b></li>
+            <li>EU·한국·일본·대만·베트남·태국·말레이시아·캄보디아·인도 등 대체 생산 후보국 대부분 포함</li>
+          </ul>
         </div>
         <div>
-          <div style="font-size:12px;color:var(--text-3);letter-spacing:.06em;margin-bottom:6px;">진행 상황 (9/29 기준)</div>
-          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
-            · 공청회: 5/5~5/8 완료 · <strong style="color:var(--warn-text);">9/29 기준 공식 판정 미발표</strong> — Bloomberg(8/24): 중국 +7.5% 준비 → (9/18경) 9/24 정상회담 <strong>이후</strong>로 연기 전망 → 회담 후에도 발표 없음, 중국 외 교역국 포함 (백악관은 "추측" 입장) · 조사 범위 최소 21개 제조업종<br>
-            · 긍정 판정 시 원칙 <strong>30일 내 조치 시행</strong> — 요건 충족 시 최대 180일 지연 가능<br>
-            · <strong>중국 20% 상한 구조</strong>: 중국 상무부(7/27) "미국이 대체 관세를 20% 상한으로 약속" 공개 — 현행 12.5%에 7.5%p 여유, 보도된 7.5%는 이 천장을 정확히 채우는 수치 · 상한의 근거인 미중 휴전은 <strong>2027-01-10까지 연장</strong>(9/23)
-          </div>
+          <div class="oc-h">진행 상황 (9/30 기준)</div>
+          <ul class="oc-list">
+            <li>공청회 완료(5/5~8) · <b>공식 판정 미발표</b></li>
+            <li>Bloomberg: 중국 +7.5%(총 20%) 준비(8/24) → 회담 후로 연기(9/18) → 회담 후에도 미발표 · 인니 미보도</li>
+            <li>판정 시 원칙 30일 내 시행 · 최대 180일 지연 가능</li>
+            <li>중국 20% 상한(중국 상무부 7/27 공개) — 근거인 휴전은 2027-01-10까지 연장</li>
+          </ul>
         </div>
         <div>
-          <div style="font-size:12px;color:var(--text-3);letter-spacing:.06em;margin-bottom:6px;">완구의 위치</div>
-          <div style="font-size:12px;color:var(--text-2);line-height:1.9;">
-            · 중국 조사: "toys and sporting goods" 서술 문단 1회 등장, 예시 업종 목록엔 없음<br>
-            · 인니 조사: 금속·농산물·연료·섬유·건자재·시멘트 근거 — 완구 언급 없음<br>
-            · 목록은 예시(illustrative)·구제는 조사 업종에 비한정 → <strong style="color:var(--text);">포함도 배제도 아닌 상태</strong>
-          </div>
+          <div class="oc-h">완구의 위치</div>
+          <ul class="oc-list">
+            <li>중국 조사: "toys and sporting goods" 1회 언급 · 예시 업종 목록엔 없음</li>
+            <li>인니 조사: 완구 언급 없음</li>
+            <li>목록은 예시일 뿐 → <b>포함도 배제도 아닌 상태</b></li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-  <div style="font-size:12px;color:var(--text-3);margin-bottom:20px;line-height:1.7;">※ 강제노동 60개국 조치(중국 12.5% / 인니 10% — 7/24 발효)와 <strong>별개의 트랙</strong>. 본 건 확정 시 강제노동 관세 위에 <strong>중첩 부과될 가능성이 높다</strong>는 것이 로펌 공통 견해 — 현행 12.5%/10% 위 추가 전제로 대비. 참고: USTR은 국가별 S301도 확산 중 — 베트남 IP 조사(5/29 개시)·브라질 디지털무역 조사 진행, 소싱 대안국 평가 시 고려 요인. 판정 발표 시 즉시 반영 예정</div>
+  <div class="oc-note">※ 강제노동 301(중국 12.5% / 인니 10%)과 <b>별개 트랙</b> — 확정 시 그 위에 중첩 부과 전제로 대비 (로펌 공통 견해)</div>
 
 </div>
   </details>
-  <!-- ACTION ITEMS -->
-  <div class="section-label"><i class="ti ti-checklist"></i> 확인 필요 항목 (2026-09-29)</div>
-  <div class="card" style="margin-bottom:20px;">
-    <div style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
-        <thead>
-          <tr>
-            <th style="padding:8px 14px;text-align:left;font-size:12px;font-weight:600;color:var(--text-3);letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">항목</th>
-            <th style="padding:8px 10px;text-align:left;font-size:12px;font-weight:600;color:var(--text-3);letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);">현황 · 비고</th>
-            <th style="padding:8px 10px;font-size:12px;font-weight:600;color:var(--text-3);letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">담당</th>
-            <th style="padding:8px 14px;font-size:12px;font-weight:600;color:var(--text-3);letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap;">시점</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">① In-transit 예외 — 적용 결과 확인 <span class="metric-badge badge-neutral" style="margin-left:4px;">마감 종료</span></td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">면제 창구 <strong>종료(KST 7/28 13:01)</strong> — 7/24 이전 선적 + 마감 내 통관분은 신규 301 면제(추가관세 0%). 당사 물량 중 <strong>적용된 entry 유무·금액을 사후 확인</strong>하여 하반기 원가 산정에 반영 (결과 확인형 질문 — 정식 메일 1순위)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">미국 법인 + 브로커</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">차주 메일</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">② 환급 권리 보전 (5개월치 10%)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">122조로 5개월간 낸 10%를 돌려받을 권리는 <strong>기한 내 서류를 넣은 회사에만</strong> 생김 — 미국 법인이 처리 방식(브로커 이의신청 vs 변호사 소송) 검토 중(7/22). 핵심 시계: 각 통관 건(entry)의 세액이 확정되면 <strong>180일 안에</strong> 이의신청해야 함 · IEEPA 선례상 확정 후에는 소송 없이 환급이 사실상 막혔음 — 같은 전개 가능성 대비 · 실무: ACE 리포트(ES-003/REV-615)로 납부 기록을 지금 무비용 확보 가능 · 신규 301조 관세에도 집단소송 제기됨 — <strong>타사 소송에 의존하지 않고 자체 보전</strong> 원칙 동일 적용</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy + 관세사/변호사</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">즉시</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">③ Entry Summary 사본 (축소 재정의)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">코드(9503.00.0090)·MFN(Free)은 브로커 서한(7/25)으로 <strong style="color:var(--ok-text);">확인 완료</strong> — 남은 용도: ⓐ 완구 외 헤딩(가방류 4202 등) 신고 물량 유무 (해당 시 List 3 25% + 신규 12.5% = <strong>37.5%</strong> 노출) ⓑ 과거 entry의 9903.88.xx 이력 (있다면 과오납 → 환급 대상) ⓒ 청산 상태 ⓓ 7/24 이후 첫 entry의 새 헤딩 확인(인니 <strong>9903.05.45</strong>, 신고 순서 최우선)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">차주 메일</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">④ 10% 개시일 대조 (2/24 vs 3/4)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">포고문 발효 2/24 vs 미국 재무팀 보고 Entry Date 3/4 — <strong>8일 차이</strong>. S122 종료로 청구 기간 분모 확정(2/24 or 3/4 ~ 7/23) — 환급 금액 산정의 선결 과제</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">미국 재무 + 관세사</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">즉시</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑤ 환급 청구 건($10M) 세부내용</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;"><strong style="color:var(--danger-text);">성격이 바뀜 — 단순 현황 파악에서 회수 가능 여부 확인으로</strong>. 법원·세관 모두 "세액이 확정·마감된 건은 <strong>소송한 회사에만</strong> 환급"이라는 입장 — 당사가 소송을 안 했고 잔액이 확정·마감 건에 있다면 회수 경로가 막힐 수 있음. <strong>확인 필요 3가지: ⓐ 미수령 잔액이 걸린 통관 건들의 확정 여부 ⓑ 당사(미국 법인)의 CIT(국제무역법원) 소송 제기 여부 ⓒ 미제소라면 집단소송 결정(8/6 심리 완료, 9/29 기준 대기 — 정부는 "신청 시점 자체가 늦어 무효" 주장 추가) vs 개별 제소 판단 ⓓ 7/30까지 IOR 제출 여부 — 10/6 CAPE 3단계 신청 자격</strong> — 로펌 권고는 "집단소송 결과에 의존하지 말 것" · 7/22 문의 발송분(청구 근거·기간·청구 vs 수령 구분·내역 파일) 회신 대기 <span style="font-size:12px;color:var(--text-3);">(CAPE 접수 약 $134.7B · 인증·재무부 송금 약 $122B, 이자 포함 — 9/17 보도 기준 · 이자 연 6% 복리)</span></td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">Jeremy / 미국 재무</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--danger-text);font-weight:600;text-align:center;white-space:nowrap;">10/6 전</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑥ 면제 목록 원문 대조 (Annex II Part A)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">국가별 면제(13개 경제권 · 9903.05.96~9903.06.21 · 인니는 농산물·목재 등)에 완구 부재 <strong style="color:var(--ok-text);">확정</strong> · 일반 면제 Part A는 2,120개 코드 중 863개만 "as entered" 면제 구조 — 9503 부재는 브로커 계산상 전제, FRN 원문(pp.137~431) 라인 대조로 종결</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세사</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);font-weight:600;text-align:center;white-space:nowrap;">차주</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑦ 인니 가공 substantial transformation</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">중국 벤더 부품의 인니 가공이 중국 원산지를 벗어나는지 — CBP(관세국경보호청) ruling 사안. 신규 체제에서 중국(12.5%) vs 인니(10%) 2.5%p 격차 + excess capacity 변수로 판단 가치 유지</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세 변호사</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);font-weight:600;text-align:center;white-space:nowrap;">4Q</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);font-weight:600;color:var(--text);">⑧ 301 exclusion 178건 만료(11/10) · 미중 휴전 만료(2027-01-10로 연장)</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);line-height:1.7;">기존 중국 301 관련 잔여 일정 — 완구 직접 영향 없음(4B 유예)이나 4B 발동 리스크 모니터링과 병행</td>
-            <td style="padding:10px;border-bottom:1px solid var(--border);color:var(--text-2);text-align:center;white-space:nowrap;">관세사</td>
-            <td style="padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);font-weight:600;text-align:center;white-space:nowrap;">4Q</td>
-          </tr>
-          <tr>
-            <td style="padding:10px 14px;border-bottom:none;font-weight:600;color:var(--text);">⑨ 무선 기능 탑재 제품 식별 (인하 제외분)</td>
-            <td style="padding:10px;border-bottom:none;color:var(--text-2);line-height:1.7;">9/27 인하 목록의 완구 항목은 <strong>RF·Wi-Fi·Ethernet·Bluetooth 탑재 제품 제외</strong> — 해당 SKU·물량 파악(인하 시행 시 원가 차등) · 쿠션·베개류(면 제외)도 목록 포함(48번) — 홈텍스타일 해당 여부 확인</td>
-            <td style="padding:10px;border-bottom:none;color:var(--text-2);text-align:center;white-space:nowrap;">상품기획 + 미국 법인</td>
-            <td style="padding:10px 14px;border-bottom:none;color:var(--warn-text);font-weight:600;text-align:center;white-space:nowrap;">10월</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
   <!-- DEF -->
 
   <details style="margin-bottom:24px;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;">
@@ -747,180 +638,156 @@
   <div class="section-label"><i class="ti ti-timeline"></i> 주요 이벤트 타임라인</div>
   <div class="card">
     <div class="card-body" style="padding:8px 18px;">
-      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;">
-        <summary style="cursor:pointer;padding:8px 14px;font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface2);list-style:none;">7/15 이전 이력 ▶</summary>
-        <div style="padding:8px 14px;">
-      <div class="tl-row">
-        <div class="tl-date">2025-02-04</div>
-        <div class="tl-dot" style="background:#3A3F47;"></div>
+      <div class="tl-row future">
+        <div class="tl-date">미정</div>
+        <div class="tl-dot" style="background:var(--text-3);"></div>
         <div class="tl-content">
-          <div class="tl-title">IEEPA 발동 — 중국 Fentanyl 관세 10% 최초 부과</div>
-          <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. MFN 0% · Section 301 List 4B 유예. 중국 합산 10% 도달.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA 개시</div>
+          <div class="tl-title">공급과잉 조사(16개국) 판정 — 다음 미확정 변수</div>
+          <div class="tl-desc">중국·인니 포함. 긍정 판정 시 30일 내 조치 시행 의무(연장 가능). 강제노동 건과 중첩 부과 전제로 대비.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">대기</div>
         </div>
       </div>
-      <div class="tl-row">
-        <div class="tl-date">2025-03-04</div>
-        <div class="tl-dot" style="background:#3A3F47;"></div>
-        <div class="tl-content">
-          <div class="tl-title">IEEPA 펜타닐 관세 20%로 인상</div>
-          <div class="tl-desc">중국 펜타닐 트랙 10%→20%. 오로라월드, 중국 아웃소싱 Baby 단가 5% D/C 대응 시작(4월 출고분부터). (기존 301은 List 4B 유예 — 합산에 미포함)</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">인상</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2025-04</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">상호관세 발동 — 중국 합산 최고 145%, 인니 10%(32% 발표 후 유예)</div>
-          <div class="tl-desc">4/5 전 세계 10% 기본 상호관세 → 4/9 국가별 세율(인니 32%) → 4/10 중국 외 90일 유예로 10% 복귀. 중국은 보복 상승으로 4/10 합산 145%(펜타닐 20% + 상호 125%). 5/14 제네바 합의로 30%(펜타닐 20% + 상호 10%). 인니는 8/7 무역합의로 19%.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">최고 관세</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2025-10-30</div>
-        <div class="tl-dot" style="background:#2B6CFF;"></div>
-        <div class="tl-content">
-          <div class="tl-title">미중 부산 정상회담 (APEC) — IEEPA 20%→10% 인하</div>
-          <div class="tl-desc">펜타닐 트랙 20%→10% 인하 합의(11/10 발효) → 중국 합산 30%→20%(펜타닐 10% + 상호 10%). 1년 휴전 — 만료 2026-11-10. 오로라월드 Baby D/C 5%→3%로 조정(11/13 출고분부터).</div>
-          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">휴전 합의</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-02-20</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">연방대법원, IEEPA의 관세 부과 권한 부정 판시 (6-3)</div>
-          <div class="tl-desc">"IEEPA는 대통령에게 관세 부과 권한을 부여하지 않는다"는 법률 해석 판결 (위헌 선고 아님). CBP(관세국경보호청)는 2/24부터 징수 중단, 같은 날 Section 122 긴급 발동. 2026년 4월 CAPE 포털 통해 IEEPA 관세 환급 절차 개시 — 인니산 상호관세 납부분 포함.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-02-24</div>
-        <div class="tl-dot" style="background:#2B6CFF;"></div>
-        <div class="tl-content">
-          <div class="tl-title">Section 122 발동 — 전 세계 10% 관세 시행</div>
-          <div class="tl-desc">대부분의 수입국에 10% 일괄 관세 적용. 150일 한시 조치로 의회 연장 없이는 2026/07/24 자동 만료.</div>
-          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">Section 122</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-03-11</div>
-        <div class="tl-dot" style="background:#B07314;"></div>
-        <div class="tl-content">
-          <div class="tl-title">USTR(무역대표부), 인도네시아 포함 16개국 Section 301 조사 개시</div>
-          <div class="tl-desc">과잉 생산 설비·불공정 무역 관행 이유로 조사 개시. 인도네시아·베트남·캄보디아·태국 등 아시아 주요 대체 생산국 포함.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">S301 조사</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-05-07</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">CIT(국제무역법원), Section 122 위법 판결 — 단, 구제는 지명 원고 한정</div>
-          <div class="tl-desc">State of Oregon v. United States / Burlap and Barrel, Inc. v. United States (<strong>Slip Op. 26-47</strong>, 2-1). Section 122 발동의 법정 요건(국제수지 적자) 미충족 판단. <strong>전면적 금지명령 없이 지명 원고에만 적용</strong>되고 원고 주(州) 대부분은 원고적격 부재로 각하 — 미제소 수입자는 구제 대상 아님. 이후 CAFC 집행정지로 CBP(관세국경보호청)는 7/23까지 계속 징수.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-05-13~15</div>
-        <div class="tl-dot" style="background:#1E9E6A;"></div>
-        <div class="tl-content">
-          <div class="tl-title">트럼프 방중 — 미중 정상회담</div>
-          <div class="tl-desc">Boeing 200대 구매, 농산물 $170억/년 구매 합의. 무역이사회 설치 합의. 관세율 직접 합의는 없음. "관계 재설정" 성격으로 평가.</div>
-          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">정상회담</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-06-02</div>
-        <div class="tl-dot" style="background:#B07314;"></div>
-        <div class="tl-content">
-          <div class="tl-title">USTR(무역대표부), 강제노동 기반 신규 Section 301 관세 제안</div>
-          <div class="tl-desc">60개국 조사 결과 발표. 중국 12.5%, 인도네시아 10% 제안. 기존 List 4B와 별개의 신규 조치로, 국가 전체 수입품 대상 (Annex A 면제 품목 제외). S122 만료 직후 발효가 목표.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">신규 301조 관세 제안</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-06-11</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">CAFC, CIT(국제무역법원) 금지명령에 스테이 발부</div>
-          <div class="tl-desc">연방순회항소법원이 CIT(국제무역법원)의 S122 위법 판결 집행을 정지. CBP(관세국경보호청)는 만료일(7/24)까지 전체 수입자 대상 징수 계속. 정부 항소 브리프는 7월 제출 예정 — 만료 전 소송 종결 사실상 불가.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-06-12</div>
-        <div class="tl-dot" style="background:#1E9E6A;"></div>
-        <div class="tl-content">
-          <div class="tl-title">CBP(관세국경보호청), 강제노동 수입금지 집행 운영 가이드 발표</div>
-          <div class="tl-desc">수입자에게 공급망 전반의 강제노동 실사(due diligence) 문서를 선제적으로 준비할 것을 요구. 관세와 별개로 통관 지연·화물 압류 리스크 관리 필요 — 오로라월드도 인니 자사공장·중국 아웃소싱 공급망 실사 문서화 검토 필요.</div>
-          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">컴플라이언스</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-07-07~09</div>
-        <div class="tl-dot" style="background:#B07314;"></div>
-        <div class="tl-content">
-          <div class="tl-title">신규 Section 301 공청회 완료 (USITC, 3일간)</div>
-          <div class="tl-desc">서면 의견 접수 마감(7/6) 후 3일간 공청회 진행 완료. 리버틀(반박) 의견 마감: 7/16. 이후 USTR(무역대표부) 최종 확정만 남음.</div>
-          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-07-15</div>
-        <div class="tl-dot" style="background:#2B6CFF;"></div>
-        <div class="tl-content">
-          <div class="tl-title">USTR(무역대표부), 브라질 Section 301 최종 조치 발표 (25% · 참고)</div>
-          <div class="tl-desc">오로라월드와 직접 무관한 별개 조사이나, USTR(무역대표부)이 S301 최종 조치 사이클을 개시했다는 신호 — 강제노동 건 최종 확정도 임박 시사. 발효일 7/22.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-07-16</div>
-        <div class="tl-dot" style="background:#B07314;outline:2px solid #D8952B;outline-offset:1px;"></div>
-        <div class="tl-content">
-          <div class="tl-title">리버틀 의견 마감 — 신규 301조 관세 의견수렴 절차 전체 종료</div>
-          <div class="tl-desc">공청회 종료(7/9) 후 5영업일 마감 규정에 따라 절차상 마지막 단계 완료. USTR(무역대표부) 최종 확정 고시만 남음 — S122 만료(7/24) 전후 발효 유력.</div>
-          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-07-15</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">CIT(국제무역법원), 청산확정 entry 재청산·환급 명령 (7/15 공지 · 7/17자 명령문) — 당사 $10M 청구 건 직결</div>
-          <div class="tl-desc">CIT(Eaton 판사)가 "IEEPA 관세를 무시하고, 청산 후 80일 초과 entry 전량을 재청산하라"고 CBP(관세국경보호청)에 명령 (Princess Awesome #25-00078 등). 계류 중 약 3,700건 소송에 동일 취지 명령 순차 발부 중 — 이후 IEEPA 환급 대표 사건은 Freestyle World로 지정. 정부는 "청산확정 entry는 개별 법원명령 없이 CBP가 재청산·환급할 권한이 없다"는 입장(연방순회항소법원 항소 진행) → <strong>제소하지 않은 수입자는 현재 확인된 환급 경로 없음</strong>. 전체 수입자 대상 class certification은 계류(정부 반대, 7/22 원고 반박). 청산확정분 규모 약 $11.4B.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">환급 리스크</div>
-        </div>
-      </div>
-      </div>
-      </details>
-<div class="tl-row">
-        <div class="tl-date">2026-07-20</div>
+      <div class="tl-row future">
+        <div class="tl-date">2027-01-10</div>
         <div class="tl-dot" style="background:#6B717B;"></div>
         <div class="tl-content">
-          <div class="tl-title">미국, 캐나다 Section 338 관세 발표 (발효 8/19 · 참고)</div>
-          <div class="tl-desc">Tariff Act of 1930의 Section 338 — 사실상 사문화됐던 권한까지 동원. 캐나다 대미 수출의 약 5%에 50% 관세, 발효 2026-08-19 (발효 시 추가 소송 예상). IEEPA 관세 권한 부정 판시 이후 행정부가 S122 공백을 S301·S338 등 국가별 조치로 대체하는 흐름의 일부. 오로라월드 직접 영향 없음.</div>
+          <div class="tl-title">연장된 미중 휴전 만료</div>
+          <div class="tl-desc">재연장 실패 시 "20% 상한"의 근거 소멸 — 대중국 관세 재상승 경로 개방.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">예정</div>
+        </div>
+      </div>
+      <div class="tl-row future">
+        <div class="tl-date">2026-11-10</div>
+        <div class="tl-dot" style="background:#6B717B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">기존 301 exclusion 178건 만료</div>
+          <div class="tl-desc">완구 무관(참고). 미중 휴전은 2027-01-10로 연장됨.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">예정</div>
+        </div>
+      </div>
+      <div class="tl-row future">
+        <div class="tl-date">2026-10-06</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">IEEPA 환급 CAPE 3단계 개시 — 청산확정분, 소송 참여사 한정</div>
+          <div class="tl-desc">CBP(관세국경보호청) 진술서(9/15): CIT(국제무역법원) 재청산 명령 대상 청산확정 통관 건(entry), 7/30까지 IOR 제출한 소송 참여사만 신청 가능. 당사 약 $10M 잔액 해당 여부 확인 필요.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">D-6</div>
+        </div>
+      </div>
+      <div class="tl-row future">
+        <div class="tl-date">2026-09-30</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">신규 301조 관세 약식 판결 심리 (Learning Resources v. United States)</div>
+          <div class="tl-desc">CIT(국제무역법원)에서 완구업체 대표 사건 심리 — 위법 판결 시 12.5%/10% 징수 중단·환급 경로 개방 전망. 정부 답변서 기한 10/2이므로 심리 당일 판결보다는 이후 결정 가능성. IEEPA(6-3 승소)·S122(2-1 위법) 이어 세 번째 법적 도전.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">D-day</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-09-28</div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
+        <div class="tl-content">
+          <div class="tl-title">중국 상무부, "양측 약 90% 품목 MFN 수준 인하 · 국내 절차 후 동시 시행" 발표</div>
+          <div class="tl-desc">미국은 "권고", 중국은 "합의"로 표현 — 온도차. 완구가 90%에 드는지는 미공개. 목록 조정은 연 1회 이내(AP 보도). 미국 측 고시(세율·시행일)가 나와야 확정.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">발표</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-09-27</div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
+        <div class="tl-content">
+          <div class="tl-title">⚑ 미중 "30-for-30" 관세 인하 목록 공개 — 완구(HTS 9503) 포함</div>
+          <div class="tl-desc">백악관 U.S. Import List(77개 항목) 49번에 9503.00.00 포함 — <strong>RF·Wi-Fi·Ethernet·Bluetooth 탑재 제품 제외</strong>. 쿠션·베개류(면 제외)도 포함. 백악관 문서: "인하 대우를 목표로 검토" · USTR(무역대표부) 성명: "향후 유리한 관세 대우를 받을 수 있도록 <strong>권고</strong>" — 세율·시행일 미공개, "각국 국내 법 절차에 따라 결정·시행". <strong>시행 전 — 현행 12.5% 유지</strong>.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">시행 전</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-09-24</div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
+        <div class="tl-content">
+          <div class="tl-title">미중 정상회담 (워싱턴) — 무역이사회(Board of Trade) 공식 출범</div>
+          <div class="tl-desc">시진핑 방미(9/23~25). 관세율 직접 합의 발표는 없음 · 공급과잉 관세는 회담 후에도 미발표.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">정상회담</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-09-23</div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
+        <div class="tl-content">
+          <div class="tl-title">미중 휴전 2027-01-10까지 연장 합의 (기존 11/10)</div>
+          <div class="tl-desc">Bessent 재무장관 발표(9/23) · 중국 상무부 공식 확인(9/28 — "연장한 기초 위에서 계속 협의"). 중국 20% 상한 구조도 1/10까지 유지되는 것으로 해석. exclusion 178건(11/10 만료) 연장 여부는 별도 미확인.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">휴전 연장</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-09-18경</div>
+        <div class="tl-dot" style="background:#D8952B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">Bloomberg: 공급과잉 관세 발표, 정상회담 이후로 연기 전망</div>
+          <div class="tl-desc">관계자 인용 — 중국 및 다른 교역국 대상 신규 관세 발표를 9/24 회담 이후로 미룰 전망, 협상 지렛대 유지 목적으로 해석. 회담 전 주말 양국 실무 협상 진행. 공식 발표 아님.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">보도</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-08-24</div>
+        <div class="tl-dot" style="background:#D8952B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">Bloomberg: 미국, 공급과잉 조사로 중국 +7.5% 준비 — 총 20% (미확정)</div>
+          <div class="tl-desc">관계자 인용 보도. 12.5%와 합쳐 약 20% = 휴전 상한 정확히 충족. 9/24 정상회담 전 발표 목표이나 보고서 법적 검토가 난항. "높은 세율 발표 후 일부 유예해 실효 7.5%" 옵션도 논의. 백악관 "근거 없는 추측" — <strong>공식 발표 아님</strong>. 인니 등 다른 15개국 세율은 미보도.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">보도</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-08-19</div>
+        <div class="tl-dot" style="background:#6B717B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">캐나다 Section 338 관세 발효 (참고)</div>
           <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-07-22</div>
-        <div class="tl-dot" style="background:#2B6CFF;"></div>
+        <div class="tl-date">2026-08-19</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
         <div class="tl-content">
-          <div class="tl-title">브라질 S301 25% 발효 — 최종 조치 실행 템플릿 확인</div>
-          <div class="tl-desc">HTSUS 9903.05.01로 부과 개시. in-transit 예외 구조(발효 전 선적 + 1주 내 통관)가 강제노동 건에도 동일하게 채택됨. 같은 날 미 의회에서 Wyden 의원이 S122 폐지·의회 승인 의무화 법안 발의 (참고).</div>
-          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">발효</div>
+          <div class="tl-title">CIT, 적법성 소송 Learning Resources를 대표 사건으로 지정 · 9/30 약식 판결 심리 확정</div>
+          <div class="tl-desc">CIT(국제무역법원)가 소송 3건을 정리: Learning Resources(완구업체, #26-03347)를 대표 사건(sample case)으로 지정하여 심리 가속. Burlap&amp;Barrel 집단소송(#26-03345)과 25개 주정부 소송(#26-03467)은 정지(stay). 정부 답변서 기한 10/2. 완구업체가 대표가 된 것은 IEEPA 대법원 소송 경험(Learning Resources v. Trump) 때문.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">소송 가속</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-07-23</div>
-        <div class="tl-dot" style="background:#D24B45;outline:2px solid #D24B45;outline-offset:1px;"></div>
+        <div class="tl-date">2026-08-04~06</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
         <div class="tl-content">
-          <div class="tl-title">⚑ 신규 301조 관세(강제노동) 최종 조치 발표 — 중국 12.5% / 인니 10% 확정</div>
-          <div class="tl-desc">USTR(무역대표부) 최종 판정 (도켓 USTR-2026-0265/0266, FRN 431페이지). 10% 티어 17개국(인니 — 금지법 보유 + ART 약속), 12.5% flat(중국 등), EU·대만·일·한·스위스는 MFN 포함 상한 방식. FRN 구성: 본문 pp.1~72 / Annex I pp.73~136(제99류 101개 헤딩 신설 + U.S. Note 52) / Annex II pp.137~431(면제 15개 목록 Part A~O — Part A는 2,120개 코드 중 863개만 as entered 면제). 6월 제안 대비 수정: 5개국 하향 이동, 13개 경제권 국가별 면제 신설(9903.05.96~9903.06.21, 완구 미포함), 인니 등 4개국 섬유 TRQ 별도 고시 예정. 별도 면제: S232 대상품(철강·알루미늄·구리·차량·목재·반도체), USMCA 특혜 대상 캐나다·멕시코산, 제98류, 정보물·기증품·수반수하물. 무기한 조치 · 대통령 단독 조정 가능.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">확정</div>
+          <div class="tl-title">IEEPA 환급 분기점 — 집단소송 인용 심리 개최 (8/6) · 결정 대기</div>
+          <div class="tl-desc">CBP(관세국경보호청) CAPE 경과보고 제출(8/4)과 비공개 조정회의(8/5)에 이어, 8/6 CIT(국제무역법원)가 집단소송(class action) 인정 여부 구두변론 진행(V.O.S. Selections 건) — 소송하지 않은 수입자의 청산확정 통관 건(entry) 환급 가능 여부를 가르는 쟁점. <strong>결정은 9/29 기준에도 미발표</strong> (판결 후 패소 측 항소 확실시 — 최종 확정 연말 이후 전망) — 결정 전까지 "CIT 제소 수입자만 환급" 정부 입장 지속. 당사 $10M 청구 건의 확인 결과와 대조 필요.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">결정 대기</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-08-03</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">25개 주정부 연합, 신규 301조 관세 적법성 소송 제소 (3번째 소송)</div>
+          <div class="tl-desc">뉴욕 주도 23개 주 + 2개 주지사, CIT(국제무역법원) #26-03467. 주장: ① 강제노동 명분은 두 차례 위법 판결받은 관세 정책의 우회 재시도(pretext — USTR(무역대표부)·재무부 인사들의 공개 발언 인용) ② 60개국 개별 판정 결여 등 절차 위반. 청구: 예비·영구 징수금지 + 기납부 환급. 기존 2건(수입업체·집단소송)과 같은 법원 계류 — S122 위법 판결을 낸 법원.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">소송</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-07-28</div>
+        <div class="tl-dot" style="background:#D8952B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">In-transit 예외 통관 마감 (KST 13:01 종료)</div>
+          <div class="tl-desc">7/24 이전 선적 해상 물량의 면제 통관 시한 경과 — 이후 통관분은 신규 301조 관세 정상 부과. 당사 적용 물량 결과 확인 단계로 전환.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">마감</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-07-27</div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
+        <div class="tl-content">
+          <div class="tl-title">중국 상무부, "미국이 대중국 대체 관세 20% 상한 약속" 공개</div>
+          <div class="tl-desc">신규 301조 12.5% 발효 직후, 중국은 보복 대신 "미국이 어떤 명분이든 대중국 추가 관세를 20% 이내로 하기로 약속했다"고 발표 (2025-10 쿠알라룸푸르 협의 기원 추정). 현행 12.5%에 7.5%p 여유 — 이후 공급과잉 세율의 사실상 천장으로 작동.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">구조</div>
         </div>
       </div>
       <div class="tl-row">
@@ -942,155 +809,174 @@
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-07-27</div>
-        <div class="tl-dot" style="background:#3A3F47;"></div>
+        <div class="tl-date">2026-07-23</div>
+        <div class="tl-dot" style="background:#D24B45;outline:2px solid #D24B45;outline-offset:1px;"></div>
         <div class="tl-content">
-          <div class="tl-title">중국 상무부, "미국이 대중국 대체 관세 20% 상한 약속" 공개</div>
-          <div class="tl-desc">신규 301조 12.5% 발효 직후, 중국은 보복 대신 "미국이 어떤 명분이든 대중국 추가 관세를 20% 이내로 하기로 약속했다"고 발표 (2025-10 쿠알라룸푸르 협의 기원 추정). 현행 12.5%에 7.5%p 여유 — 이후 공급과잉 세율의 사실상 천장으로 작동.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">구조</div>
+          <div class="tl-title">⚑ 신규 301조 관세(강제노동) 최종 조치 발표 — 중국 12.5% / 인니 10% 확정</div>
+          <div class="tl-desc">USTR(무역대표부) 최종 판정 (도켓 USTR-2026-0265/0266, FRN 431페이지). 10% 티어 17개국(인니 — 금지법 보유 + ART 약속), 12.5% flat(중국 등), EU·대만·일·한·스위스는 MFN 포함 상한 방식. FRN 구성: 본문 pp.1~72 / Annex I pp.73~136(제99류 101개 헤딩 신설 + U.S. Note 52) / Annex II pp.137~431(면제 15개 목록 Part A~O — Part A는 2,120개 코드 중 863개만 as entered 면제). 6월 제안 대비 수정: 5개국 하향 이동, 13개 경제권 국가별 면제 신설(9903.05.96~9903.06.21, 완구 미포함), 인니 등 4개국 섬유 TRQ 별도 고시 예정. 별도 면제: S232 대상품(철강·알루미늄·구리·차량·목재·반도체), USMCA 특혜 대상 캐나다·멕시코산, 제98류, 정보물·기증품·수반수하물. 무기한 조치 · 대통령 단독 조정 가능.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">확정</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-07-28</div>
-        <div class="tl-dot" style="background:#D8952B;"></div>
+        <div class="tl-date">2026-07-22</div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
         <div class="tl-content">
-          <div class="tl-title">In-transit 예외 통관 마감 (KST 13:01 종료)</div>
-          <div class="tl-desc">7/24 이전 선적 해상 물량의 면제 통관 시한 경과 — 이후 통관분은 신규 301조 관세 정상 부과. 당사 적용 물량 결과 확인 단계로 전환.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">마감</div>
+          <div class="tl-title">브라질 S301 25% 발효 — 최종 조치 실행 템플릿 확인</div>
+          <div class="tl-desc">HTSUS 9903.05.01로 부과 개시. in-transit 예외 구조(발효 전 선적 + 1주 내 통관)가 강제노동 건에도 동일하게 채택됨. 같은 날 미 의회에서 Wyden 의원이 S122 폐지·의회 승인 의무화 법안 발의 (참고).</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">발효</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-08-03</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">25개 주정부 연합, 신규 301조 관세 적법성 소송 제소 (3번째 소송)</div>
-          <div class="tl-desc">뉴욕 주도 23개 주 + 2개 주지사, CIT(국제무역법원) #26-03467. 주장: ① 강제노동 명분은 두 차례 위법 판결받은 관세 정책의 우회 재시도(pretext — USTR(무역대표부)·재무부 인사들의 공개 발언 인용) ② 60개국 개별 판정 결여 등 절차 위반. 청구: 예비·영구 징수금지 + 기납부 환급. 기존 2건(수입업체·집단소송)과 같은 법원 계류 — S122 위법 판결을 낸 법원.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">소송</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-08-04~06</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">IEEPA 환급 분기점 — 집단소송 인용 심리 개최 (8/6) · 결정 대기</div>
-          <div class="tl-desc">CBP(관세국경보호청) CAPE 경과보고 제출(8/4)과 비공개 조정회의(8/5)에 이어, 8/6 CIT(국제무역법원)가 집단소송(class action) 인정 여부 구두변론 진행(V.O.S. Selections 건) — 소송하지 않은 수입자의 청산확정 통관 건(entry) 환급 가능 여부를 가르는 쟁점. <strong>결정은 9/29 기준에도 미발표</strong> (판결 후 패소 측 항소 확실시 — 최종 확정 연말 이후 전망) — 결정 전까지 "CIT 제소 수입자만 환급" 정부 입장 지속. 당사 $10M 청구 건의 확인 결과와 대조 필요.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">결정 대기</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-08-19</div>
+        <div class="tl-date">2026-07-20</div>
         <div class="tl-dot" style="background:#6B717B;"></div>
         <div class="tl-content">
-          <div class="tl-title">캐나다 Section 338 관세 발효 (참고)</div>
+          <div class="tl-title">미국, 캐나다 Section 338 관세 발표 (발효 8/19 · 참고)</div>
+          <div class="tl-desc">Tariff Act of 1930의 Section 338 — 사실상 사문화됐던 권한까지 동원. 캐나다 대미 수출의 약 5%에 50% 관세, 발효 2026-08-19 (발효 시 추가 소송 예상). IEEPA 관세 권한 부정 판시 이후 행정부가 S122 공백을 S301·S338 등 국가별 조치로 대체하는 흐름의 일부. 오로라월드 직접 영향 없음.</div>
           <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-08-19</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-date">2026-07-16</div>
+        <div class="tl-dot" style="background:#B07314;outline:2px solid #D8952B;outline-offset:1px;"></div>
         <div class="tl-content">
-          <div class="tl-title">CIT, 적법성 소송 Learning Resources를 대표 사건으로 지정 · 9/30 약식 판결 심리 확정</div>
-          <div class="tl-desc">CIT(국제무역법원)가 소송 3건을 정리: Learning Resources(완구업체, #26-03347)를 대표 사건(sample case)으로 지정하여 심리 가속. Burlap&amp;Barrel 집단소송(#26-03345)과 25개 주정부 소송(#26-03467)은 정지(stay). 정부 답변서 기한 10/2. 완구업체가 대표가 된 것은 IEEPA 대법원 소송 경험(Learning Resources v. Trump) 때문.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">소송 가속</div>
+          <div class="tl-title">리버틀 의견 마감 — 신규 301조 관세 의견수렴 절차 전체 종료</div>
+          <div class="tl-desc">공청회 종료(7/9) 후 5영업일 마감 규정에 따라 절차상 마지막 단계 완료. USTR(무역대표부) 최종 확정 고시만 남음 — S122 만료(7/24) 전후 발효 유력.</div>
+          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-08-24</div>
-        <div class="tl-dot" style="background:#D8952B;"></div>
-        <div class="tl-content">
-          <div class="tl-title">Bloomberg: 미국, 공급과잉 조사로 중국 +7.5% 준비 — 총 20% (미확정)</div>
-          <div class="tl-desc">관계자 인용 보도. 12.5%와 합쳐 약 20% = 휴전 상한 정확히 충족. 9/24 정상회담 전 발표 목표이나 보고서 법적 검토가 난항. "높은 세율 발표 후 일부 유예해 실효 7.5%" 옵션도 논의. 백악관 "근거 없는 추측" — <strong>공식 발표 아님</strong>. 인니 등 다른 15개국 세율은 미보도.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">보도</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-09-18경</div>
-        <div class="tl-dot" style="background:#D8952B;"></div>
-        <div class="tl-content">
-          <div class="tl-title">Bloomberg: 공급과잉 관세 발표, 정상회담 이후로 연기 전망</div>
-          <div class="tl-desc">관계자 인용 — 중국 및 다른 교역국 대상 신규 관세 발표를 9/24 회담 이후로 미룰 전망, 협상 지렛대 유지 목적으로 해석. 회담 전 주말 양국 실무 협상 진행. 공식 발표 아님.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">보도</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-09-23</div>
-        <div class="tl-dot" style="background:#3A3F47;"></div>
-        <div class="tl-content">
-          <div class="tl-title">미중 휴전 2027-01-10까지 연장 합의 (기존 11/10)</div>
-          <div class="tl-desc">Bessent 재무장관 발표(9/23) · 중국 상무부 공식 확인(9/28 — "연장한 기초 위에서 계속 협의"). 중국 20% 상한 구조도 1/10까지 유지되는 것으로 해석. exclusion 178건(11/10 만료) 연장 여부는 별도 미확인.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">휴전 연장</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-09-24</div>
-        <div class="tl-dot" style="background:#3A3F47;"></div>
-        <div class="tl-content">
-          <div class="tl-title">미중 정상회담 (워싱턴) — 무역이사회(Board of Trade) 공식 출범</div>
-          <div class="tl-desc">시진핑 방미(9/23~25). 관세율 직접 합의 발표는 없음 · 공급과잉 관세는 회담 후에도 미발표.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">정상회담</div>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">2026-09-27</div>
+        <div class="tl-date">2026-07-15</div>
         <div class="tl-dot" style="background:#2B6CFF;"></div>
         <div class="tl-content">
-          <div class="tl-title">⚑ 미중 "30-for-30" 관세 인하 목록 공개 — 완구(HTS 9503) 포함</div>
-          <div class="tl-desc">백악관 U.S. Import List(77개 항목) 49번에 9503.00.00 포함 — <strong>RF·Wi-Fi·Ethernet·Bluetooth 탑재 제품 제외</strong>. 쿠션·베개류(면 제외)도 포함. 백악관 문서: "인하 대우를 목표로 검토" · USTR(무역대표부) 성명: "향후 유리한 관세 대우를 받을 수 있도록 <strong>권고</strong>" — 세율·시행일 미공개, "각국 국내 법 절차에 따라 결정·시행". <strong>시행 전 — 현행 12.5% 유지</strong>.</div>
-          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">시행 전</div>
+          <div class="tl-title">USTR(무역대표부), 브라질 Section 301 최종 조치 발표 (25% · 참고)</div>
+          <div class="tl-desc">오로라월드와 직접 무관한 별개 조사이나, USTR(무역대표부)이 S301 최종 조치 사이클을 개시했다는 신호 — 강제노동 건 최종 확정도 임박 시사. 발효일 7/22.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">참고</div>
         </div>
       </div>
       <div class="tl-row">
-        <div class="tl-date">2026-09-28</div>
+        <div class="tl-date">2026-07-15</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">CIT(국제무역법원), 청산확정 entry 재청산·환급 명령 (7/15 공지 · 7/17자 명령문) — 당사 $10M 청구 건 직결</div>
+          <div class="tl-desc">CIT(Eaton 판사)가 "IEEPA 관세를 무시하고, 청산 후 80일 초과 entry 전량을 재청산하라"고 CBP(관세국경보호청)에 명령 (Princess Awesome #25-00078 등). 계류 중 약 3,700건 소송에 동일 취지 명령 순차 발부 중 — 이후 IEEPA 환급 대표 사건은 Freestyle World로 지정. 정부는 "청산확정 entry는 개별 법원명령 없이 CBP가 재청산·환급할 권한이 없다"는 입장(연방순회항소법원 항소 진행) → <strong>제소하지 않은 수입자는 현재 확인된 환급 경로 없음</strong>. 전체 수입자 대상 class certification은 계류(정부 반대, 7/22 원고 반박). 청산확정분 규모 약 $11.4B.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">환급 리스크</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-07-07~09</div>
+        <div class="tl-dot" style="background:#B07314;"></div>
+        <div class="tl-content">
+          <div class="tl-title">신규 Section 301 공청회 완료 (USITC, 3일간)</div>
+          <div class="tl-desc">서면 의견 접수 마감(7/6) 후 3일간 공청회 진행 완료. 리버틀(반박) 의견 마감: 7/16. 이후 USTR(무역대표부) 최종 확정만 남음.</div>
+          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">완료</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-06-12</div>
+        <div class="tl-dot" style="background:#1E9E6A;"></div>
+        <div class="tl-content">
+          <div class="tl-title">CBP(관세국경보호청), 강제노동 수입금지 집행 운영 가이드 발표</div>
+          <div class="tl-desc">수입자에게 공급망 전반의 강제노동 실사(due diligence) 문서를 선제적으로 준비할 것을 요구. 관세와 별개로 통관 지연·화물 압류 리스크 관리 필요 — 오로라월드도 인니 자사공장·중국 아웃소싱 공급망 실사 문서화 검토 필요.</div>
+          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">컴플라이언스</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-06-11</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">CAFC, CIT(국제무역법원) 금지명령에 스테이 발부</div>
+          <div class="tl-desc">연방순회항소법원이 CIT(국제무역법원)의 S122 위법 판결 집행을 정지. CBP(관세국경보호청)는 만료일(7/24)까지 전체 수입자 대상 징수 계속. 정부 항소 브리프는 7월 제출 예정 — 만료 전 소송 종결 사실상 불가.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-06-02</div>
+        <div class="tl-dot" style="background:#B07314;"></div>
+        <div class="tl-content">
+          <div class="tl-title">USTR(무역대표부), 강제노동 기반 신규 Section 301 관세 제안</div>
+          <div class="tl-desc">60개국 조사 결과 발표. 중국 12.5%, 인도네시아 10% 제안. 기존 List 4B와 별개의 신규 조치로, 국가 전체 수입품 대상 (Annex A 면제 품목 제외). S122 만료 직후 발효가 목표.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">신규 301조 관세 제안</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-05-13~15</div>
+        <div class="tl-dot" style="background:#1E9E6A;"></div>
+        <div class="tl-content">
+          <div class="tl-title">트럼프 방중 — 미중 정상회담</div>
+          <div class="tl-desc">Boeing 200대 구매, 농산물 $170억/년 구매 합의. 무역이사회 설치 합의. 관세율 직접 합의는 없음. "관계 재설정" 성격으로 평가.</div>
+          <div class="tl-tag" style="background:var(--ok-bg);color:var(--ok-text);">정상회담</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-05-07</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">CIT(국제무역법원), Section 122 위법 판결 — 단, 구제는 지명 원고 한정</div>
+          <div class="tl-desc">State of Oregon v. United States / Burlap and Barrel, Inc. v. United States (<strong>Slip Op. 26-47</strong>, 2-1). Section 122 발동의 법정 요건(국제수지 적자) 미충족 판단. <strong>전면적 금지명령 없이 지명 원고에만 적용</strong>되고 원고 주(州) 대부분은 원고적격 부재로 각하 — 미제소 수입자는 구제 대상 아님. 이후 CAFC 집행정지로 CBP(관세국경보호청)는 7/23까지 계속 징수.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-03-11</div>
+        <div class="tl-dot" style="background:#B07314;"></div>
+        <div class="tl-content">
+          <div class="tl-title">USTR(무역대표부), 인도네시아 포함 16개국 Section 301 조사 개시</div>
+          <div class="tl-desc">과잉 생산 설비·불공정 무역 관행 이유로 조사 개시. 인도네시아·베트남·캄보디아·태국 등 아시아 주요 대체 생산국 포함.</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">S301 조사</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-02-24</div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
+        <div class="tl-content">
+          <div class="tl-title">Section 122 발동 — 전 세계 10% 관세 시행</div>
+          <div class="tl-desc">대부분의 수입국에 10% 일괄 관세 적용. 150일 한시 조치로 의회 연장 없이는 2026/07/24 자동 만료.</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">Section 122</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2026-02-20</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">연방대법원, IEEPA의 관세 부과 권한 부정 판시 (6-3)</div>
+          <div class="tl-desc">"IEEPA는 대통령에게 관세 부과 권한을 부여하지 않는다"는 법률 해석 판결 (위헌 선고 아님). CBP(관세국경보호청)는 2/24부터 징수 중단, 같은 날 Section 122 긴급 발동. 2026년 4월 CAPE 포털 통해 IEEPA 관세 환급 절차 개시 — 인니산 상호관세 납부분 포함.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">법원 판결</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025-10-30</div>
+        <div class="tl-dot" style="background:#2B6CFF;"></div>
+        <div class="tl-content">
+          <div class="tl-title">미중 부산 정상회담 (APEC) — IEEPA 20%→10% 인하</div>
+          <div class="tl-desc">펜타닐 트랙 20%→10% 인하 합의(11/10 발효) → 중국 합산 30%→20%(펜타닐 10% + 상호 10%). 1년 휴전 — 만료 2026-11-10. 오로라월드 Baby D/C 5%→3%로 조정(11/13 출고분부터).</div>
+          <div class="tl-tag" style="background:var(--s122-bg);color:var(--s122-text);">휴전 합의</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025-04</div>
+        <div class="tl-dot" style="background:#D24B45;"></div>
+        <div class="tl-content">
+          <div class="tl-title">상호관세 발동 — 중국 합산 최고 145%, 인니 10%(32% 발표 후 유예)</div>
+          <div class="tl-desc">4/5 전 세계 10% 기본 상호관세 → 4/9 국가별 세율(인니 32%) → 4/10 중국 외 90일 유예로 10% 복귀. 중국은 보복 상승으로 4/10 합산 145%(펜타닐 20% + 상호 125%). 5/14 제네바 합의로 30%(펜타닐 20% + 상호 10%). 인니는 8/7 무역합의로 19%.</div>
+          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">최고 관세</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2025-03-04</div>
         <div class="tl-dot" style="background:#3A3F47;"></div>
         <div class="tl-content">
-          <div class="tl-title">중국 상무부, "양측 약 90% 품목 MFN 수준 인하 · 국내 절차 후 동시 시행" 발표</div>
-          <div class="tl-desc">미국은 "권고", 중국은 "합의"로 표현 — 온도차. 완구가 90%에 드는지는 미공개. 목록 조정은 연 1회 이내(AP 보도). 미국 측 고시(세율·시행일)가 나와야 확정.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">발표</div>
+          <div class="tl-title">IEEPA 펜타닐 관세 20%로 인상</div>
+          <div class="tl-desc">중국 펜타닐 트랙 10%→20%. 오로라월드, 중국 아웃소싱 Baby 단가 5% D/C 대응 시작(4월 출고분부터). (기존 301은 List 4B 유예 — 합산에 미포함)</div>
+          <div class="tl-tag" style="background:var(--warn-bg);color:var(--warn-text);">인상</div>
         </div>
       </div>
-      <div class="tl-row future">
-        <div class="tl-date">2026-09-30</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
+      <div class="tl-row">
+        <div class="tl-date">2025-02-04</div>
+        <div class="tl-dot" style="background:#3A3F47;"></div>
         <div class="tl-content">
-          <div class="tl-title">신규 301조 관세 약식 판결 심리 (Learning Resources v. United States)</div>
-          <div class="tl-desc">CIT(국제무역법원)에서 완구업체 대표 사건 심리 — 위법 판결 시 12.5%/10% 징수 중단·환급 경로 개방 전망. 정부 답변서 기한 10/2이므로 심리 당일 판결보다는 이후 결정 가능성. IEEPA(6-3 승소)·S122(2-1 위법) 이어 세 번째 법적 도전.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">D-1</div>
-        </div>
-      </div>
-      <div class="tl-row future">
-        <div class="tl-date">2026-10-06</div>
-        <div class="tl-dot" style="background:#D24B45;"></div>
-        <div class="tl-content">
-          <div class="tl-title">IEEPA 환급 CAPE 3단계 개시 — 청산확정분, 소송 참여사 한정</div>
-          <div class="tl-desc">CBP(관세국경보호청) 진술서(9/15): CIT(국제무역법원) 재청산 명령 대상 청산확정 통관 건(entry), 7/30까지 IOR 제출한 소송 참여사만 신청 가능. 당사 약 $10M 잔액 해당 여부 확인 필요.</div>
-          <div class="tl-tag" style="background:var(--danger-bg);color:var(--danger-text);">D-7</div>
-        </div>
-      </div>
-      <div class="tl-row future">
-        <div class="tl-date">2026-11-10</div>
-        <div class="tl-dot" style="background:#6B717B;"></div>
-        <div class="tl-content">
-          <div class="tl-title">기존 301 exclusion 178건 만료</div>
-          <div class="tl-desc">완구 무관(참고). 미중 휴전은 2027-01-10로 연장됨.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">예정</div>
-        </div>
-      </div>
-      <div class="tl-row future">
-        <div class="tl-date">2027-01-10</div>
-        <div class="tl-dot" style="background:#6B717B;"></div>
-        <div class="tl-content">
-          <div class="tl-title">연장된 미중 휴전 만료</div>
-          <div class="tl-desc">재연장 실패 시 "20% 상한"의 근거 소멸 — 대중국 관세 재상승 경로 개방.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">예정</div>
-        </div>
-      </div>
-      <div class="tl-row future">
-        <div class="tl-date">미정</div>
-        <div class="tl-dot" style="background:var(--text-3);"></div>
-        <div class="tl-content">
-          <div class="tl-title">공급과잉 조사(16개국) 판정 — 다음 미확정 변수</div>
-          <div class="tl-desc">중국·인니 포함. 긍정 판정 시 30일 내 조치 시행 의무(연장 가능). 강제노동 건과 중첩 부과 전제로 대비.</div>
-          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">대기</div>
+          <div class="tl-title">IEEPA 발동 — 중국 Fentanyl 관세 10% 최초 부과</div>
+          <div class="tl-desc">IEEPA 기반 중국산 10% 추가 관세 시행. MFN 0% · Section 301 List 4B 유예. 중국 합산 10% 도달.</div>
+          <div class="tl-tag" style="background:var(--neutral-bg);color:var(--neutral-text);">IEEPA 개시</div>
         </div>
       </div>
     </div>
